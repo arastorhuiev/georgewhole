@@ -31,6 +31,42 @@
   "directoryMap": {},
   "hotPaths": [
     {
+      "path": "research/00_README.md",
+      "accessCount": 10,
+      "lastAccessed": 1779803643738,
+      "type": "file"
+    },
+    {
+      "path": "research/00_executive_summary.md",
+      "accessCount": 5,
+      "lastAccessed": 1779802701845,
+      "type": "file"
+    },
+    {
+      "path": "research/99_sources.md",
+      "accessCount": 4,
+      "lastAccessed": 1779802707745,
+      "type": "file"
+    },
+    {
+      "path": "research/01_market_and_audience/README.md",
+      "accessCount": 3,
+      "lastAccessed": 1779802728523,
+      "type": "file"
+    },
+    {
+      "path": "research/02_content/README.md",
+      "accessCount": 3,
+      "lastAccessed": 1779802731770,
+      "type": "file"
+    },
+    {
+      "path": "research/03_technical_seo/README.md",
+      "accessCount": 3,
+      "lastAccessed": 1779802735410,
+      "type": "file"
+    },
+    {
       "path": "research/raw/01_prevalence_stats.md",
       "accessCount": 2,
       "lastAccessed": 1779799315689,
@@ -58,6 +94,90 @@
       "path": "research/raw/05_seo_search.md",
       "accessCount": 2,
       "lastAccessed": 1779799317406,
+      "type": "file"
+    },
+    {
+      "path": "research/raw/06_new_markets_scan.md",
+      "accessCount": 2,
+      "lastAccessed": 1779801137985,
+      "type": "file"
+    },
+    {
+      "path": "research/raw/08_market_russophone_diaspora.md",
+      "accessCount": 2,
+      "lastAccessed": 1779801138282,
+      "type": "file"
+    },
+    {
+      "path": "research/01_market_and_audience/01_audience_profile.md",
+      "accessCount": 2,
+      "lastAccessed": 1779801953230,
+      "type": "file"
+    },
+    {
+      "path": "research/01_market_and_audience/02_pains_and_needs.md",
+      "accessCount": 2,
+      "lastAccessed": 1779801960285,
+      "type": "file"
+    },
+    {
+      "path": "research/01_market_and_audience/03_competitors_market.md",
+      "accessCount": 2,
+      "lastAccessed": 1779801966433,
+      "type": "file"
+    },
+    {
+      "path": "research/01_market_and_audience/05_segmentation_priorities.md",
+      "accessCount": 2,
+      "lastAccessed": 1779801972555,
+      "type": "file"
+    },
+    {
+      "path": "research/02_content/04a_content_strategy.md",
+      "accessCount": 2,
+      "lastAccessed": 1779802010979,
+      "type": "file"
+    },
+    {
+      "path": "research/03_technical_seo/04b_seo_keywords.md",
+      "accessCount": 2,
+      "lastAccessed": 1779802018106,
+      "type": "file"
+    },
+    {
+      "path": "research/03_technical_seo/09_multilingual_architecture.md",
+      "accessCount": 2,
+      "lastAccessed": 1779802027042,
+      "type": "file"
+    },
+    {
+      "path": "research/01_market_and_audience/06_new_markets_scan.md",
+      "accessCount": 2,
+      "lastAccessed": 1779802034538,
+      "type": "file"
+    },
+    {
+      "path": "research/01_market_and_audience/07_market_ukraine.md",
+      "accessCount": 2,
+      "lastAccessed": 1779802042201,
+      "type": "file"
+    },
+    {
+      "path": "research/01_market_and_audience/08_market_russophone_diaspora.md",
+      "accessCount": 2,
+      "lastAccessed": 1779802049186,
+      "type": "file"
+    },
+    {
+      "path": "research/raw/09_spanish_audience_pains.md",
+      "accessCount": 2,
+      "lastAccessed": 1779802429629,
+      "type": "file"
+    },
+    {
+      "path": "research/raw/10_spanish_competitors_market.md",
+      "accessCount": 2,
+      "lastAccessed": 1779802430599,
       "type": "file"
     },
     {
@@ -127,12 +247,6 @@
       "type": "file"
     },
     {
-      "path": "research/00_executive_summary.md",
-      "accessCount": 1,
-      "lastAccessed": 1779799473601,
-      "type": "file"
-    },
-    {
       "path": "research/02_pains_and_needs.md",
       "accessCount": 1,
       "lastAccessed": 1779799600590,
@@ -163,9 +277,45 @@
       "type": "file"
     },
     {
-      "path": "research/99_sources.md",
+      "path": "marketingskills/skills/seo-audit/references/international-seo.md",
       "accessCount": 1,
-      "lastAccessed": 1779799988441,
+      "lastAccessed": 1779800811261,
+      "type": "file"
+    },
+    {
+      "path": "research/raw/07_market_ukraine.md",
+      "accessCount": 1,
+      "lastAccessed": 1779801198426,
+      "type": "file"
+    },
+    {
+      "path": "research/2026-05-26.md",
+      "accessCount": 1,
+      "lastAccessed": 1779802118811,
+      "type": "file"
+    },
+    {
+      "path": "research/01_market_and_audience/10_market_spanish_deep.md",
+      "accessCount": 1,
+      "lastAccessed": 1779802530204,
+      "type": "file"
+    },
+    {
+      "path": "research/03_technical_seo/10_seo_keywords_spanish.md",
+      "accessCount": 1,
+      "lastAccessed": 1779802582623,
+      "type": "file"
+    },
+    {
+      "path": "research/02_content/10_content_spanish.md",
+      "accessCount": 1,
+      "lastAccessed": 1779802624075,
+      "type": "file"
+    },
+    {
+      "path": "research/00_glossary.md",
+      "accessCount": 1,
+      "lastAccessed": 1779803284205,
       "type": "file"
     }
   ],

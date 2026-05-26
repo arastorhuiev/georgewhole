@@ -1,0 +1,7 @@
+{
+  "tool_name": "WebFetch",
+  "tool_input_preview": "{\"url\":\"https://saludata.saludcapital.gov.co/osb/wp-content/uploads/2026/01/TCA_II-sem2025_VF.pdf\",\"prompt\":\"Extraer estadísticas clave sobre TCA en Bogotá/Colombia 2024-2025: número de casos, distrib...",
+  "error": "timeout of 60000ms exceeded",
+  "timestamp": "2026-05-26T13:27:49.370Z",
+  "retry_count": 1
+}

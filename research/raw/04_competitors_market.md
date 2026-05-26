@@ -1,5 +1,7 @@
 # Конкурентный анализ рынка: «Новый Код» vs self-help / anti-diet / body-health США
 
+> 📖 **Термины** — полный глоссарий проекта: `../00_glossary.md`
+
 **Дата сбора данных:** 2026-05-26  
 **Рынок:** США (первичный), англоязычный глобальный (вторичный)  
 **Гипотеза:** целевая аудитория 35+, США  
@@ -457,11 +459,11 @@
 | Amazon product pages | Заблокированы (503/500/JavaScript) — данные не считаны |
 | Red Pen Reviews (Anti-Diet) | Рабочий, fetch успешен |
 | Yates Nutrition (Brain over Binge) | Рабочий, fetch успешен |
-| elizabethharrisnutrition.com | Рабочий |
-| anjaliruth.substack.com | Рабочий |
-| glucosegoddess.com | Рабочий (цены не показаны) |
-| camelcamelcamel.com | Блок 403 |
-| barnesandnoble.com | Блок 403 |
-| us.macmillan.com | Блок 403 |
-| helmpublishing.com | 404 |
+| <https://elizabethharrisnutrition.com> | Рабочий |
+| <https://anjaliruth.substack.com> | Рабочий |
+| <https://glucosegoddess.com> | Рабочий (цены не показаны) |
+| <https://camelcamelcamel.com> | Блок 403 |
+| <https://barnesandnoble.com> | Блок 403 |
+| <https://us.macmillan.com> | Блок 403 |
+| <https://helmpublishing.com> | 404 |
 | Ценовые данные | Частично подтверждены (Amazon $11 на discount, диапазон из множественных запросов); точные Kindle-цены не верифицированы |

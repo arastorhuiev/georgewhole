@@ -1,4 +1,6 @@
 # SEO / Search Behaviour Research — «Новый Код»
+
+> 📖 **Термины** — полный глоссарий проекта: `../00_glossary.md`
 **Рынок:** США (англоязычный)  
 **Дата исследования:** 2026-05-26  
 **Тема продукта:** Self-help книга — anti-diet, здоровое отношение к еде, телу, движению, психике  
@@ -13,7 +15,7 @@
 | **how to stop binge eating** | Как перестать есть запоями — высокоболезненный, эмоционально заряженный запрос | Informational / Implementation | Awareness → Implementation | **Высокий.** Устойчивый поиск; клиники, Mayo Clinic, NHS, NEDA — доказывает массовость боли | Очень высокая: медицинские сайты (Mayo, NHS, Cleveland Clinic), ED-клиники, Healthline. Пробел: нехватка психологически-ориентированного, «не-клинического» угла |
 | **why can't I stop eating** | Почему я не могу перестать есть — голос внутреннего монолога | Informational | Awareness | **Высокий.** Quora-тред с сотнями ответов, Healthline-статья. Запрос отражает именно ту боль, про которую книга | Средняя: Healthline, Quora, Cleveland Clinic. Пробел: мало контента с психологическим (не медицинским) фреймингом |
 | **how to stop overeating** | Как перестать переедать — практический запрос | Informational / Implementation | Implementation | **Высокий.** Параллелен binge eating, охватывает более широкую аудиторию без клинического диагноза | Высокая: медицинские порталы, диетологи-блогеры |
-| **food noise** | «Пищевой шум» — постоянные мысли о еде; термин вошёл в массовое употребление в 2024–2025 в контексте GLP-1/Ozempic | Informational | Awareness | **Высокий и растущий.** Cleveland Clinic, Harvard Health, Tufts, Henry Ford (апрель 2025), mhs.net (март 2026) — тема активно освещается. Разрыв: большинство материалов фреймирует это как «медицинскую проблему» → пробел для психологического угла без лекарств | Средняя-высокая, но тема молодая — возможен быстрый рост нового контента |
+| **food noise** | «Пищевой шум» — постоянные мысли о еде; термин вошёл в массовое употребление в 2024–2025 в контексте GLP-1/Ozempic | Informational | Awareness | **Высокий и растущий.** Cleveland Clinic, Harvard Health, Tufts, Henry Ford (апрель 2025), <https://mhs.net> (март 2026) — тема активно освещается. Разрыв: большинство материалов фреймирует это как «медицинскую проблему» → пробел для психологического угла без лекарств | Средняя-высокая, но тема молодая — возможен быстрый рост нового контента |
 | **how to stop emotional eating** | Как остановить эмоциональное питание | Informational / Implementation | Awareness → Implementation | **Высокий.** Присутствуют Mayo Clinic, HelpGuide, WebMD, Johns Hopkins, Harvard Health — широкий институциональный интерес | Очень высокая. Пробел: почти весь контент — списки советов, нет нарративного / identity-change угла |
 | **stress eating** | Стресс-еда — короткий, часто используемый термин | Informational | Awareness | **Высокий.** Calm Blog, BSW Health, WebMD — устойчивое присутствие медиа и wellness-брендов | Высокая |
 | **intuitive eating** | Интуитивное питание — ключевой концептуальный термин ниши | Informational | Awareness / Consideration | **Очень высокий.** WebMD, Harvard HSPH, NPR, Ohio State — крупнейшие авторитеты охватывают тему | Очень высокая: почти невозможно конкурировать head-to-head. Тактика: брать long-tail и «проблемные» подзапросы |
@@ -23,8 +25,8 @@
 | **why do I always fail my diet** | Почему я всегда срываюсь на диете — голос стыда | Informational | Awareness (emotional) | **Высокий.** Запрос с высоким уровнем боли, много Quora-ответов | Средняя. Преимущественно diet-culture критика + медицинские объяснения; нет сочувствующего, identity-level ответа |
 | **diet culture** | Диетная культура — концептуальный / образовательный запрос | Informational | Awareness | **Высокий.** EBSCO, BPS, Emily Program, Signos — широкий охват 2024–2026 | Высокая. Доминируют RD-блогеры и медиа |
 | **anti diet** / **what is anti diet** | Что такое anti-diet подход | Informational | Awareness | **Средний-высокий.** Rhonda Krick, Kate Brock Nutrition, Mental Health Dietitians — нишевые RD-ресурсы | Средняя. Пробел: нет «точки входа» для скептически настроенной аудитории |
-| **how to have a healthy relationship with food** | Как выстроить здоровые отношения с едой | Informational | Awareness → Consideration | **Высокий.** jennhand.com, evidation.com, unlockednutrition.com — много контента | Средняя-высокая |
-| **food freedom** | Свобода от пищевого контроля — aspirational термин | Informational / Consideration | Consideration | **Высокий.** Jennhand, Sammi Brondo, Rock Recovery, dietitianrachel.com | Средняя. Пробел: большинство контента написано RD для RD-аудитории |
+| **how to have a healthy relationship with food** | Как выстроить здоровые отношения с едой | Informational | Awareness → Consideration | **Высокий.** <https://jennhand.com>, <https://evidation.com>, <https://unlockednutrition.com> — много контента | Средняя-высокая |
+| **food freedom** | Свобода от пищевого контроля — aspirational термин | Informational / Consideration | Consideration | **Высокий.** Jennhand, Sammi Brondo, Rock Recovery, <https://dietitianrachel.com> | Средняя. Пробел: большинство контента написано RD для RD-аудитории |
 | **how to stop obsessing over food** / **stop thinking about food all the time** | Как перестать думать о еде постоянно | Informational | Awareness | **Высокий.** Healthline, Emily Van Eck, Galen Hope, Equip Health | Средняя. Пробел: нет контента с «нейро-психологическим» объяснением в доступном языке |
 | **joyful movement** | Концепция «радостного движения» — альтернатива принудительным тренировкам | Informational | Consideration | **Средний.** Cleveland Clinic, Alissa Rumsey, Her Happy Heart — преимущественно RD и wellness-блогеры | Низкая-средняя. Хорошая точка входа для темы «движение без ненависти» |
 | **how to like exercise** / **exercise without hating it** | Как полюбить тренировки / упражнения без ненависти к ним | Informational | Awareness | **Средний.** Trainwell, Nerd Fitness, Her Happy Heart | Низкая-средняя. Сильный пробел: мало контента через психологическую линзу |
@@ -226,12 +228,12 @@
 ## Сводная заметка по источникам (верифицированные URL)
 
 Следующие ресурсы подтверждены как активные (2025–2026):
-- https://health.clevelandclinic.org/food-noise-and-how-to-stop-it
-- https://www.henryford.com/blog/2025/04/how-to-combat-food-noise
-- https://www.mhs.net/blog/2026/03/food-noise-what-is-it-and-how-to-turn-it-down
-- https://www.health.harvard.edu/diet-and-nutrition/understanding-food-noise-and-how-to-turn-down-the-volume
-- https://nutritionbycarrie.com/2025/07/damage-of-diet-culture.html
-- https://katebrocknutrition.com/ditch-diet-culture/ (2025)
-- https://bloggers.feedspot.com/intuitive_eating_blogs/ (топ-30 IE блогов 2026)
-- https://www.webmd.com/diet/what-is-intuitive-eating (обновлено февраль 2026)
-- https://nutritionsource.hsph.harvard.edu/intuitive-eating/ (обновлено ноябрь 2024)
+- <https://health.clevelandclinic.org/food-noise-and-how-to-stop-it>
+- <https://www.henryford.com/blog/2025/04/how-to-combat-food-noise>
+- <https://www.mhs.net/blog/2026/03/food-noise-what-is-it-and-how-to-turn-it-down>
+- <https://www.health.harvard.edu/diet-and-nutrition/understanding-food-noise-and-how-to-turn-down-the-volume>
+- <https://nutritionbycarrie.com/2025/07/damage-of-diet-culture.html>
+- <https://katebrocknutrition.com/ditch-diet-culture/> (2025)
+- <https://bloggers.feedspot.com/intuitive_eating_blogs/> (топ-30 IE блогов 2026)
+- <https://www.webmd.com/diet/what-is-intuitive-eating> (обновлено февраль 2026)
+- <https://nutritionsource.hsph.harvard.edu/intuitive-eating/> (обновлено ноябрь 2024)

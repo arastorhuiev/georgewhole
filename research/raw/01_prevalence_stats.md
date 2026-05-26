@@ -1,4 +1,6 @@
 # Статистика по РПП и весу в США
+
+> 📖 **Термины** — полный глоссарий проекта: `../00_glossary.md`
 ## Файл: 01_prevalence_stats.md
 ## Дата сбора: 2026-05-26
 ## Цель: Проверка гипотезы автора книги «Новый Код» (аудитория = США, 35+, боли = BED/переедание/булимия)
@@ -11,11 +13,11 @@
 
 | Показатель | Значение | Год данных | Пол/возраст | Источник + ссылка | Статус ссылки | Цитата-доказательство |
 |---|---|---|---|---|---|---|
-| BED lifetime prevalence | 2.8% | 2007 (NCS-R) | Все взрослые | Hudson et al. 2007, через NIMH nimh.nih.gov/health/statistics/eating-disorders | [рабочая] | «Lifetime Prevalence: 2.8%» — NIMH stats page |
+| BED lifetime prevalence | 2.8% | 2007 (NCS-R) | Все взрослые | Hudson et al. 2007, через NIMH <https://nimh.nih.gov/health/statistics/eating-disorders> | [рабочая] | «Lifetime Prevalence: 2.8%» — NIMH stats page |
 | BED 12-month prevalence | 1.2% | 2007 (NCS-R) | Все взрослые | Hudson et al. 2007, через NIMH | [рабочая] | «Past Year Prevalence: Overall: 1.2%» — NIMH |
 | BED 12-month — женщины | 1.6% | 2007 (NCS-R) | Женщины 18+ | NIMH / Hudson et al. | [рабочая] | «Female: 1.6%» — NIMH |
 | BED 12-month — мужчины | 0.8% | 2007 (NCS-R) | Мужчины 18+ | NIMH / Hudson et al. | [рабочая] | «Male: 0.8%» — NIMH |
-| BED lifetime — женщины | 3.5% | 2007 / 2020 | Женщины | Alliance for Eating Disorders allianceforeatingdisorders.com + Deloitte 2020 | [рабочая] | «3.5% of women and 2% of men» — Alliance stats page |
+| BED lifetime — женщины | 3.5% | 2007 / 2020 | Женщины | Alliance for Eating Disorders <https://allianceforeatingdisorders.com> + Deloitte 2020 | [рабочая] | «3.5% of women and 2% of men» — Alliance stats page |
 | BED lifetime — мужчины | 2.0% | 2007 / 2020 | Мужчины | Alliance for Eating Disorders + Deloitte 2020 | [рабочая] | «3.5% of women and 2% of men» — Alliance stats page |
 | Bulimia Nervosa lifetime | 1.0% | 2007 (NCS-R) | Все взрослые | NIMH / Hudson et al. | [рабочая] | «Lifetime Prevalence: 1.0%» — NIMH |
 | Bulimia 12-month | 0.3% | 2007 (NCS-R) | Все взрослые | NIMH / Hudson et al. | [рабочая] | «Past Year Prevalence: Overall: 0.3%» — NIMH |
@@ -23,7 +25,7 @@
 | Anorexia Nervosa lifetime | 0.6% | 2007 (NCS-R) | Все взрослые | NIMH / Hudson et al. | [рабочая] | «Overall: 0.6%» — NIMH |
 | Anorexia — женщины | 0.9% | 2007 | Женщины | NIMH | [рабочая] | «Female: 0.9%» — NIMH |
 | Anorexia — мужчины | 0.3% | 2007 | Мужчины | NIMH | [рабочая] | «Male: 0.3%» — NIMH |
-| OSFED 12-month — женщины | 1.18% | 2020 | Женщины | Deloitte Access Economics 2020, через NEDA nationaleatingdisorders.org/statistics/ | [рабочая] | «one-year prevalence: 1.18% females» — NEDA stats |
+| OSFED 12-month — женщины | 1.18% | 2020 | Женщины | Deloitte Access Economics 2020, через NEDA <https://nationaleatingdisorders.org/statistics/> | [рабочая] | «one-year prevalence: 1.18% females» — NEDA stats |
 | OSFED 12-month — мужчины | 0.27% | 2020 | Мужчины | Deloitte 2020 / NEDA | [рабочая] | «0.27% males» — NEDA stats |
 | Все РПП lifetime (США) | ~9% / 28–31 млн чел | 2020 | Все возрасты | Deloitte 2020 / Harvard, через NEDA и ANAD | [рабочая] | «9% of U.S. population (28.8 million Americans) will experience an eating disorder» — ANAD |
 | Все РПП lifetime — женщины | 8.60% | 2020 | Женщины | Deloitte Access Economics 2020, через NEDA | [рабочая] | «Lifetime prevalence: 8.60% females» — NEDA |
@@ -72,7 +74,7 @@
 | Disordered eating (субклиническое) — мужчины 40+ | 7% | обзор PMC10552830 | PMC10552830 (2023) | [рабочая] | «Men age 40+: 7% experience at least one current symptom» — NEDA midlife page |
 | Диагностические критерии РПП — женщины 40+ | 2–7.7% | обзор PMC10552830 | PMC10552830 (2023) | [рабочая] | «Full diagnoses (DSM-IV/DSM-5): 2.1–7.7%» |
 | Диагностические критерии РПП — мужчины 40+ | ~1% | обзор PMC10552830 | PMC10552830 (2023) | [рабочая] | «Full diagnoses: <1%» — PMC10552830 |
-| BED у взрослых 40–59 (США) | 2.3% | цитируется в обзоре midlife | NEDA midlife page nationaleatingdisorders.org/eating-disorders-and-midlife-and-beyond/ | [рабочая] | «0.5% of all Americans aged 40 to 59 have anorexia nervosa, 0.9% have bulimia nervosa, and 2.3% have some form of binge eating disorder» |
+| BED у взрослых 40–59 (США) | 2.3% | цитируется в обзоре midlife | NEDA midlife page <https://nationaleatingdisorders.org/eating-disorders-and-midlife-and-beyond/> | [рабочая] | «0.5% of all Americans aged 40 to 59 have anorexia nervosa, 0.9% have bulimia nervosa, and 2.3% have some form of binge eating disorder» |
 | Bulimia у взрослых 40–59 (США) | 0.9% | midlife data | NEDA midlife page | [рабочая] | «0.9% have bulimia nervosa» |
 | Anorexia у взрослых 40–59 (США) | 0.5% | midlife data | NEDA midlife page | [рабочая] | «0.5% of all Americans aged 40 to 59 have anorexia nervosa» |
 | Пик disordered eating у женщин — возраст 40–49 | Пик 40–49, затем снижение | Mitchell et al. / PMC10552830 | [рабочая] | «Peak: ages 40-49, Significant decrease at 60+» — PMC10552830 |
@@ -92,7 +94,7 @@
 | Дети и подростки с disordered eating behaviors | 22% | 2023, глобально | López-Gil et al. 2023, через Alliance + NEDA | [рабочая] | «22% of children and adolescents worldwide show disordered eating» — Alliance 2024 |
 | ЭД-симптомы среди пациентов отделений скорой помощи (взрослые) | 16% | ANAD источник | ANAD | [рабочая] | «In emergency room samples, 16% of adult patients screened positive» — ANAD |
 | 73% женщин среднего возраста — недовольны весом | 73% | NEDA midlife page | [рабочая] | «73% of midlife women experience dissatisfaction with their weight» — NEDA midlife |
-| Симптомы РПП (диета/расстройство) среди 44% американцев | 44% диетят сейчас + среди них 43% жалуются на упадок сил, 34% на депрессию | 2022 | Within Health survey / withinhealth.com | [рабочая] | «Among the 44% experiencing at least one symptom: Depression: 34%» |
+| Симптомы РПП (диета/расстройство) среди 44% американцев | 44% диетят сейчас + среди них 43% жалуются на упадок сил, 34% на депрессию | 2022 | Within Health survey / <https://withinhealth.com> | [рабочая] | «Among the 44% experiencing at least one symptom: Depression: 34%» |
 | 80% американцев пробовали диету | 80% | 2022 | Within Health survey | [рабочая] | «80% have been on some diet in the past» — Within Health 2022 |
 | Субклиническое у ветеранов (США, ср. возраст 50+) | Жен 32% / муж: EDE-Q 25.2% | Mitchell et al. / PMC10552830 | [рабочая] | «Women: 32% (using EDE-Q cutoff 2.8), Peak: ages 40-49» |
 
@@ -102,7 +104,7 @@
 
 | Показатель | Значение | Год данных | Пол/возраст | Источник + ссылка | Статус | Цитата |
 |---|---|---|---|---|---|---|
-| Ожирение — все взрослые 20+ | 40.3% | Август 2021–август 2023 | Все | CDC NHANES / NCHS Data Brief 508, cdc.gov/nchs/products/databriefs/db508.htm | [рабочая] | «The prevalence of obesity among adults was 40.3% during August 2021–August 2023» |
+| Ожирение — все взрослые 20+ | 40.3% | Август 2021–август 2023 | Все | CDC NHANES / NCHS Data Brief 508, <https://cdc.gov/nchs/products/databriefs/db508.htm> | [рабочая] | «The prevalence of obesity among adults was 40.3% during August 2021–August 2023» |
 | Ожирение + избыточный вес | 72.4% | Август 2021–август 2023 | Все взрослые 20+ | CDC NCHS | [рабочая] | «Overweight (including obesity): 72.4%» — CDC FastStats |
 | Ожирение — возраст 40–59 | 46.4% | Август 2021–август 2023 | 40–59 лет | CDC NCHS db508 | [рабочая] | «The prevalence of obesity in adults ages 40–59 was 46.4%» |
 | Ожирение — возраст 20–39 | 35.5% | Август 2021–август 2023 | 20–39 лет | CDC NCHS db508 | [рабочая] | «adults ages 20–39 (35.5%)» |
@@ -120,10 +122,10 @@
 
 | Показатель | Значение | Год | Источник | Статус | Цитата |
 |---|---|---|---|---|---|
-| Рынок weight loss США | $89.9 млрд | 2023 | marketresearch.com / Yahoo Finance | [рабочая] | «U.S. weight loss market expanded to $90 billion in 2023» |
-| Рынок weight loss США (прогноз) | $93.8 млрд | 2024 | marketresearch.com | [рабочая] | «expected to grow another 4.3% to $93.8 billion in 2024» |
-| Препараты GLP-1 (Ozempic, Wegovy) | $11.9 млрд | 2023 | marketresearch.com | [рабочая] | «Obesity medications: $11.9 billion (doubled from $5.1 billion in 2022)» |
-| Коммерческие диетические сети | $3.35 млрд (-25% от 2021) | 2023 | marketresearch.com | [рабочая] | «Commercial diet chains: $3.35 billion (down 25% from 2021)» |
+| Рынок weight loss США | $89.9 млрд | 2023 | <https://marketresearch.com> / Yahoo Finance | [рабочая] | «U.S. weight loss market expanded to $90 billion in 2023» |
+| Рынок weight loss США (прогноз) | $93.8 млрд | 2024 | <https://marketresearch.com> | [рабочая] | «expected to grow another 4.3% to $93.8 billion in 2024» |
+| Препараты GLP-1 (Ozempic, Wegovy) | $11.9 млрд | 2023 | <https://marketresearch.com> | [рабочая] | «Obesity medications: $11.9 billion (doubled from $5.1 billion in 2022)» |
+| Коммерческие диетические сети | $3.35 млрд (-25% от 2021) | 2023 | <https://marketresearch.com> | [рабочая] | «Commercial diet chains: $3.35 billion (down 25% from 2021)» |
 | Доля американцев, сидящих на диете сейчас | 44% | 2022 | Within Health survey (N=901) | [рабочая] | «44% of Americans are currently on a diet» |
 | Когда-либо пробовали диету | 80% | 2022 | Within Health survey | [рабочая] | «80% have been on some diet in the past» |
 | Пытались похудеть за последний год | 49.1% | CDC data | CDC NCHS | [рабочая] | «Nearly half of adults (49.1%) attempted to lose weight within the last year» |
@@ -133,7 +135,7 @@
 | Только 1 из 6 сохраняет -10% веса | ~17% | обзор | Enterprise Apps Today | [рабочая] | «about one in six people who are overweight lose 10% or more of their weight and maintain that loss» |
 | Yo-yo dieting охватывает | 10–40% населения Запада | обзор | Shortlister / Yahoo Finance | [рабочая] | «estimated 10 percent to 40 percent of the population» (weight cycling) |
 | Потеря в первый год — возврат 30-65% | 30–65% за год | обзор | различные | [рабочая] | «they will regain 30–65% of that lost weight within one year» |
-| Потеря рабочих мест в diet coaching | 26,500 коучей | 2023–2024 | marketresearch.com | [рабочая] | «26,500 weight loss coaches have lost their jobs» |
+| Потеря рабочих мест в diet coaching | 26,500 коучей | 2023–2024 | <https://marketresearch.com> | [рабочая] | «26,500 weight loss coaches have lost their jobs» |
 | Академические упоминания "anti-diet" выросли | втрое 2019–2023 | 2024 | The Examination / NPR, через WebSearch | [рабочая] | «Between 2019 and 2023, academic mentions of 'anti-diet' tripled» — The Examination analysis |
 
 ---
@@ -144,7 +146,7 @@
 |---|---|---|---|---|---|
 | Рост академических упоминаний "anti-diet" | ×3 за 2019–2023 | 2024 | The Examination (анализ Google Scholar) | [рабочая] | «academic mentions of 'anti-diet' tripled» — NPR/The Examination |
 | #AntiDiet / #HealthAtEverySize на TikTok | Топ-темы: РПП, диеты, похудение | 2024 | анализ 1500 TikTok videos | [рабочая] | «most commonly discussed topics included eating disorders, dieting and weight loss» |
-| «Intuitive Eating» Tribole & Resch | 4-е издание (1995 → обновлено) | 2020 | intuitiveeating.org | [рабочая] | Книга-основа движения, переиздана в 4-й раз |
+| «Intuitive Eating» Tribole & Resch | 4-е издание (1995 → обновлено) | 2020 | <https://intuitiveeating.org> | [рабочая] | Книга-основа движения, переиздана в 4-й раз |
 | Рыночные цифры anti-diet как сегмента | Не найдено | — | — | не подтверждено | Выделенных market-size данных не нашёл — рынок не стандартизирован как сегмент |
 | 52% американцев следовали диете/eating pattern в 2023 | 52% | 2023 | Statista через WebSearch | [рабочая] | «52% of Americans said they followed a specific diet or eating pattern at some point» |
 
@@ -175,7 +177,7 @@
 
 | Показатель | Значение | Год | Источник | Статус | Цитата |
 |---|---|---|---|---|---|
-| Доля мужчин среди всех случаев РПП | 1 из 4 (~25%) | ANAD / PMC10479477 | anad.org + PMC10479477 | [рабочая] | «one in four people affected with an ED is male» — PMC10479477; «Men represent up to 25%» — ANAD |
+| Доля мужчин среди всех случаев РПП | 1 из 4 (~25%) | ANAD / PMC10479477 | <https://anad.org> + PMC10479477 | [рабочая] | «one in four people affected with an ED is male» — PMC10479477; «Men represent up to 25%» — ANAD |
 | BED: соотношение жен/муж | 3:1 | PMC10479477 | [рабочая] | «Binge eating disorder: Female to male ratio of 3:1» |
 | BED у мужчин — доля всех случаев BED | ~40% | NEDA/ANAD | [рабочая] | «roughly 40% of cases of BED occur in men» — WebSearch summary |
 | Мужчины с РПП в США | 1 млн / 6.6 млн | NEDA (старые vs Deloitte 2020) | [рабочая] | «4.07% of males (6.6 million) experienced eating disorders lifetime» — NEDA |
@@ -268,20 +270,20 @@
 
 ## ИСТОЧНИКИ (КЛЮЧЕВЫЕ, ПРОВЕРЕННЫЕ)
 
-1. NIMH Eating Disorders Statistics — https://www.nimh.nih.gov/health/statistics/eating-disorders [рабочая]
-2. ANAD Statistics — https://anad.org/eating-disorders-statistics/ [рабочая]
-3. National Alliance for Eating Disorders — https://www.allianceforeatingdisorders.com/eating-disorder-statistics-an-updated-view-for-2024/ [рабочая]
-4. NEDA Statistics — https://www.nationaleatingdisorders.org/statistics/ [рабочая]
-5. NEDA Midlife — https://www.nationaleatingdisorders.org/eating-disorders-and-midlife-and-beyond/ [рабочая]
-6. CDC NCHS Data Brief 508 (Obesity) — https://www.cdc.gov/nchs/products/databriefs/db508.htm [рабочая]
-7. NCBI StatPearls BED — https://www.ncbi.nlm.nih.gov/books/NBK551700/ [рабочая]
-8. PMC10552830 (Eating disorders older adults 2023) — https://pmc.ncbi.nlm.nih.gov/articles/PMC10552830/ [рабочая]
-9. PMC5240354 (Midlife women, UK ALSPAC, 2017) — https://pmc.ncbi.nlm.nih.gov/articles/PMC5240354/ [рабочая]
-10. PMC6802241 (Ward et al. JAMA 2019, age-stratified prevalence) — https://pmc.ncbi.nlm.nih.gov/articles/PMC6802241/ [рабочая]
-11. PMC10479477 (Eating disorders in males, 2023) — https://pmc.ncbi.nlm.nih.gov/articles/PMC10479477/ [рабочая]
-12. Within Health 2022 survey — https://withinhealth.com/explore-articles/study-reveals-americans-dieting-habits-in-2022 [рабочая]
-13. Market Research Blog — US Weight Loss $90B — https://blog.marketresearch.com/u.s.-weight-loss-industry-grows-to-90-billion-fueled-by-obesity-drugs-demand [рабочая]
-14. SingleCare Eating Disorder Statistics 2026 — https://www.singlecare.com/blog/news/eating-disorder-statistics/ [рабочая]
+1. NIMH Eating Disorders Statistics — <https://www.nimh.nih.gov/health/statistics/eating-disorders> [рабочая]
+2. ANAD Statistics — <https://anad.org/eating-disorders-statistics/> [рабочая]
+3. National Alliance for Eating Disorders — <https://www.allianceforeatingdisorders.com/eating-disorder-statistics-an-updated-view-for-2024/> [рабочая]
+4. NEDA Statistics — <https://www.nationaleatingdisorders.org/statistics/> [рабочая]
+5. NEDA Midlife — <https://www.nationaleatingdisorders.org/eating-disorders-and-midlife-and-beyond/> [рабочая]
+6. CDC NCHS Data Brief 508 (Obesity) — <https://www.cdc.gov/nchs/products/databriefs/db508.htm> [рабочая]
+7. NCBI StatPearls BED — <https://www.ncbi.nlm.nih.gov/books/NBK551700/> [рабочая]
+8. PMC10552830 (Eating disorders older adults 2023) — <https://pmc.ncbi.nlm.nih.gov/articles/PMC10552830/> [рабочая]
+9. PMC5240354 (Midlife women, UK ALSPAC, 2017) — <https://pmc.ncbi.nlm.nih.gov/articles/PMC5240354/> [рабочая]
+10. PMC6802241 (Ward et al. JAMA 2019, age-stratified prevalence) — <https://pmc.ncbi.nlm.nih.gov/articles/PMC6802241/> [рабочая]
+11. PMC10479477 (Eating disorders in males, 2023) — <https://pmc.ncbi.nlm.nih.gov/articles/PMC10479477/> [рабочая]
+12. Within Health 2022 survey — <https://withinhealth.com/explore-articles/study-reveals-americans-dieting-habits-in-2022> [рабочая]
+13. Market Research Blog — US Weight Loss $90B — <https://blog.marketresearch.com/u.s.-weight-loss-industry-grows-to-90-billion-fueled-by-obesity-drugs-demand> [рабочая]
+14. SingleCare Eating Disorder Statistics 2026 — <https://www.singlecare.com/blog/news/eating-disorder-statistics/> [рабочая]
 15. Hudson et al. 2007 NCS-R (базовое исследование для BED prevalence) — цитируется через NIMH, Alliance, NEDA
 16. Deloitte Access Economics 2020 Social and Economic Cost report — цитируется через NEDA (PDF напрямую не извлечён)
-17. STRIPED/Harvard report landing page — https://www.hsph.harvard.edu/striped/report-economic-costs-of-eating-disorders/ [рабочая, но PDF не извлечён]
+17. STRIPED/Harvard report landing page — <https://www.hsph.harvard.edu/striped/report-economic-costs-of-eating-disorders/> [рабочая, но PDF не извлечён]

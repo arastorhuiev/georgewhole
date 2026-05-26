@@ -1,5 +1,7 @@
 # VOC Research: Живой язык боли — переедание, компульсивное переедание, срывы, вес, ненависть к телу
 
+> 📖 **Термины** — полный глоссарий проекта: `../00_glossary.md`
+
 **Дата сбора:** 2026-05-26  
 **Аналитик:** Customer Research Agent (Claude)  
 **Методология:** WebSearch + WebFetch по англоязычным источникам (Reddit заблокирован для прямого фетча, использованы агрегаторы, академические исследования с прямыми цитатами участников, личные блоги, Goodreads, NEDA/ANAD, Recovery Warriors, Beat ED, Quora-агрегаты)  
@@ -12,27 +14,27 @@
 | Источник | Статус | Тип цитат |
 |---|---|---|
 | PMC / Frontiers (qualitative studies) | [рабочая] | Прямые цитаты участников исследований |
-| brainoverbinge.com/recoverystories | [рабочая] | Личные истории с именами/возрастом |
-| nationaleatingdisorders.org | [рабочая] | Личные истории |
-| eatingdisorderhope.com | [рабочая] | Личные истории |
-| anad.org | [рабочая] | Личные истории |
-| youngminds.org.uk | [рабочая] | Личные блог |
-| drmariannemiller.com | [рабочая] | Автобиографическая история |
-| healthline.com (bulimia story) | [рабочая] | Личная история |
-| karidahlgren.net | [рабочая] | Автобиография |
+| <https://brainoverbinge.com/recoverystories> | [рабочая] | Личные истории с именами/возрастом |
+| <https://nationaleatingdisorders.org> | [рабочая] | Личные истории |
+| <https://eatingdisorderhope.com> | [рабочая] | Личные истории |
+| <https://anad.org> | [рабочая] | Личные истории |
+| <https://youngminds.org.uk> | [рабочая] | Личные блог |
+| <https://drmariannemiller.com> | [рабочая] | Автобиографическая история |
+| <https://healthline.com> (bulimia story) | [рабочая] | Личная история |
+| <https://karidahlgren.net> | [рабочая] | Автобиография |
 | equip.health (Stacy Jones) | [рабочая] | Peer mentor testimony |
-| lyndicohen.com | [рабочая] | Автобиографическая история |
-| firststepsed.co.uk | [рабочая] | Личная история |
-| slate.com (2024) | [рабочая] | Личная история |
+| <https://lyndicohen.com> | [рабочая] | Автобиографическая история |
+| <https://firststepsed.co.uk> | [рабочая] | Личная история |
+| <https://slate.com> (2024) | [рабочая] | Личная история |
 | PMC12232363 (food insecurity + BED, qualitative) | [рабочая] | Прямые цитаты участников P1–P28 |
 | PMC11921570 (Norwegian women + healthcare) | [рабочая] | Прямые цитаты участников |
 | PMC12214294 (relapse in EDs, systematic review) | [рабочая] | Прямые цитаты участников |
 | Frontiers fpsyg.2024.1432011 | [рабочая] | Прямые цитаты участников |
-| recoverywarriors.com | [рабочая] | Личная история |
+| <https://recoverywarriors.com> | [рабочая] | Личная история |
 | r/BingeEatingDisorder (Reddit) | [ЗАБЛОКИРОВАН] | — |
-| old.reddit.com | [ЗАБЛОКИРОВАН] | — |
-| quora.com | [ЗАБЛОКИРОВАН — 403] | — |
-| amazon.com (reviews) | [ЗАБЛОКИРОВАН — 503] | — |
+| <https://old.reddit.com> | [ЗАБЛОКИРОВАН] | — |
+| <https://quora.com> | [ЗАБЛОКИРОВАН — 403] | — |
+| <https://amazon.com> (reviews) | [ЗАБЛОКИРОВАН — 503] | — |
 
 ---
 
@@ -46,7 +48,7 @@
 
 > "At first, it doesn't really start out with the intention to binge. It's more like searching for comfort except, then you can't stop eating."  
 > («Сначала это не начинается с намерения переесть. Это больше похоже на поиск утешения, только потом ты не можешь остановиться»)  
-> — [P8, участник исследования PMC12232363 «Binge Eating and Food Insecurity», 2025, https://pmc.ncbi.nlm.nih.gov/articles/PMC12232363/ — рабочая]
+> — [P8, участник исследования PMC12232363 «Binge Eating and Food Insecurity», 2025, <https://pmc.ncbi.nlm.nih.gov/articles/PMC12232363/> — рабочая]
 
 > "I can eat what you might think was three meals. And then, as soon as the discomfort goes away from my being so, so full, I'll start eating again."  
 > («Я могу съесть то, что ты бы назвал тремя блюдами. И как только дискомфорт от переполненности проходит — я начинаю есть снова»)  
@@ -58,15 +60,15 @@
 
 > "My binges were out of control, and I'd given up."  
 > («Мои срывы были совершенно неуправляемыми, и я сдалась»)  
-> — [Maribel, 28 лет, brainoverbinge.com/recoverystories — рабочая]
+> — [Maribel, 28 лет, <https://brainoverbinge.com/recoverystories> — рабочая]
 
 > "A loss of control that was terrifying."  
 > («Потеря контроля, которая была ужасающей»)  
-> — [Danielle, 28 лет, brainoverbinge.com/recoverystories — рабочая]
+> — [Danielle, 28 лет, <https://brainoverbinge.com/recoverystories> — рабочая]
 
 > "I felt it was something that was happening to me rather than something I was doing."  
 > («Мне казалось, что это происходило со мной, а не то, что я делала»)  
-> — [Emma, 19 лет, brainoverbinge.com/recoverystories — рабочая]
+> — [Emma, 19 лет, <https://brainoverbinge.com/recoverystories> — рабочая]
 
 > "I felt like I couldn't really control it" (despite motivation and knowledge).  
 > («Мне казалось, что я не могу это контролировать» — при наличии мотивации и знаний)  
@@ -96,43 +98,43 @@
 
 > "I felt so ashamed that I couldn't control myself around food."  
 > («Мне было так стыдно, что я не могу контролировать себя вокруг еды»)  
-> — [Dr. Marianne Miller, drmariannemiller.com/blog/my-binge-eating-recovery-story — рабочая]
+> — [Dr. Marianne Miller, <https://drmariannemiller.com/blog/my-binge-eating-recovery-story> — рабочая]
 
 > "Binging felt 'bad'—and sometimes immoral."  
 > («Переедание казалось "плохим" — а иногда и аморальным»)  
-> — [Dr. Marianne Miller, drmariannemiller.com — рабочая]
+> — [Dr. Marianne Miller, <https://drmariannemiller.com> — рабочая]
 
 > "A 50-year sea of darkness filled with shame, embarrassment."  
 > («50 лет в море тьмы, наполненного стыдом и смущением»)  
-> — [Staci, brainoverbinge.com/recoverystories — рабочая]
+> — [Staci, <https://brainoverbinge.com/recoverystories> — рабочая]
 
 > "The shame of what I was doing was crippling."  
 > («Стыд от того, что я делала, был парализующим»)  
-> — [Di, 62 года, brainoverbinge.com/recoverystories — рабочая]
+> — [Di, 62 года, <https://brainoverbinge.com/recoverystories> — рабочая]
 
 > "trapped in a never-ending loop of shame, guilt, and isolation"  
 > («в ловушке бесконечной петли стыда, вины и изоляции»)  
-> — [Agness, anad.org/agness-recovery-story — рабочая]
+> — [Agness, <https://anad.org/agness-recovery-story> — рабочая]
 
 > "eating to find solace, then hating myself for it afterward"  
 > («есть, чтобы найти утешение, а потом ненавидеть себя за это»)  
-> — [Agness, anad.org — рабочая]
+> — [Agness, <https://anad.org> — рабочая]
 
 > "Every time I binged and purged, I isolated myself, hiding in shame."  
 > («Каждый раз после срыва я изолировалась, прячась в стыде»)  
-> — [Agness, eatingdisorderhope.com/blog/agness-hidden-battle, сентябрь 2024 — рабочая]
+> — [Agness, <https://eatingdisorderhope.com/blog/agness-hidden-battle>, сентябрь 2024 — рабочая]
 
 > "I knew the damage I was doing to my body, and all I felt was guilt."  
 > («Я знала, какой вред наношу своему телу, и всё, что я чувствовала — это вина»)  
-> — [личная история, firststepsed.co.uk, май 2025 — рабочая]
+> — [личная история, <https://firststepsed.co.uk>, май 2025 — рабочая]
 
 > "I thought, 'I would rather die than continue living like this.'"  
 > («Я думала: "Я бы предпочла умереть, чем продолжать так жить"»)  
-> — [личная история, firststepsed.co.uk, май 2025 — рабочая]
+> — [личная история, <https://firststepsed.co.uk>, май 2025 — рабочая]
 
 > "When I was bingeing, I was very depressed; I felt like I wasn't worth the love and care of my friends and family so I hid myself away, made excuses to get out of social events."  
 > («Когда я переедала, я была в глубокой депрессии; мне казалось, что я недостойна любви и заботы друзей и семьи, поэтому я замыкалась, придумывала отговорки, чтобы избегать социальных встреч»)  
-> — [личная история, Beat Eating Disorders, beateatingdisorders.org.uk — рабочая (снипет из поиска)]
+> — [личная история, Beat Eating Disorders, <https://beateatingdisorders.org.uk> — рабочая (снипет из поиска)]
 
 ---
 
@@ -146,31 +148,31 @@
 
 > "The more I tried to control my eating, the more out of control it became."  
 > («Чем больше я пыталась контролировать своё питание, тем более неуправляемым оно становилось»)  
-> — [Agness, eatingdisorderhope.com, сентябрь 2024 — рабочая]
+> — [Agness, <https://eatingdisorderhope.com>, сентябрь 2024 — рабочая]
 
 > "Restriction, binging, and purging soon became the rhythm of my life."  
 > («Ограничения, переедание и очищение вскоре стали ритмом моей жизни»)  
-> — [Agness, anad.org — рабочая]
+> — [Agness, <https://anad.org> — рабочая]
 
 > "restrict, binge, purge, repeat—hidden behind my smile"  
 > («ограничивать, переедать, очищаться, повторять — скрытое за моей улыбкой»)  
-> — [Agness, eatingdisorderhope.com — рабочая]
+> — [Agness, <https://eatingdisorderhope.com> — рабочая]
 
 > "I would restrict until my body's natural response took over and I would binge eat."  
 > («Я ограничивала себя, пока естественная реакция тела не брала верх и я не начинала есть без контроля»)  
-> — [личная история, firststepsed.co.uk, май 2025 — рабочая]
+> — [личная история, <https://firststepsed.co.uk>, май 2025 — рабочая]
 
 > "Every week was the same – each Monday I'd blame myself, believing if I had more self-control and could choose 'good' over 'bad' foods, I'd be able to stop the emotional eating."  
 > («Каждую неделю было одно и то же — каждый понедельник я винила себя, веря, что если бы у меня было больше самоконтроля и я могла бы выбирать "хорошую" еду вместо "плохой", я смогла бы остановить эмоциональное переедание»)  
-> — [Lyndi Cohen, lyndicohen.com — рабочая]
+> — [Lyndi Cohen, <https://lyndicohen.com> — рабочая]
 
 > "The harder I tried to avoid forbidden foods, the more frequent, intense and uncontrollable the binges became."  
 > («Чем усерднее я пыталась избегать запрещённых продуктов, тем более частыми, интенсивными и неконтролируемыми становились срывы»)  
-> — [Lyndi Cohen, lyndicohen.com — рабочая]
+> — [Lyndi Cohen, <https://lyndicohen.com> — рабочая]
 
 > "months of rebellion when binge behavior ran my life" / "I would switch to compliance mode when I ate restrictively"  
 > («месяцы бунта, когда поведение при срывах управляло моей жизнью» / «я переключалась в режим послушания, когда ела ограниченно»)  
-> — [Dr. Marianne Miller, drmariannemiller.com — рабочая]
+> — [Dr. Marianne Miller, <https://drmariannemiller.com> — рабочая]
 
 > "And like I feel a lot of shame … I just feel like I shouldn't have been here four times now"  
 > («И я испытываю огромный стыд… Мне кажется, что я не должна была здесь оказаться в четвёртый раз»)  
@@ -200,23 +202,23 @@
 
 > "The hardest part was how lonely I felt, like everyone else had more willpower than me and that there was something wrong with me."  
 > («Самым тяжёлым было ощущение одиночества — как будто у всех остальных больше силы воли, чем у меня, и что со мной что-то не так»)  
-> — [Lyndi Cohen, lyndicohen.com — рабочая]
+> — [Lyndi Cohen, <https://lyndicohen.com> — рабочая]
 
 > "I waited for seven isolating and damaging years believing I was the only one who had no control around food."  
 > («Я ждала семь изолирующих и разрушительных лет, веря, что я единственная, у кого нет контроля над едой»)  
-> — [Lyndi Cohen, lyndicohen.com — рабочая]
+> — [Lyndi Cohen, <https://lyndicohen.com> — рабочая]
 
 > "I believed that it was my fault, my lack of self-control, and an inability to help myself stop."  
 > («Я верила, что это моя вина, мой недостаток самоконтроля и неспособность помочь себе остановиться»)  
-> — [Hollie, youngminds.org.uk — рабочая]
+> — [Hollie, <https://youngminds.org.uk> — рабочая]
 
 > "It took ages for me to realise there wasn't anything wrong with my willpower."  
 > («Мне потребовались годы, чтобы понять, что с моей силой воли всё в порядке»)  
-> — [Lyndi Cohen, lyndicohen.com — рабочая]
+> — [Lyndi Cohen, <https://lyndicohen.com> — рабочая]
 
 > "My self-esteem was rock bottom."  
 > («Моя самооценка была на нуле»)  
-> — [Dr. Marianne Miller, drmariannemiller.com — рабочая]
+> — [Dr. Marianne Miller, <https://drmariannemiller.com> — рабочая]
 
 > "I have to fix something, or I have to be different to be good enough"  
 > («Мне нужно что-то исправить, или мне нужно быть другой, чтобы быть достаточно хорошей»)  
@@ -242,27 +244,27 @@
 
 > "Waking up at 2am thinking about food. Surfing the internet at work, looking up new recipes when you have a deadline. Planning and stopping at fast food restaurants between every meal."  
 > («Просыпаться в 2 часа ночи, думая о еде. Сёрфить в интернете на работе, искать новые рецепты, когда горит дедлайн. Планировать и останавливаться в заведениях быстрого питания между каждым приёмом пищи»)  
-> — [Ryan Sheldon, nationaleatingdisorders.org — рабочая]
+> — [Ryan Sheldon, <https://nationaleatingdisorders.org> — рабочая]
 
 > "Food became my life. I began to put food before almost any other commitment in my life."  
 > («Еда стала моей жизнью. Я начал ставить еду выше почти любого другого обязательства в своей жизни»)  
-> — [Ryan Sheldon, nationaleatingdisorders.org — рабочая]
+> — [Ryan Sheldon, <https://nationaleatingdisorders.org> — рабочая]
 
 > "I was food and weight obsessed."  
 > («Я был одержим едой и весом»)  
-> — [Laurence Blairon, 54 года, brainoverbinge.com/recoverystories — рабочая]
+> — [Laurence Blairon, 54 года, <https://brainoverbinge.com/recoverystories> — рабочая]
 
 > "I thought about what I was eating, not eating or should be eating 24/7. Thoughts of my body, shame of weight gain, self-consciousness around how I looked in clothes consumed my waking hours."  
 > («Я думала о том, что ем, не ем или должна есть 24/7. Мысли о теле, стыд от набора веса, самосознание о том, как я выгляжу в одежде, поглощали мои бодрствующие часы»)  
-> — [личная история, источник: WebSearch snippet, sarahgoldrd.com контекст — рабочая]
+> — [личная история, источник: WebSearch snippet, <https://sarahgoldrd.com> контекст — рабочая]
 
 > "persistent, intrusive thoughts about food that are disruptive to daily life"  
 > («постоянные, навязчивые мысли о еде, нарушающие повседневную жизнь»)  
-> — [определение food noise из исследований участников, Olivia Palmer Health / Substack, oliviapalmerhealth.substack.com — рабочая]
+> — [определение food noise из исследований участников, Olivia Palmer Health / Substack, <https://oliviapalmerhealth.substack.com> — рабочая]
 
 > "Every year, I would tell myself, this would be the year I'd finally get my binge eating under control and reclaim the headspace I kept losing to thoughts about food—what I'd already eaten, and what I was going to eat next."  
 > («Каждый год я говорила себе: этот год станет тем, когда я наконец возьму переедание под контроль и верну себе ментальное пространство, которое постоянно терял из-за мыслей о еде — что уже съела и что съем следующим»)  
-> — [Jo Moscalu, bingeeatingdietitian.com, 2025 — рабочая]
+> — [Jo Moscalu, <https://bingeeatingdietitian.com>, 2025 — рабочая]
 
 ---
 
@@ -300,11 +302,11 @@
 
 > "I constantly perceived myself as fat and ugly and this distorted self-image led me to isolate myself."  
 > («Я постоянно воспринимала себя толстой и некрасивой, и этот искажённый образ себя приводил меня к изоляции»)  
-> — [Kari Dahlgren, karidahlgren.net — рабочая]
+> — [Kari Dahlgren, <https://karidahlgren.net> — рабочая]
 
 > "I will never forget the first time I saw my own reflection without wanting to see less of it."  
 > («Я никогда не забуду первый раз, когда увидела своё отражение, не желая видеть его меньше»)  
-> — [Jaclyn Munson, BuzzFeed News «17 Stories of Eating Disorder Survival», buzzfeednews.com — рабочая]
+> — [Jaclyn Munson, BuzzFeed News «17 Stories of Eating Disorder Survival», <https://buzzfeednews.com> — рабочая]
 
 ---
 
@@ -326,19 +328,19 @@
 
 > "food wasn't the enemy. It was my escape"  
 > («еда была не врагом. Она была моим побегом»)  
-> — [Agness, eatingdisorderhope.com, 2024 — рабочая]
+> — [Agness, <https://eatingdisorderhope.com>, 2024 — рабочая]
 
 > "food wasn't the problem—it had been the solution"  
 > («еда была не проблемой — она была решением»)  
-> — [Agness, anad.org — рабочая]
+> — [Agness, <https://anad.org> — рабочая]
 
 > "I began bingeing to cope. I binge ate to deal with the pain, to avoid my emotions"  
 > («Я начала переедать, чтобы справляться. Я переедала, чтобы справиться с болью, избежать своих эмоций»)  
-> — [Dr. Marianne Miller, drmariannemiller.com — рабочая]
+> — [Dr. Marianne Miller, <https://drmariannemiller.com> — рабочая]
 
 > "For me, when I binged on food it was a coping mechanism in times when I was experiencing high levels of anxiety and depression."  
 > («Для меня переедание было механизмом преодоления в периоды высокого уровня тревоги и депрессии»)  
-> — [Hollie, youngminds.org.uk — рабочая]
+> — [Hollie, <https://youngminds.org.uk> — рабочая]
 
 > "My relapse was to fill something" (after relationship loss)  
 > («Мой рецидив был, чтобы заполнить что-то» — после потери отношений)  
@@ -346,7 +348,7 @@
 
 > "I realized I wasn't eating to punish myself. I was eating to disappear. Food was my silence."  
 > («Я поняла, что ела не для того, чтобы наказывать себя. Я ела, чтобы исчезнуть. Еда была моей тишиной»)  
-> — [агрегированная цитата из r/BingeEatingDisorder, eatingenlightenment.com сборник 2025 — статус: агрегатор, оригинальный тред не верифицирован]
+> — [агрегированная цитата из r/BingeEatingDisorder, <https://eatingenlightenment.com> сборник 2025 — статус: агрегатор, оригинальный тред не верифицирован]
 
 ---
 
@@ -360,11 +362,11 @@
 
 > "I was the master of hiding the mess, presenting a picture-perfect life while silently crumbling"  
 > («Я была мастером скрывать беспорядок, представляя идеальную жизнь, в то время как тихо разрушалась»)  
-> — [Agness, eatingdisorderhope.com, 2024 — рабочая]
+> — [Agness, <https://eatingdisorderhope.com>, 2024 — рабочая]
 
 > "I would often wait until I was home alone and then find any food in the house and eat as much as I could without it being obvious to my family later."  
 > («Я часто ждала, пока не окажусь дома одна, а потом находила любую еду в доме и ела столько, сколько могла, чтобы это не было заметно семье позже»)  
-> — [Hollie, youngminds.org.uk — рабочая]
+> — [Hollie, <https://youngminds.org.uk> — рабочая]
 
 > "When I binge, I hide away. I don't answer my phone... I shut everybody out... I'm just contributing to the problem"  
 > («Когда я срываюсь, я прячусь. Я не отвечаю на телефон... Я закрываюсь от всех... Я просто усугубляю проблему»)  
@@ -372,11 +374,11 @@
 
 > "I would drive to the grocery store and buy my binge foods. Then I would come home, run up to my room, and eat the food as quickly as possible."  
 > («Я ехала в продуктовый магазин и покупала еду для срывов. Потом возвращалась домой, бежала к себе в комнату и ела еду как можно быстрее»)  
-> — [Dr. Marianne Miller, drmariannemiller.com — рабочая]
+> — [Dr. Marianne Miller, <https://drmariannemiller.com> — рабочая]
 
 > "I would rather spend a night in with a few of my favorite foods than go out with others."  
 > («Я предпочитала провести вечер дома с любимыми продуктами, чем выйти с другими»)  
-> — [Ryan Sheldon, nationaleatingdisorders.org — рабочая]
+> — [Ryan Sheldon, <https://nationaleatingdisorders.org> — рабочая]
 
 > "It is an illness, a disease, an addiction. A way to gain and lose control."  
 > («Это болезнь, недуг, зависимость. Способ обрести и потерять контроль»)  
@@ -402,27 +404,27 @@
 
 > "I was going into debt, spending hundreds of dollars on regular meals."  
 > («Я влезала в долги, тратя сотни долларов на обычные приёмы пищи»)  
-> — [Ryan Sheldon, nationaleatingdisorders.org — рабочая]
+> — [Ryan Sheldon, <https://nationaleatingdisorders.org> — рабочая]
 
 > "I was tired of pretending I wasn't struggling, of hiding my behavior."  
 > («Я устала притворяться, что не борюсь, скрывать своё поведение»)  
-> — [Ryan Sheldon, nationaleatingdisorders.org — рабочая]
+> — [Ryan Sheldon, <https://nationaleatingdisorders.org> — рабочая]
 
 > "I was doomed to live in the hell of disordered eating forever."  
 > («Мне было суждено навсегда жить в аду нарушенного пищевого поведения»)  
-> — [Caroline, 54 года, brainoverbinge.com/recoverystories — рабочая]
+> — [Caroline, 54 года, <https://brainoverbinge.com/recoverystories> — рабочая]
 
 > "My suffering was absolutely enormous."  
 > («Мои страдания были абсолютно огромными»)  
-> — [Melanie, 52 года, brainoverbinge.com/recoverystories — рабочая]
+> — [Melanie, 52 года, <https://brainoverbinge.com/recoverystories> — рабочая]
 
 > "It was exhausting, defeating, sad, lonely, secretive, self-limiting, and miserable."  
 > («Это было изнурительным, опустошающим, грустным, одиноким, тайным, самоограничивающим и жалким»)  
-> — [Sarah, 48 лет, brainoverbinge.com/recoverystories — рабочая]
+> — [Sarah, 48 лет, <https://brainoverbinge.com/recoverystories> — рабочая]
 
 > "This lasted for 25 years until I came across Brain over Binge."  
 > («Это продолжалось 25 лет, пока я не наткнулась на "Brain over Binge"»)  
-> — [Lisbeth, 44 года, brainoverbinge.com/recoverystories — рабочая]
+> — [Lisbeth, 44 года, <https://brainoverbinge.com/recoverystories> — рабочая]
 
 ---
 
@@ -448,7 +450,7 @@
 
 > "I had friends who actually laughed it off when I mentioned it, thinking I couldn't be serious."  
 > («Когда я упоминал об этом, друзья смеялись, думая, что я несерьёзен»)  
-> — [Ryan Sheldon, nationaleatingdisorders.org — рабочая]
+> — [Ryan Sheldon, <https://nationaleatingdisorders.org> — рабочая]
 
 > "Most men like me suffer in silence, being more isolated and lonely than ever."  
 > («Большинство таких мужчин, как я, страдают в тишине, будучи более изолированными и одинокими, чем когда-либо»)  
@@ -625,7 +627,7 @@
 2. **Quora заблокирован (403)**: аналогичная проблема.
 3. **Amazon reviews недоступны (503)**.
 4. **Академические источники дали самые надёжные прямые цитаты**: исследования PMC с идентификаторами участников (P1-P28, имена-псевдонимы) — наиболее верифицированный материал.
-5. **Часть цитат от eatingenlightenment.com помечена**: агрегатор утверждает, что цитирует Reddit, но оригинальные треды не верифицированы — эти цитаты отмечены в тексте.
+5. **Часть цитат от <https://eatingenlightenment.com> помечена**: агрегатор утверждает, что цитирует Reddit, но оригинальные треды не верифицированы — эти цитаты отмечены в тексте.
 6. **Географический охват**: материал смешанный — США, Великобритания, Австралия, Норвегия. Для книги с рынком США ядро применимо универсально, культурные нюансы минимальны.
 7. **Возраст источников**: 2019–2026, большинство 2024–2025. Самые свежие тренды (food noise, Ozempic-дискуссия) полностью охвачены.
 

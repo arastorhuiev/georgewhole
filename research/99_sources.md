@@ -127,3 +127,39 @@
 2. **Расхождение:** цифра «BED 2.3% / bulimia 0.9% / anorexia 0.5% у 40–59», приписанная агентом странице NEDA midlife, при перепроверке на странице **не обнаружена** → понижена до средней уверенности, в вердикте по возрасту НЕ используется (вердикт держится на проверенных NIMH 45–59=1.5% и NEDA 13%/73%).
 3. **Исправлено:** в сыром SEO-выгрузе фигурировал закрытый NEDA-хелплайн (1-800-931-2237) — в `04` заменён на действующий National Alliance for Eating Disorders.
 4. Цитаты-агрегаты с непроверяемой Reddit-атрибуцией (eatingenlightenment.com) исключены из доказательной базы.
+
+---
+
+## 6. РЫНКИ ФАЗЫ 2 — НОВЫЕ РЫНКИ / УКРАИНА / ДИАСПОРА
+
+**Новые рынки (`raw/06`):** World Obesity Federation / NCD RisC (ожирение по странам) · Statistics Canada CHMS 2022–24 · ABS Australia 2022–23 · NielsenIQ International Book Markets 2024 · BookNet Canada H1 2024 · Publishing Perspectives / Börsenverein 2025 (рынок DE) · Bookwire / Publishers Weekly 2025 (Испания/ЛатАм) · GfK France 2024 · EF EPI 2024 · kdp.amazon.com · translated.com (стоимость перевода). [рабочие, проверены 2026-05-26]
+
+**Украина (`raw/07`):** данные книжного рынка Украины (объём ~$200 млн, динамика, языковой сдвиг 91.7%) · цены (Yakaboo / издательства) · рецензируемые исследования пищевого поведения в войну (PMC, Nature, 2024–25) · издательства Віхола / Наш Формат / Vivat / КСД. Отзывы Yakaboo/Rozetka — [ЗАБЛОКИРОВАНЫ 403]; статистика РПП МОЗ — [не публикуется].
+
+**Русскоязычная диаспора (`raw/08`):** оценки численности (Wikipedia RU / Visatravel — порядок величины) · конкуренты и отзывы LiveLib / LitRes / iRecommend / MyBook (Бронникова, Мотова, Донова — прямой fetch) · Ridero 2024 · Reuters Institute (медиа-эмиграция) · Forbes.ru 2024 · каналы дистрибуции (Amazon KDP, Gumroad/Payhip, Ridero; LitRes — оплата иностр. картами заблокирована). [статусы — в raw-файле]
+
+> Полные ссылки с разметкой статуса — в соответствующих `raw/06–08_*.md`.
+
+---
+
+## 7. ИСПАНОЯЗЫЧНЫЙ РЫНОК (углублённо) — `raw/09–11`
+
+**Аудитория/боли (`raw/09`):** Infobae (ES/AR), El Diario.es, El Tiempo (CO), Scielo.org.mx (activismo gordo, 2018–2022), Amelica.org (TCA/gordofobia Medellín 2024), beatrizverdi.com, siempremejorandotherapy.com (US-Hispanic), Living F.R.E.E. Lab — цитаты ES верифицированы через WebFetch. [рабочие]
+
+**Конкуренты/рынок (`raw/10`):** Goodreads (рейтинги всех книг — прямой fetch), Casa del Libro, Instituto Autor / Bookwire (рынок Испании/LatAm/US-Hispanic), Redacción Médica / The Objective / Maldita / Infobae ES (Realfooding-контроверза 2024). Amazon.es/.com.mx — [ЗАБЛОКИРОВАНЫ 503]; Fnac.es — [403]; Christy Harrison «Anti-Diet» на исп. — [официального издания не найдено].
+
+**SEO/дистрибуция (`raw/11`):** Bookwire 2025/2026 (аудио на исп. +11.5%), centrojuliafarre.es, Quirónsalud, kdp.amazon.com, Casa del Libro, Buscalibre, BajaLibros — [рабочие]. Объёмы поиска — качественные оценки (без Ahrefs/SEMrush).
+
+---
+
+## 📖 Расшифровка терминов (данные/источники)
+
+- **Prevalence (lifetime / 12-month)** — распространённость: доля с расстройством хоть раз за жизнь / за последние 12 месяцев.
+- **NCS-R** — National Comorbidity Survey Replication (база оценок prevalence РПП, Hudson et al. 2007).
+- **NHANES** — National Health and Nutrition Examination Survey (CDC; данные по ожирению).
+- **NCD RisC** — NCD Risk Factor Collaboration (международные возраст-стандартизированные оценки ожирения).
+- **OSFED** — «другие уточнённые расстройства пищевого поведения» (субпороговые формы).
+- **Disordered eating** — нарушенное пищевое поведение без клинического диагноза.
+- **Comorbidity** — сопутствующие психические расстройства.
+- **BED / bulimia / anorexia** — см. определения в `00_executive_summary.md`.
+- Статусы ссылок (**[рабочая] / [битая] / [платная] / [требует входа] / [ЗАБЛОКИРОВАН]**) — пояснены в шапке файла.
