@@ -1,0 +1,7 @@
+{
+  "tool_name": "WebFetch",
+  "tool_input_preview": "{\"url\":\"https://www.bodywhys.ie/wp-content/uploads/2025/06/Bodywhys_BED_Breaking-the-Cycle_SCREEN.pdf\",\"prompt\":\"Extract ALL verbatim direct quotes from real people (not clinical descriptions) about b...",
+  "error": "timeout of 60000ms exceeded",
+  "timestamp": "2026-05-26T12:36:30.385Z",
+  "retry_count": 1
+}

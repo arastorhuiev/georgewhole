@@ -29,6 +29,145 @@
   },
   "customNotes": [],
   "directoryMap": {},
-  "hotPaths": [],
+  "hotPaths": [
+    {
+      "path": "research/raw/01_prevalence_stats.md",
+      "accessCount": 2,
+      "lastAccessed": 1779799315689,
+      "type": "file"
+    },
+    {
+      "path": "research/raw/02_voices_binge_weight.md",
+      "accessCount": 2,
+      "lastAccessed": 1779799316122,
+      "type": "file"
+    },
+    {
+      "path": "research/raw/03_voices_antidiet_ie.md",
+      "accessCount": 2,
+      "lastAccessed": 1779799316598,
+      "type": "file"
+    },
+    {
+      "path": "research/raw/04_competitors_market.md",
+      "accessCount": 2,
+      "lastAccessed": 1779799317354,
+      "type": "file"
+    },
+    {
+      "path": "research/raw/05_seo_search.md",
+      "accessCount": 2,
+      "lastAccessed": 1779799317406,
+      "type": "file"
+    },
+    {
+      "path": "new-code-short-summary.md",
+      "accessCount": 1,
+      "lastAccessed": 1779798239932,
+      "type": "file"
+    },
+    {
+      "path": "marketingskills/skills/customer-research/SKILL.md",
+      "accessCount": 1,
+      "lastAccessed": 1779798320597,
+      "type": "file"
+    },
+    {
+      "path": "marketingskills/skills/marketing-psychology/SKILL.md",
+      "accessCount": 1,
+      "lastAccessed": 1779798321033,
+      "type": "file"
+    },
+    {
+      "path": "marketingskills/skills/competitor-profiling/SKILL.md",
+      "accessCount": 1,
+      "lastAccessed": 1779798321514,
+      "type": "file"
+    },
+    {
+      "path": "marketingskills/skills/competitors/SKILL.md",
+      "accessCount": 1,
+      "lastAccessed": 1779798322665,
+      "type": "file"
+    },
+    {
+      "path": "marketingskills/skills/content-strategy/SKILL.md",
+      "accessCount": 1,
+      "lastAccessed": 1779798322940,
+      "type": "file"
+    },
+    {
+      "path": "marketingskills/skills/seo-audit/SKILL.md",
+      "accessCount": 1,
+      "lastAccessed": 1779798323327,
+      "type": "file"
+    },
+    {
+      "path": "marketingskills/skills/lead-magnets/SKILL.md",
+      "accessCount": 1,
+      "lastAccessed": 1779798324405,
+      "type": "file"
+    },
+    {
+      "path": "marketingskills/skills/copywriting/SKILL.md",
+      "accessCount": 1,
+      "lastAccessed": 1779798324902,
+      "type": "file"
+    },
+    {
+      "path": "marketingskills/skills/programmatic-seo/SKILL.md",
+      "accessCount": 1,
+      "lastAccessed": 1779798325772,
+      "type": "file"
+    },
+    {
+      "path": "marketingskills/skills/site-architecture/SKILL.md",
+      "accessCount": 1,
+      "lastAccessed": 1779798325855,
+      "type": "file"
+    },
+    {
+      "path": "research/00_executive_summary.md",
+      "accessCount": 1,
+      "lastAccessed": 1779799473601,
+      "type": "file"
+    },
+    {
+      "path": "research/02_pains_and_needs.md",
+      "accessCount": 1,
+      "lastAccessed": 1779799600590,
+      "type": "file"
+    },
+    {
+      "path": "research/01_audience_profile.md",
+      "accessCount": 1,
+      "lastAccessed": 1779799684640,
+      "type": "file"
+    },
+    {
+      "path": "research/03_competitors_market.md",
+      "accessCount": 1,
+      "lastAccessed": 1779799757506,
+      "type": "file"
+    },
+    {
+      "path": "research/04_content_seo_strategy.md",
+      "accessCount": 1,
+      "lastAccessed": 1779799849610,
+      "type": "file"
+    },
+    {
+      "path": "research/05_segmentation_priorities.md",
+      "accessCount": 1,
+      "lastAccessed": 1779799900713,
+      "type": "file"
+    },
+    {
+      "path": "research/99_sources.md",
+      "accessCount": 1,
+      "lastAccessed": 1779799988441,
+      "type": "file"
+    }
+  ],
   "userDirectives": []
 }
