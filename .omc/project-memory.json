@@ -38,14 +38,20 @@
     },
     {
       "path": "research/00_executive_summary.md",
-      "accessCount": 5,
-      "lastAccessed": 1779802701845,
+      "accessCount": 6,
+      "lastAccessed": 1779823570581,
       "type": "file"
     },
     {
       "path": "research/99_sources.md",
       "accessCount": 4,
       "lastAccessed": 1779802707745,
+      "type": "file"
+    },
+    {
+      "path": "design-prompt.md",
+      "accessCount": 4,
+      "lastAccessed": 1779860600218,
       "type": "file"
     },
     {
@@ -64,6 +70,18 @@
       "path": "research/03_technical_seo/README.md",
       "accessCount": 3,
       "lastAccessed": 1779802735410,
+      "type": "file"
+    },
+    {
+      "path": "research/02_content/04a_content_strategy.md",
+      "accessCount": 3,
+      "lastAccessed": 1779823570904,
+      "type": "file"
+    },
+    {
+      "path": "research/03_technical_seo/09_multilingual_architecture.md",
+      "accessCount": 3,
+      "lastAccessed": 1779823571449,
       "type": "file"
     },
     {
@@ -133,21 +151,9 @@
       "type": "file"
     },
     {
-      "path": "research/02_content/04a_content_strategy.md",
-      "accessCount": 2,
-      "lastAccessed": 1779802010979,
-      "type": "file"
-    },
-    {
       "path": "research/03_technical_seo/04b_seo_keywords.md",
       "accessCount": 2,
       "lastAccessed": 1779802018106,
-      "type": "file"
-    },
-    {
-      "path": "research/03_technical_seo/09_multilingual_architecture.md",
-      "accessCount": 2,
-      "lastAccessed": 1779802027042,
       "type": "file"
     },
     {
