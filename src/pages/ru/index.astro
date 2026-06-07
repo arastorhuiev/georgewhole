@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import MobileNav from '@components/nav/MobileNav.astro';
+import Nav from '@components/nav/Nav.astro';
 
 const navItems = [
   { key: 'articles',   label: 'Статьи',   href: '/ru/articles'    },
@@ -23,13 +24,25 @@ const locales = [
   title="georgewhole · книги и письма"
   description="Тихие книги о правилах, по которым мы живём, не выбирая их."
 >
-  <MobileNav
-    brand="georgewhole"
-    navItems={navItems}
-    locales={locales}
-    currentLocale="RU"
-    labels={{ lang: 'Язык сайта', menu: 'Меню' }}
-  />
+  <div class="hidden md:block">
+    <Nav
+      brand="georgewhole"
+      items={navItems}
+      locale="RU"
+      locales={locales}
+      active="home"
+      wide
+    />
+  </div>
+  <div class="md:hidden">
+    <MobileNav
+      brand="georgewhole"
+      navItems={navItems}
+      locales={locales}
+      currentLocale="RU"
+      labels={{ lang: 'Язык сайта', menu: 'Меню' }}
+    />
+  </div>
   <main class="mx-auto max-w-3xl px-6 py-20">
     <p class="font-mono text-xs uppercase tracking-[0.16em] text-ink-muted">
       M0 · фундамент · RU
