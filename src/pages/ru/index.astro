@@ -1,0 +1,49 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+
+const navItems = [
+  { key: 'articles',   label: 'Статьи',   href: '/ru/articles'    },
+  { key: 'books',      label: 'Книги',     href: '/ru/books'       },
+  { key: 'about',      label: 'Об авторе', href: '/ru/about'       },
+  { key: 'newsletter', label: 'Рассылка',  href: '/ru/newsletter'  },
+];
+
+const locales = [
+  { code: 'EN', name: 'English',    href: '/en' },
+  { code: 'UK', name: 'Українська', href: '/uk' },
+  { code: 'RU', name: 'Русский' },
+  { code: 'ES', name: 'Español',    href: '/es' },
+];
+---
+
+<BaseLayout
+  locale="ru"
+  path=""
+  title="georgewhole · книги и письма"
+  description="Тихие книги о правилах, по которым мы живём, не выбирая их."
+>
+  <MobileNav
+    brand="georgewhole"
+    navItems={navItems}
+    locales={locales}
+    currentLocale="RU"
+    labels={{ lang: 'Язык сайта', menu: 'Меню' }}
+  />
+  <main class="mx-auto max-w-3xl px-6 py-20">
+    <p class="font-mono text-xs uppercase tracking-[0.16em] text-ink-muted">
+      M0 · фундамент · RU
+    </p>
+    <h1 class="mt-4 font-serif text-6xl leading-none tracking-tight text-ink">
+      georgewhole
+    </h1>
+    <p class="mt-6 font-serif text-2xl leading-snug text-ink-soft">
+      Тихий способ кормить себя.
+    </p>
+    <p class="mt-8 max-w-prose text-base leading-relaxed text-ink-soft">
+      Фундамент M0 пройден: маршрутизация по локалям, hreflang, canonical,
+      sitemap, шрифт по локали (Literata для кириллицы), импорт-алиасы.
+      Настоящая главная страница — в M2.
+    </p>
+  </main>
+</BaseLayout>

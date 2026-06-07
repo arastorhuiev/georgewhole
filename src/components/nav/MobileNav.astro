@@ -1,0 +1,268 @@
+---
+import Icon from '@components/common/Icon.astro';
+
+interface NavItem {
+  key: string;
+  label: string;
+  href: string;
+}
+
+interface LocaleOption {
+  code: string;
+  name: string;
+  href?: string;
+}
+
+interface Labels {
+  lang: string;
+  menu: string;
+}
+
+interface Props {
+  brand: string;
+  navItems: Array<NavItem>;
+  locales: Array<LocaleOption>;
+  currentLocale: string;
+  labels: Labels;
+}
+
+const { brand, navItems, locales, currentLocale, labels } = Astro.props;
+---
+
+<header class="mobile-nav">
+  <a href="/" class="brandlink" style="font-family:var(--font-serif);font-size:18px;font-weight:400;color:var(--color-ink);text-decoration:none;">
+    {brand}
+  </a>
+
+  <div class="controls">
+    <!-- Language dropdown -->
+    <details class="nav-details">
+      <summary
+        class="iconbtn lang-summary"
+        aria-label={labels.lang}
+        style="border:1px solid var(--color-hair);background:transparent;color:var(--color-ink);padding:6px 10px;border-radius:var(--radius-md);font-size:12px;font-family:var(--font-mono);display:flex;align-items:center;gap:5px;letter-spacing:0.4px;list-style:none;"
+      >
+        {currentLocale}
+        <Icon name="chev" size={8} class="chev-i" />
+      </summary>
+
+      <div class="panel lang-panel">
+        <!-- Mono header row -->
+        <div class="panel-header">
+          <Icon name="globe" size={11} />
+          {labels.lang}
+        </div>
+
+        <!-- Locale rows -->
+        {locales.map((locale) => {
+          const active = locale.code === currentLocale;
+          return locale.href ? (
+            <a
+              href={locale.href}
+              class:list={['menurow', 'locale-row', active && 'locale-row--active']}
+            >
+              <span class="locale-row__left">
+                <span
+                  class:list={['locale-code', 'font-mono', active ? 'text-accent' : 'text-ink-muted']}
+                  style={active ? 'font-weight:700;' : 'font-weight:400;'}
+                >
+                  {locale.code}
+                </span>
+                <span
+                  class:list={['locale-name', active ? 'text-ink' : 'text-ink-soft']}
+                  style={active ? 'font-weight:600;' : 'font-weight:400;'}
+                >
+                  {locale.name}
+                </span>
+              </span>
+              {active && (
+                <span class="check-icon text-accent">
+                  <Icon name="check" size={13} />
+                </span>
+              )}
+            </a>
+          ) : (
+            <span
+              class:list={['menurow', 'locale-row', active && 'locale-row--active']}
+              tabindex="0"
+            >
+              <span class="locale-row__left">
+                <span
+                  class:list={['locale-code', 'font-mono', active ? 'text-accent' : 'text-ink-muted']}
+                  style={active ? 'font-weight:700;' : 'font-weight:400;'}
+                >
+                  {locale.code}
+                </span>
+                <span
+                  class:list={['locale-name', active ? 'text-ink' : 'text-ink-soft']}
+                  style={active ? 'font-weight:600;' : 'font-weight:400;'}
+                >
+                  {locale.name}
+                </span>
+              </span>
+              {active && (
+                <span class="check-icon text-accent">
+                  <Icon name="check" size={13} />
+                </span>
+              )}
+            </span>
+          );
+        })}
+      </div>
+    </details>
+
+    <!-- Nav dropdown -->
+    <details class="nav-details">
+      <summary
+        class="iconbtn nav-summary"
+        aria-label={labels.menu}
+        style="border:1px solid var(--color-hair);background:transparent;color:var(--color-ink);width:34px;height:30px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;list-style:none;"
+      >
+        <Icon name="hamburger" size={16} />
+      </summary>
+
+      <div class="panel nav-panel">
+        <nav>
+          {navItems.map((item) => (
+            <a
+              href={item.href}
+              class="menurow nav-row"
+            >
+              {item.label}
+              <span class="text-accent" style="display:inline-flex;">
+                <Icon name="arrow" size={13} />
+              </span>
+            </a>
+          ))}
+        </nav>
+      </div>
+    </details>
+  </div>
+</header>
+
+<style>
+  .mobile-nav {
+    border-bottom: 1px solid var(--color-hair);
+    background: var(--color-bg);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Strip default <details> marker / disclosure triangle */
+  summary {
+    list-style: none;
+    cursor: pointer;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Open-state: summary gets is-open look via CSS (no JS needed) */
+  details[open] > summary.iconbtn {
+    border-color: var(--color-accent) !important;
+    color: var(--color-accent) !important;
+    background: rgba(63, 107, 94, 0.07) !important;
+  }
+
+  /* Chevron rotation when open */
+  details[open] .chev-i {
+    transform: rotate(180deg);
+  }
+
+  /* Dropdown panel */
+  .panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 20px;
+    z-index: 30;
+    background: var(--color-bg);
+    border: 1px solid var(--color-hair);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 28px rgba(42, 39, 35, 0.14), 0 2px 6px rgba(42, 39, 35, 0.08);
+    overflow: hidden;
+    min-width: 208px;
+  }
+
+  /* Lang panel header row */
+  .panel-header {
+    padding: 10px 16px 8px;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    border-bottom: 1px solid var(--color-hair-soft);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  /* Locale rows */
+  .locale-row {
+    width: 100%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    text-align: left;
+    text-decoration: none;
+    background: transparent;
+    color: var(--color-ink);
+  }
+
+  .locale-row--active {
+    background: var(--color-accent-soft);
+  }
+
+  .locale-row__left {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .locale-code {
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    width: 22px;
+    display: inline-block;
+  }
+
+  .locale-name {
+    font-family: var(--font-sans);
+    font-size: 14.5px;
+  }
+
+  .check-icon {
+    display: inline-flex;
+  }
+
+  /* Nav rows */
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 16px;
+    text-decoration: none;
+    border-top: 1px solid var(--color-hair-soft);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .nav-row:first-child {
+    border-top: none;
+  }
+
+</style>
