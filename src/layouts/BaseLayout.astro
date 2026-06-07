@@ -2,6 +2,9 @@
 import '@styles/global.css';
 import type { Locale } from '@lib/locales';
 import Head from '@components/seo/Head.astro';
+import JsonLd from '@components/seo/JsonLd.astro';
+import { baseGraph } from '@lib/schema';
+import { useTranslations } from '@i18n';
 
 interface Props {
   locale: Locale;
@@ -10,20 +13,37 @@ interface Props {
   title: string;
   description?: string;
   noindex?: boolean;
+  /** page-specific JSON-LD nodes (Book / Article / BreadcrumbList / …) */
+  jsonLd?: object[];
 }
-const { locale, path = '', title, description, noindex = false } = Astro.props;
+const {
+  locale,
+  path = '',
+  title,
+  description,
+  noindex = false,
+  jsonLd = [],
+} = Astro.props;
+
+const t = useTranslations(locale);
+const siteUrl = (Astro.site?.href ?? 'https://example.com/').replace(/\/$/, '');
+const nodes = [
+  ...baseGraph({ siteUrl, locale, brand: t.brand, description: t.hero.sub }),
+  ...jsonLd,
+];
+
+// Privacy-first analytics — only when a domain is configured (PUBLIC_PLAUSIBLE_DOMAIN).
+const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
 ---
 
 <!doctype html>
 <html lang={locale} data-locale={locale}>
   <head>
-    <Head
-      locale={locale}
-      path={path}
-      title={title}
-      description={description}
-      noindex={noindex}
-    />
+    <Head locale={locale} path={path} title={title} description={description} noindex={noindex} />
+    <JsonLd nodes={nodes} />
+    {plausibleDomain && (
+      <script defer data-domain={plausibleDomain} src="https://plausible.io/js/script.js" is:inline></script>
+    )}
   </head>
   <body>
     <slot />

@@ -2,6 +2,9 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import BookDetailPage from '@/page-impl/BookDetailPage.astro';
 import { booksFor, slugOf } from '@lib/content';
+import { absUrl } from '@lib/seo';
+import { bookNode, breadcrumb } from '@lib/schema';
+import { useTranslations } from '@i18n';
 
 export async function getStaticPaths() {
   const entries = await booksFor('ru');
@@ -11,15 +14,35 @@ export async function getStaticPaths() {
   }));
 }
 
+const lang = 'ru';
+const t = useTranslations(lang);
 const { entry } = Astro.props;
 const slug = slugOf(entry.id);
+const url = absUrl(lang, `books/${slug}`);
+const siteUrl = (Astro.site?.href ?? 'https://example.com/').replace(/\/$/, '');
+
+const jsonLd = [
+  bookNode(siteUrl, url, lang, {
+    title: entry.data.title,
+    subtitle: entry.data.subtitle,
+    lead: entry.data.lead,
+    languages: entry.data.languages,
+    year: entry.data.year,
+  }),
+  breadcrumb([
+    { name: t.brand, url: absUrl(lang, '') },
+    { name: t.nav.books, url: absUrl(lang, 'books') },
+    { name: entry.data.title, url },
+  ]),
+];
 ---
 
 <BaseLayout
-  locale="ru"
+  locale={lang}
   path={`books/${slug}`}
   title={`${entry.data.title} · georgewhole`}
   description={entry.data.subtitle ?? entry.data.line}
+  jsonLd={jsonLd}
 >
-  <BookDetailPage lang="ru" entry={entry} />
+  <BookDetailPage lang={lang} entry={entry} />
 </BaseLayout>

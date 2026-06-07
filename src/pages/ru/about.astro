@@ -2,9 +2,17 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import AboutPage from '@/page-impl/AboutPage.astro';
 import { useTranslations } from '@i18n';
+import { absUrl } from '@lib/seo';
+import { breadcrumb } from '@lib/schema';
 
 const lang = 'ru';
 const t = useTranslations(lang);
+const jsonLd = [
+  breadcrumb([
+    { name: t.brand, url: absUrl(lang, '') },
+    { name: t.about.kicker, url: absUrl(lang, 'about') },
+  ]),
+];
 ---
 
 <BaseLayout
@@ -12,6 +20,7 @@ const t = useTranslations(lang);
   path="about"
   title={`${t.about.kicker} · ${t.brand}`}
   description={t.about.sub}
+  jsonLd={jsonLd}
 >
   <AboutPage lang={lang} />
 </BaseLayout>

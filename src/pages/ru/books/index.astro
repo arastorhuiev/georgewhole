@@ -2,9 +2,19 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import BooksIndexPage from '@/page-impl/BooksIndexPage.astro';
 import { useTranslations } from '@i18n';
+import { absUrl } from '@lib/seo';
+import { breadcrumb, collectionPageNode } from '@lib/schema';
 
 const lang = 'ru';
 const t = useTranslations(lang);
+const url = absUrl(lang, 'books');
+const jsonLd = [
+  collectionPageNode(url, lang, t.booksIndex.title, t.booksIndex.sub),
+  breadcrumb([
+    { name: t.brand, url: absUrl(lang, '') },
+    { name: t.nav.books, url },
+  ]),
+];
 ---
 
 <BaseLayout
@@ -12,6 +22,7 @@ const t = useTranslations(lang);
   path="books"
   title={`${t.booksIndex.title} · ${t.brand}`}
   description={t.booksIndex.sub}
+  jsonLd={jsonLd}
 >
   <BooksIndexPage lang={lang} />
 </BaseLayout>
