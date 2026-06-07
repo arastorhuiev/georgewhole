@@ -57,11 +57,8 @@ const currentLocale = Astro.props.currentLocale.toUpperCase();
         <!-- Locale rows -->
         {locales.map((locale) => {
           const active = locale.code === currentLocale;
-          return locale.href ? (
-            <a
-              href={locale.href}
-              class:list={['menurow', 'locale-row', active && 'locale-row--active']}
-            >
+          const inner = (
+            <>
               <span class="locale-row__left">
                 <span
                   class:list={['locale-code', 'font-mono', active ? 'text-accent' : 'text-ink-muted']}
@@ -81,31 +78,21 @@ const currentLocale = Astro.props.currentLocale.toUpperCase();
                   <Icon name="check" size={13} />
                 </span>
               )}
+            </>
+          );
+          return locale.href ? (
+            <a
+              href={locale.href}
+              class:list={['menurow', 'locale-row', active && 'locale-row--active']}
+            >
+              {inner}
             </a>
           ) : (
             <span
               class:list={['menurow', 'locale-row', active && 'locale-row--active']}
               role="presentation"
             >
-              <span class="locale-row__left">
-                <span
-                  class:list={['locale-code', 'font-mono', active ? 'text-accent' : 'text-ink-muted']}
-                  style={active ? 'font-weight:700;' : 'font-weight:400;'}
-                >
-                  {locale.code}
-                </span>
-                <span
-                  class:list={['locale-name', active ? 'text-ink' : 'text-ink-soft']}
-                  style={active ? 'font-weight:600;' : 'font-weight:400;'}
-                >
-                  {locale.name}
-                </span>
-              </span>
-              {active && (
-                <span class="check-icon text-accent">
-                  <Icon name="check" size={13} />
-                </span>
-              )}
+              {inner}
             </span>
           );
         })}
