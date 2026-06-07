@@ -20,18 +20,19 @@ interface Labels {
 
 interface Props {
   brand: string;
+  brandHref?: string;
   navItems: Array<NavItem>;
   locales: Array<LocaleOption>;
   currentLocale: string;
   labels: Labels;
 }
 
-const { brand, navItems, locales, labels } = Astro.props;
+const { brand, brandHref = '/', navItems, locales, labels } = Astro.props;
 const currentLocale = Astro.props.currentLocale.toUpperCase();
 ---
 
 <header class="mobile-nav">
-  <a href="/" class="brandlink" style="font-family:var(--font-serif);font-size:18px;font-weight:400;color:var(--color-ink);text-decoration:none;">
+  <a href={brandHref} class="brandlink" style="font-family:var(--font-serif);font-size:18px;font-weight:400;color:var(--color-ink);text-decoration:none;">
     {brand}
   </a>
 
