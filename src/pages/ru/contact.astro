@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import HomePage from '@/page-impl/HomePage.astro';
+import ContactPage from '@/page-impl/ContactPage.astro';
 import { useTranslations } from '@i18n';
 
 const lang = 'ru';
@@ -9,9 +9,9 @@ const t = useTranslations(lang);
 
 <BaseLayout
   locale={lang}
-  path=""
-  title={`${t.brand} · ${t.brandTagline}`}
-  description={t.hero.sub}
+  path="contact"
+  title={`${t.contactPage.title} · ${t.brand}`}
+  description={t.contactPage.sub}
 >
-  <HomePage lang={lang} />
+  <ContactPage lang={lang} />
 </BaseLayout>

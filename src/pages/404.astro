@@ -1,0 +1,13 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import NotFoundPage from '@/page-impl/NotFoundPage.astro';
+import { useTranslations } from '@i18n';
+
+// Single root 404 (per-locale 404 is host-dependent best-effort).
+const lang = 'ru';
+const t = useTranslations(lang);
+---
+
+<BaseLayout locale={lang} path="" title={`${t.notFound.title} · ${t.brand}`} noindex>
+  <NotFoundPage lang={lang} />
+</BaseLayout>

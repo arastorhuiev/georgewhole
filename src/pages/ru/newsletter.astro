@@ -1,0 +1,17 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import NewsletterPage from '@/page-impl/NewsletterPage.astro';
+import { useTranslations } from '@i18n';
+
+const lang = 'ru';
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  locale={lang}
+  path="newsletter"
+  title={`${t.newsletterPage.title} · ${t.brand}`}
+  description={t.newsletterPage.sub}
+>
+  <NewsletterPage lang={lang} />
+</BaseLayout>

@@ -1,0 +1,25 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ArticlePage from '@/page-impl/ArticlePage.astro';
+import { articlesFor, slugOf } from '@lib/content';
+
+export async function getStaticPaths() {
+  const entries = await articlesFor('ru');
+  return entries.map((entry) => ({
+    params: { slug: slugOf(entry.id) },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const slug = slugOf(entry.id);
+---
+
+<BaseLayout
+  locale="ru"
+  path={`articles/${slug}`}
+  title={`${entry.data.title} · georgewhole`}
+  description={entry.data.summary}
+>
+  <ArticlePage lang="ru" entry={entry} />
+</BaseLayout>

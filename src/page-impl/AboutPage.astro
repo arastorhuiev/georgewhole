@@ -1,0 +1,540 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Kicker from '@components/common/Kicker.astro';
+import AtmosImage from '@components/common/AtmosImage.astro';
+import PullQuote from '@components/article/PullQuote.astro';
+import CrisisResources from '@components/common/CrisisResources.astro';
+import NextSteps from '@components/common/NextSteps.astro';
+import Footer from '@components/footer/Footer.astro';
+import { useTranslations } from '@i18n';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang as any);
+const locales = buildLocaleSwitcherItems(lang as any, 'about');
+
+const navItems = [
+  { key: 'articles',   label: t.nav.articles,   href: `/${lang}/articles`   },
+  { key: 'books',      label: t.nav.books,       href: `/${lang}/books`      },
+  { key: 'about',      label: t.nav.about,       href: `/${lang}/about`      },
+  { key: 'newsletter', label: t.nav.newsletter,  href: `/${lang}/newsletter` },
+];
+
+const a = t.about;
+
+// Credibility trio — 3 cards, no clinical-review card (per decision)
+const credCards: [string, string, string][] = [
+  [
+    'Личный опыт',
+    'Десять лет по эту сторону',
+    'Написано с другой стороны восстановления — без дистанции, без готовых ответов.',
+  ],
+  [
+    'Источники',
+    'Опирается на исследования',
+    'Ссылки на первичные источники — не советы, а то, что стоит за ними.',
+  ],
+  [
+    'Чем это не является',
+    'Не терапия и не план',
+    'Это книги и письма. Если сейчас тяжело — пожалуйста, обратитесь за профессиональной помощью.',
+  ],
+];
+---
+
+<BaseLayout
+  locale={lang as any}
+  path="about"
+  title={`Об авторе · georgewhole`}
+  description={a.sub}
+>
+  {/* Desktop nav — hidden on mobile */}
+  <div class="nav-desktop">
+    <Nav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      brandTagline={t.brandTagline}
+      items={navItems}
+      active="about"
+      locale={lang}
+      locales={locales}
+      wide
+    />
+  </div>
+  {/* Mobile nav — hidden on desktop */}
+  <div class="nav-mobile">
+    <MobileNav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      navItems={navItems}
+      locales={locales}
+      currentLocale={lang}
+      labels={t.mobileNav}
+    />
+  </div>
+
+  <main>
+    {/* ── Breadcrumb ── */}
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href={`/${lang}/`} class="bc-link">{a.crumb[0]}</a>
+      <span class="bc-sep" aria-hidden="true">/</span>
+      <span class="bc-current" aria-current="page">{a.crumb[1]}</span>
+    </nav>
+
+    {/* ── Hero ── */}
+    <section class="hero section-border">
+      <div class="hero-text">
+        <Kicker>{a.kicker}</Kicker>
+        <h1 class="hero-h1 font-serif text-ink">{a.title}</h1>
+        <p class="hero-sub font-serif text-ink-soft">{a.sub}</p>
+      </div>
+      <div class="hero-img">
+        <AtmosImage height={460} label="автор за столом · плейсхолдер" tone="dusk" accentTint />
+      </div>
+    </section>
+
+    {/* ── Timeline + Narrative ── */}
+    <section class="narrative section-border">
+      <aside class="timeline-aside">
+        <div class="timeline-label font-mono text-ink-muted">{a.timelineLabel}</div>
+        {a.timeline.map(([year, text]) => (
+          <div class="timeline-row">
+            <span class="timeline-year font-mono text-accent">{year}</span>
+            <span class="timeline-text font-sans text-ink-soft">{text}</span>
+          </div>
+        ))}
+      </aside>
+
+      <article class="narrative-body font-serif text-ink">
+        <h2 class="narrative-h2 font-serif text-ink">{a.h2_1}</h2>
+        <p class="narrative-p">{a.p1}</p>
+        <p class="narrative-p">{a.p2}</p>
+
+        <PullQuote attribution={a.pullBy}>{a.pull}</PullQuote>
+
+        <h2 class="narrative-h2 font-serif text-ink">{a.h2_2}</h2>
+        <p class="narrative-p">{a.p3}</p>
+        <p class="narrative-p">{a.p4}</p>
+
+        <h2 class="narrative-h2 font-serif text-ink">{a.h2_3}</h2>
+        <p class="narrative-p-tight">{a.p5}</p>
+        <ul class="nots-list font-sans text-ink-soft" role="list">
+          {a.nots.map((item) => (
+            <li class="nots-item">
+              <span class="nots-dash font-mono text-accent" aria-hidden="true">—</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </section>
+
+    {/* ── Credibility trio ── */}
+    <section class="cred section-border">
+      <div class="cred-inner">
+        <div class="cred-intro">
+          <Kicker>Достоверность</Kicker>
+          <h2 class="cred-title font-serif text-ink">Почему этому можно доверять.</h2>
+          <p class="cred-body font-sans text-ink-soft">
+            Не потому что автор — эксперт. Потому что он прошёл это сам, опирается на источники и честен о границах того, что делает.
+          </p>
+        </div>
+        <div class="cred-cards">
+          {credCards.map(([kicker, title, body]) => (
+            <div class="cred-card">
+              <Kicker>{kicker}</Kicker>
+              <h4 class="cred-card-title font-serif text-ink">{title}</h4>
+              <p class="cred-card-body font-sans text-ink-soft">{body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ── Crisis resources ── */}
+    <section class="crisis-section section-border">
+      <CrisisResources
+        label={t.crisis.label}
+        resources={t.crisis.resources as any}
+        note={t.crisis.note}
+      />
+    </section>
+
+    {/* ── Next steps ── */}
+    <section class="next-section">
+      <div class="next-desktop">
+        <NextSteps
+          kicker={a.nextKicker}
+          title={a.nextTitle}
+          sub={a.nextSub}
+          ctas={[...a.nextCtas]}
+          layout="desktop"
+        />
+      </div>
+      <div class="next-mobile">
+        <NextSteps
+          kicker={a.nextKicker}
+          title={a.nextTitle}
+          sub={a.nextSub}
+          ctas={[...a.nextCtas]}
+          layout="mobile"
+        />
+      </div>
+    </section>
+  </main>
+
+  <div class="footer-desktop-wrap">
+    <Footer strings={t.footer} locale={lang} locales={locales} layout="desktop" />
+  </div>
+  <div class="footer-mobile-wrap">
+    <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
+  </div>
+</BaseLayout>
+
+<style>
+  /* ── Nav visibility ── */
+  .nav-mobile { display: block; }
+  .nav-desktop { display: none; }
+
+  @media (min-width: 768px) {
+    .nav-mobile { display: none; }
+    .nav-desktop { display: block; }
+  }
+
+  /* ── Footer visibility ── */
+  .footer-mobile-wrap { display: block; }
+  .footer-desktop-wrap { display: none; }
+
+  @media (min-width: 768px) {
+    .footer-mobile-wrap { display: none; }
+    .footer-desktop-wrap { display: block; }
+  }
+
+  /* ── Breadcrumb ── */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    border-bottom: 1px solid var(--color-hair);
+  }
+
+  @media (min-width: 768px) {
+    .breadcrumb {
+      padding: 14px 64px;
+    }
+  }
+
+  .bc-link {
+    color: var(--color-ink-muted);
+    text-decoration: none;
+  }
+  .bc-link:hover { color: var(--color-ink); }
+  .bc-sep { color: var(--color-hair); }
+  .bc-current { color: var(--color-ink-soft); }
+
+  /* ── Shared ── */
+  .section-border { border-bottom: 1px solid var(--color-hair); }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 36px 20px 32px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      padding: 80px 64px 64px;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 72px;
+      align-items: center;
+    }
+  }
+
+  .hero-h1 {
+    font-size: 32px;
+    line-height: 1.1;
+    margin: 14px 0 16px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    text-wrap: balance;
+  }
+
+  @media (min-width: 768px) {
+    .hero-h1 {
+      font-size: 54px;
+      line-height: 1.07;
+      margin: 20px 0 24px;
+      letter-spacing: -0.9px;
+    }
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    line-height: 1.55;
+    margin: 0;
+    font-style: italic;
+  }
+
+  @media (min-width: 768px) {
+    .hero-sub {
+      font-size: 20px;
+      max-width: 540px;
+    }
+  }
+
+  /* ── Timeline + Narrative ── */
+  .narrative {
+    padding: 40px 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .narrative {
+      padding: 88px 64px;
+      grid-template-columns: 220px 1fr;
+      gap: 56px;
+      align-items: flex-start;
+    }
+  }
+
+  .timeline-aside {
+    position: static;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-aside {
+      position: sticky;
+      top: 32px;
+    }
+  }
+
+  .timeline-label {
+    font-size: 10.5px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .timeline-row {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 8px;
+    padding: 10px 0;
+    border-top: 1px solid var(--color-hair-soft);
+    font-size: 13px;
+  }
+
+  .timeline-year {
+    font-size: 13px;
+    letter-spacing: 0.4px;
+  }
+
+  .timeline-text {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .narrative-body {
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  @media (min-width: 768px) {
+    .narrative-body {
+      max-width: 70ch;
+      font-size: 20px;
+      justify-self: center;
+    }
+  }
+
+  .narrative-h2 {
+    font-size: 24px;
+    line-height: 1.25;
+    font-weight: 400;
+    letter-spacing: -0.3px;
+    margin: 32px 0 16px;
+  }
+
+  .narrative-h2:first-child { margin-top: 0; }
+
+  @media (min-width: 768px) {
+    .narrative-h2 {
+      font-size: 32px;
+      line-height: 1.2;
+      letter-spacing: -0.4px;
+      margin: 40px 0 24px;
+    }
+  }
+
+  .narrative-p { margin: 0 0 20px; }
+  .narrative-p-tight { margin: 0 0 12px; }
+
+  @media (min-width: 768px) {
+    .narrative-p { margin: 0 0 24px; }
+  }
+
+  .nots-list {
+    margin: 20px 0 24px;
+    padding: 0;
+    list-style: none;
+    font-size: 15.5px;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 768px) {
+    .nots-list { font-size: 17.5px; line-height: 1.65; }
+  }
+
+  .nots-item {
+    padding: 7px 0;
+    border-top: 1px solid var(--color-hair-soft);
+    display: flex;
+    gap: 10px;
+  }
+
+  @media (min-width: 768px) {
+    .nots-item { padding: 8px 0; gap: 12px; }
+  }
+
+  .nots-dash { flex-shrink: 0; }
+
+  /* ── Credibility ── */
+  .cred {
+    padding: 36px 20px;
+    background: var(--color-surface-soft);
+  }
+
+  @media (min-width: 768px) {
+    .cred { padding: 80px 64px; }
+  }
+
+  .cred-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .cred-inner {
+      grid-template-columns: 1fr 1.4fr;
+      gap: 56px;
+      align-items: flex-start;
+    }
+  }
+
+  .cred-title {
+    font-size: 22px;
+    line-height: 1.3;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    margin: 12px 0 18px;
+  }
+
+  @media (min-width: 768px) {
+    .cred-title {
+      font-size: 32px;
+      line-height: 1.2;
+      letter-spacing: -0.4px;
+      margin: 14px 0 20px;
+    }
+  }
+
+  .cred-body {
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .cred-body { font-size: 15.5px; }
+  }
+
+  .cred-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  @media (min-width: 768px) {
+    .cred-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  .cred-card {
+    background: var(--color-bg);
+    padding: 18px;
+    border: 1px solid var(--color-hair);
+    font-family: var(--font-sans);
+  }
+
+  @media (min-width: 768px) {
+    .cred-card { padding: 22px; }
+  }
+
+  .cred-card-title {
+    font-size: 17px;
+    margin: 8px 0 6px;
+    line-height: 1.3;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+  }
+
+  @media (min-width: 768px) {
+    .cred-card-title { font-size: 19px; margin: 10px 0 8px; }
+  }
+
+  .cred-card-body {
+    font-size: 13px;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .cred-card-body { font-size: 13.5px; line-height: 1.6; }
+  }
+
+  /* ── Crisis ── */
+  .crisis-section {
+    padding: 32px 20px;
+  }
+
+  @media (min-width: 768px) {
+    .crisis-section { padding: 48px 64px; }
+  }
+
+  /* ── Next steps ── */
+  .next-section {
+    padding: 40px 20px;
+  }
+
+  @media (min-width: 768px) {
+    .next-section { padding: 88px 64px; }
+  }
+
+  .next-desktop { display: none; }
+  .next-mobile  { display: block; }
+
+  @media (min-width: 768px) {
+    .next-desktop { display: block; }
+    .next-mobile  { display: none; }
+  }
+</style>

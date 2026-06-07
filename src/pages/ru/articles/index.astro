@@ -1,0 +1,17 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ArticleIndexPage from '@/page-impl/ArticleIndexPage.astro';
+import { useTranslations } from '@i18n';
+
+const lang = 'ru';
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  locale={lang}
+  path="articles"
+  title={`${t.articlesIndex.title} · ${t.brand}`}
+  description={t.articlesIndex.sub}
+>
+  <ArticleIndexPage lang={lang} />
+</BaseLayout>

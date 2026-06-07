@@ -1,0 +1,208 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Kicker from '@components/common/Kicker.astro';
+import ContactForm from '@components/forms/ContactForm.astro';
+import Footer from '@components/footer/Footer.astro';
+import { useTranslations } from '@i18n';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang as any);
+const locales = buildLocaleSwitcherItems(lang as any, 'contact');
+
+const navItems = [
+  { key: 'articles',   label: t.nav.articles,   href: `/${lang}/articles`   },
+  { key: 'books',      label: t.nav.books,       href: `/${lang}/books`      },
+  { key: 'about',      label: t.nav.about,       href: `/${lang}/about`      },
+  { key: 'newsletter', label: t.nav.newsletter,  href: `/${lang}/newsletter` },
+];
+
+const c = t.contactPage;
+---
+
+<BaseLayout
+  locale={lang as any}
+  path="contact"
+  title={`Обратная связь · georgewhole`}
+  description={c.sub}
+>
+  {/* Desktop nav */}
+  <div class="nav-desktop">
+    <Nav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      brandTagline={t.brandTagline}
+      items={navItems}
+      active=""
+      locale={lang}
+      locales={locales}
+      wide
+    />
+  </div>
+  {/* Mobile nav */}
+  <div class="nav-mobile">
+    <MobileNav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      navItems={navItems}
+      locales={locales}
+      currentLocale={lang}
+      labels={t.mobileNav}
+    />
+  </div>
+
+  <main>
+    {/* ── Breadcrumb ── */}
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href={`/${lang}/`} class="bc-link">{c.crumb[0]}</a>
+      <span class="bc-sep" aria-hidden="true">/</span>
+      <span class="bc-current" aria-current="page">{c.crumb[1]}</span>
+    </nav>
+
+    {/* ── Page header ── */}
+    <header class="page-head section-border">
+      <Kicker>{c.kicker}</Kicker>
+      <h1 class="page-head-title font-serif text-ink">{c.title}</h1>
+      <p class="page-head-sub font-serif text-ink-soft">{c.sub}</p>
+    </header>
+
+    {/* ── Contact form — desktop layout ── */}
+    <section class="form-section form-section--desktop">
+      <ContactForm
+        layout="desktop"
+        strings={t.contact}
+        elsewhere={[...t.contact.elsewhere]}
+      />
+    </section>
+
+    {/* ── Contact form — mobile layout ── */}
+    <section class="form-section form-section--mobile">
+      <ContactForm
+        layout="mobile"
+        strings={t.contact}
+        elsewhere={[...t.contact.elsewhere]}
+      />
+    </section>
+  </main>
+
+  <div class="footer-desktop-wrap">
+    <Footer strings={t.footer} locale={lang} locales={locales} layout="desktop" />
+  </div>
+  <div class="footer-mobile-wrap">
+    <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
+  </div>
+</BaseLayout>
+
+<style>
+  /* ── Nav visibility ── */
+  .nav-mobile  { display: block; }
+  .nav-desktop { display: none; }
+
+  @media (min-width: 768px) {
+    .nav-mobile  { display: none; }
+    .nav-desktop { display: block; }
+  }
+
+  /* ── Footer visibility ── */
+  .footer-mobile-wrap  { display: block; }
+  .footer-desktop-wrap { display: none; }
+
+  @media (min-width: 768px) {
+    .footer-mobile-wrap  { display: none; }
+    .footer-desktop-wrap { display: block; }
+  }
+
+  /* ── Breadcrumb ── */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    border-bottom: 1px solid var(--color-hair);
+  }
+
+  @media (min-width: 768px) {
+    .breadcrumb { padding: 14px 64px; }
+  }
+
+  .bc-link {
+    color: var(--color-ink-muted);
+    text-decoration: none;
+  }
+  .bc-link:hover { color: var(--color-ink); }
+  .bc-sep     { color: var(--color-hair); }
+  .bc-current { color: var(--color-ink-soft); }
+
+  /* ── Shared ── */
+  .section-border { border-bottom: 1px solid var(--color-hair); }
+
+  /* ── Page header ── */
+  .page-head {
+    padding: 36px 20px 32px;
+  }
+
+  @media (min-width: 768px) {
+    .page-head { padding: 64px 64px 56px; }
+  }
+
+  .page-head-title {
+    font-size: 32px;
+    line-height: 1.1;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    margin: 14px 0 16px;
+    text-wrap: balance;
+  }
+
+  @media (min-width: 768px) {
+    .page-head-title {
+      font-size: 48px;
+      line-height: 1.08;
+      margin: 16px 0 20px;
+      letter-spacing: -0.8px;
+    }
+  }
+
+  .page-head-sub {
+    font-size: 17px;
+    line-height: 1.55;
+    margin: 0;
+    font-style: italic;
+  }
+
+  @media (min-width: 768px) {
+    .page-head-sub {
+      font-size: 20px;
+      max-width: 560px;
+    }
+  }
+
+  /* ── Form sections — layout switching ── */
+  .form-section {
+    padding: 36px 20px 48px;
+  }
+
+  @media (min-width: 768px) {
+    .form-section { padding: 64px 64px 80px; }
+  }
+
+  /* Mobile form: show on small screens, hide on ≥768px */
+  .form-section--mobile  { display: block; }
+  .form-section--desktop { display: none; }
+
+  @media (min-width: 768px) {
+    .form-section--mobile  { display: none; }
+    .form-section--desktop { display: block; }
+  }
+</style>

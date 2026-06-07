@@ -1,0 +1,45 @@
+---
+// M2 placeholder — M3 replaces <main> with the interactive Svelte quiz island.
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Footer from '@components/footer/Footer.astro';
+import Kicker from '@components/common/Kicker.astro';
+import { useTranslations } from '@i18n';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+
+const lang = 'ru';
+const t = useTranslations(lang);
+const locales = buildLocaleSwitcherItems(lang, 'quiz');
+const navItems = [
+  { key: 'articles', label: t.nav.articles, href: `/${lang}/articles` },
+  { key: 'books', label: t.nav.books, href: `/${lang}/books` },
+  { key: 'about', label: t.nav.about, href: `/${lang}/about` },
+  { key: 'newsletter', label: t.nav.newsletter, href: `/${lang}/newsletter` },
+];
+---
+
+<BaseLayout
+  locale={lang}
+  path="quiz"
+  title={`${t.quizHome.title} · ${t.brand}`}
+  description={t.quizHome.sub}
+>
+  <div class="hidden md:block">
+    <Nav brand="georgewhole" brandHref={`/${lang}/`} brandTagline={t.brandTagline} items={navItems} locale={lang} locales={locales} wide />
+  </div>
+  <div class="md:hidden">
+    <MobileNav brand="georgewhole" brandHref={`/${lang}/`} navItems={navItems} locales={locales} currentLocale={lang} labels={t.mobileNav} />
+  </div>
+  <main class="mx-auto max-w-2xl px-5 py-20 text-center md:py-28">
+    <Kicker>{t.quizHome.kicker}</Kicker>
+    <h1 class="mt-4 font-serif text-4xl leading-tight tracking-[-0.5px] text-ink md:text-5xl">
+      {t.quizHome.title}
+    </h1>
+    <p class="mt-5 font-serif text-lg leading-relaxed text-ink-soft">{t.quizHome.sub}</p>
+    <p class="mt-8 font-mono text-xs uppercase tracking-widest text-ink-muted">
+      Интерактивный тест — следующий этап
+    </p>
+  </main>
+  <Footer strings={t.footer} locale={lang} locales={locales} />
+</BaseLayout>

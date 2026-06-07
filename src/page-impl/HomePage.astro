@@ -1,0 +1,536 @@
+---
+import { useTranslations } from '@i18n/index';
+import { booksFor, articlesFor, slugOf } from '@lib/content';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Footer from '@components/footer/Footer.astro';
+import AtmosImage from '@components/common/AtmosImage.astro';
+import AuthorPortrait from '@components/common/AuthorPortrait.astro';
+import Button from '@components/common/Button.astro';
+import BookShelf from '@components/book/BookShelf.astro';
+import ArticleCard from '@components/article/ArticleCard.astro';
+import EmailCapture from '@components/forms/EmailCapture.astro';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang as any);
+
+const booksEntries = await booksFor(lang as any);
+const articlesEntries = await articlesFor(lang as any);
+
+const locales = buildLocaleSwitcherItems(lang as any, '');
+
+const navItems = [
+  { key: 'articles',   label: t.nav.articles,   href: `/${lang}/articles`   },
+  { key: 'books',      label: t.nav.books,      href: `/${lang}/books`      },
+  { key: 'about',      label: t.nav.about,      href: `/${lang}/about`      },
+  { key: 'newsletter', label: t.nav.newsletter, href: `/${lang}/newsletter` },
+];
+
+// Map book entries to the shelf shape
+const shelfBooks = booksEntries.map((entry) => ({
+  id:     slugOf(entry.id),
+  href:   `/${lang}/books/${slugOf(entry.id)}/`,
+  num:    entry.data.num,
+  title:  entry.data.title,
+  themes: entry.data.themes,
+  status: entry.data.status,
+  cover:  entry.data.cover,
+}));
+
+// First 3 articles for the reading grid
+const readingArticles = articlesEntries.slice(0, 3);
+---
+
+<div style="background:var(--color-bg);min-height:100%;box-sizing:border-box;">
+
+  <!-- ── NAV ─────────────────────────────────────────────────── -->
+  <div class="hidden md:block">
+    <Nav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      brandTagline={t.brandTagline}
+      items={navItems}
+      active="home"
+      locale={lang}
+      locales={locales}
+      wide
+    />
+  </div>
+  <div class="md:hidden">
+    <MobileNav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      navItems={navItems}
+      locales={locales}
+      currentLocale={lang}
+      labels={t.mobileNav}
+    />
+  </div>
+
+  <!-- ── HERO ─────────────────────────────────────────────────── -->
+  <section
+    class="hero-section"
+    style="border-bottom:1px solid var(--color-hair);"
+  >
+    <div class="hero-text">
+      <!-- kicker -->
+      <div class="font-mono text-accent" style="font-size:11px;letter-spacing:1.6px;text-transform:uppercase;font-weight:500;">
+        {t.hero.kicker}
+      </div>
+      <!-- h1 -->
+      <h1
+        class="font-serif text-ink"
+        style="font-size:clamp(38px,6vw,70px);line-height:1.04;margin:24px 0 24px;font-weight:400;letter-spacing:-1.2px;text-wrap:balance;"
+      >
+        {t.hero.title}
+      </h1>
+      <!-- sub -->
+      <p
+        class="font-serif text-ink-soft"
+        style="font-size:clamp(17px,2vw,22px);line-height:1.5;margin:0 0 36px;max-width:560px;"
+      >
+        {t.hero.sub}
+      </p>
+      <!-- CTAs -->
+      <div class="hero-ctas">
+        <Button variant="primary" size="lg" href={`/${lang}/books/`}>
+          {t.hero.primary}
+        </Button>
+        <Button variant="ghost" size="lg" href={`/${lang}/about/`}>
+          {t.hero.ghost}
+        </Button>
+      </div>
+    </div>
+    <!-- atmospheric image -->
+    <div class="hero-image">
+      <AtmosImage height={520} label="утренний свет · без фигур" tone="morning" />
+    </div>
+  </section>
+
+  <!-- ── AUTHOR STRIPE ─────────────────────────────────────────── -->
+  <section
+    class="author-stripe"
+    style="border-bottom:1px solid var(--color-hair);background:var(--color-surface-soft);"
+  >
+    <AuthorPortrait size={68} class="hidden md:flex" />
+    <AuthorPortrait size={52} class="md:hidden" />
+    <div style="flex:1;">
+      <div
+        class="font-mono text-ink-muted"
+        style="font-size:11px;letter-spacing:1.6px;text-transform:uppercase;font-weight:500;"
+      >
+        {t.authorStripe.kicker}
+      </div>
+      <div
+        class="font-serif text-ink hidden md:block"
+        style="font-size:24px;margin-top:6px;line-height:1.35;letter-spacing:-0.2px;"
+      >
+        {t.authorStripe.line}
+      </div>
+      <div class="md:hidden">
+        <div class="font-serif text-ink" style="font-size:17px;margin-top:4px;line-height:1.35;">
+          {t.authorStripe.name}
+        </div>
+        <div class="font-serif text-ink-soft" style="font-size:14.5px;font-style:italic;line-height:1.45;">
+          {t.authorStripe.mobileSummary}
+        </div>
+      </div>
+    </div>
+    <a
+      href={`/${lang}/about/`}
+      class="font-sans text-accent"
+      style="font-size:14px;font-weight:500;text-decoration:none;border-bottom:1px solid var(--color-accent-hair);padding-bottom:1px;white-space:nowrap;"
+    >
+      {t.authorStripe.link}
+    </a>
+  </section>
+
+  <!-- ── BOOK SHELF ─────────────────────────────────────────────── -->
+  <div class="hidden md:block">
+    <BookShelf
+      books={shelfBooks}
+      labels={{ statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon }}
+      layout="desktop"
+      heading={{
+        kicker: t.shelf.kicker,
+        title:  t.shelf.title,
+        sub:    t.shelf.sub,
+        all:    t.shelf.all,
+        allHref: `/${lang}/books/`,
+      }}
+    />
+  </div>
+  <div class="md:hidden">
+    <BookShelf
+      books={shelfBooks}
+      labels={{ statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon }}
+      layout="mobile"
+      heading={{
+        kicker: t.shelf.kicker,
+        title:  t.shelf.title,
+        sub:    t.shelf.sub,
+        all:    t.shelf.all,
+        allHref: `/${lang}/books/`,
+      }}
+    />
+  </div>
+
+  <!-- ── READING GRID ───────────────────────────────────────────── -->
+  <section
+    class="reading-section"
+    style="border-bottom:1px solid var(--color-hair);"
+  >
+    <div class="reading-header">
+      <h2
+        class="font-serif text-ink"
+        style="font-size:clamp(28px,3vw,36px);line-height:1.15;margin:0;font-weight:400;letter-spacing:-0.4px;"
+      >
+        {t.reading.title}
+      </h2>
+      <a
+        href={`/${lang}/articles/`}
+        class="font-sans text-accent hidden md:inline-flex"
+        style="font-size:14px;font-weight:500;text-decoration:none;border-bottom:1px solid var(--color-accent-hair);padding-bottom:1px;align-items:center;gap:6px;white-space:nowrap;"
+      >
+        {t.reading.all}
+      </a>
+    </div>
+
+    <!-- Reading grid: 3-col desktop / stacked mobile -->
+    <div class="reading-grid">
+      {readingArticles.map((entry) => (
+        <a
+          href={`/${lang}/articles/${slugOf(entry.id)}/`}
+          style="text-decoration:none;display:flex;flex-direction:column;"
+        >
+          <ArticleCard
+            title={entry.data.title}
+            kicker={entry.data.kicker}
+            summary={entry.data.summary}
+            meta={entry.data.readingTime}
+            image={entry.data.image}
+            imageTone={entry.data.imageTone}
+            width="100%"
+          />
+        </a>
+      ))}
+    </div>
+
+    <!-- Mobile "all articles" link -->
+    <div class="mt-7 md:hidden">
+      <a
+        href={`/${lang}/articles/`}
+        class="font-sans text-accent"
+        style="font-size:14px;font-weight:500;text-decoration:none;border-bottom:1px solid var(--color-accent-hair);padding-bottom:1px;"
+      >
+        {t.reading.all}
+      </a>
+    </div>
+  </section>
+
+  <!-- ── QUIZ TEASER ────────────────────────────────────────────── -->
+  <section
+    class="quiz-section"
+    style="border-bottom:1px solid var(--color-hair);"
+  >
+    <div class="quiz-inner">
+      <!-- Email capture for quiz -->
+      <EmailCapture
+        variant="quiz"
+        strings={{
+          kicker:    t.quizHome.kicker,
+          title:     t.quizHome.title,
+          sub:       t.quizHome.sub,
+          placeholder: t.quizHome.placeholder,
+          submit:    t.quizHome.submit,
+          note:      t.quizHome.note,
+          sentTitle: t.newsletter.sentTitle,
+          sentBody:  t.newsletter.sentBody,
+        }}
+      />
+      <!-- Static quiz link card -->
+      <a
+        href={`/${lang}/quiz/`}
+        class="quiz-card"
+        style="background:var(--color-bg);border:1px solid var(--color-hair);padding:32px;display:block;text-decoration:none;"
+        aria-label={t.quizHome.title}
+      >
+        <div
+          class="font-mono text-ink-muted"
+          style="font-size:10.5px;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;"
+        >
+          <span>{t.quizUi.progressLabel} 1 {t.quizUi.of} 12</span>
+          <span>· · · · ● · · · · · · ·</span>
+        </div>
+        <h4
+          class="font-serif text-ink"
+          style="font-size:22px;line-height:1.35;margin:0 0 22px;font-weight:400;letter-spacing:-0.2px;"
+        >
+          {t.quizUi.howLabel}
+        </h4>
+        <div
+          class="font-sans text-accent"
+          style="font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:6px;"
+        >
+          {t.quizHome.submit}
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── NEWSLETTER ─────────────────────────────────────────────── -->
+  <section class="newsletter-section">
+    <div class="newsletter-inner">
+      <EmailCapture
+        variant="newsletter"
+        strings={{
+          title:       t.newsletter.title,
+          sub:         t.newsletter.sub,
+          placeholder: t.newsletter.placeholder,
+          submit:      t.newsletter.submit,
+          note:        t.newsletter.note,
+          sentTitle:   t.newsletter.sentTitle,
+          sentBody:    t.newsletter.sentBody,
+        }}
+      />
+      <div class="hidden md:block">
+        <AtmosImage height={300} label="послеобеденный свет · бумажный стол" tone="paper" accentTint />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT STRIP ──────────────────────────────────────────── -->
+  <section
+    class="contact-strip"
+    style="border-top:1px solid var(--color-hair);background:var(--color-surface-soft);"
+  >
+    <div class="contact-inner">
+      <div style="max-width:540px;">
+        <div
+          class="font-mono text-accent"
+          style="font-size:11px;letter-spacing:1.6px;text-transform:uppercase;font-weight:500;"
+        >
+          {t.contact.kicker}
+        </div>
+        <h2
+          class="font-serif text-ink"
+          style="font-size:clamp(24px,2.5vw,30px);line-height:1.2;font-weight:400;letter-spacing:-0.4px;margin:12px 0 8px;"
+        >
+          {t.contact.title}
+        </h2>
+        <p
+          class="font-sans text-ink-soft"
+          style="font-size:15px;line-height:1.6;margin:0;"
+        >
+          {t.contact.sub}
+        </p>
+      </div>
+      <Button variant="primary" href={`/${lang}/contact/`}>
+        {t.contact.submit}
+      </Button>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────── -->
+  <div class="hidden md:block">
+    <Footer strings={{ ...t.footer, legal: [...t.footer.legal] }} locale={lang} locales={locales} />
+  </div>
+  <div class="md:hidden">
+    <Footer strings={{ ...t.footer, legal: [...t.footer.legal] }} locale={lang} locales={locales} layout="mobile" />
+  </div>
+
+</div>
+
+<style>
+  /* ── Hero ── */
+  .hero-section {
+    padding: 40px 20px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  @media (min-width: 768px) {
+    .hero-section {
+      padding: 88px 64px 72px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+  }
+
+  .hero-text {
+    order: 1;
+  }
+
+  .hero-image {
+    order: 2;
+    margin-top: 28px;
+  }
+
+  @media (min-width: 768px) {
+    .hero-image {
+      margin-top: 0;
+    }
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  @media (min-width: 768px) {
+    .hero-ctas {
+      flex-direction: row;
+      gap: 14px;
+      align-items: center;
+    }
+  }
+
+  /* ── Author stripe ── */
+  .author-stripe {
+    padding: 28px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  @media (min-width: 768px) {
+    .author-stripe {
+      padding: 40px 64px;
+      gap: 28px;
+    }
+  }
+
+  /* ── Reading section ── */
+  .reading-section {
+    padding: 48px 20px;
+  }
+
+  @media (min-width: 768px) {
+    .reading-section {
+      padding: 88px 64px;
+    }
+  }
+
+  .reading-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .reading-header {
+      margin-bottom: 48px;
+    }
+  }
+
+  .reading-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  @media (min-width: 768px) {
+    .reading-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+  }
+
+  /* ── Quiz section ── */
+  .quiz-section {
+    padding: 40px 20px;
+  }
+
+  @media (min-width: 768px) {
+    .quiz-section {
+      padding: 88px 64px;
+    }
+  }
+
+  .quiz-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  @media (min-width: 768px) {
+    .quiz-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      background: var(--color-surface-soft);
+      padding: 64px 56px;
+      border: 1px solid var(--color-hair);
+    }
+  }
+
+  .quiz-card {
+    border-radius: 0;
+  }
+
+  /* ── Newsletter section ── */
+  .newsletter-section {
+    padding: 40px 20px;
+  }
+
+  @media (min-width: 768px) {
+    .newsletter-section {
+      padding: 88px 64px;
+    }
+  }
+
+  .newsletter-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .newsletter-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+  }
+
+  /* ── Contact strip ── */
+  .contact-strip {
+    padding: 40px 20px;
+  }
+
+  @media (min-width: 768px) {
+    .contact-strip {
+      padding: 64px 64px;
+    }
+  }
+
+  .contact-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  @media (min-width: 768px) {
+    .contact-inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+  }
+</style>

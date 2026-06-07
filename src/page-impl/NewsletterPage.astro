@@ -1,0 +1,254 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Kicker from '@components/common/Kicker.astro';
+import EmailCapture from '@components/forms/EmailCapture.astro';
+import Footer from '@components/footer/Footer.astro';
+import { useTranslations } from '@i18n';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang as any);
+const locales = buildLocaleSwitcherItems(lang as any, 'newsletter');
+
+const navItems = [
+  { key: 'articles',   label: t.nav.articles,   href: `/${lang}/articles`   },
+  { key: 'books',      label: t.nav.books,       href: `/${lang}/books`      },
+  { key: 'about',      label: t.nav.about,       href: `/${lang}/about`      },
+  { key: 'newsletter', label: t.nav.newsletter,  href: `/${lang}/newsletter` },
+];
+
+const n = t.newsletterPage;
+---
+
+<BaseLayout
+  locale={lang as any}
+  path="newsletter"
+  title={`Рассылка · georgewhole`}
+  description={n.sub}
+>
+  {/* Desktop nav */}
+  <div class="nav-desktop">
+    <Nav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      brandTagline={t.brandTagline}
+      items={navItems}
+      active="newsletter"
+      locale={lang}
+      locales={locales}
+      wide
+    />
+  </div>
+  {/* Mobile nav */}
+  <div class="nav-mobile">
+    <MobileNav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      navItems={navItems}
+      locales={locales}
+      currentLocale={lang}
+      labels={t.mobileNav}
+    />
+  </div>
+
+  <main>
+    {/* ── Breadcrumb ── */}
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href={`/${lang}/`} class="bc-link">{n.crumb[0]}</a>
+      <span class="bc-sep" aria-hidden="true">/</span>
+      <span class="bc-current" aria-current="page">{n.crumb[1]}</span>
+    </nav>
+
+    {/* ── Page header ── */}
+    <header class="page-head section-border">
+      <Kicker>{n.kicker}</Kicker>
+      <h1 class="page-head-title font-serif text-ink">{n.title}</h1>
+      <p class="page-head-sub font-serif text-ink-soft">{n.sub}</p>
+    </header>
+
+    {/* ── Two-col: EmailCapture | points — desktop; stacked on mobile ── */}
+    <section class="body-section">
+      {/* Email capture — left on desktop, top on mobile */}
+      <div class="capture-wrap">
+        <EmailCapture
+          variant="newsletter"
+          bare
+          strings={t.newsletter}
+        />
+      </div>
+
+      {/* 3 points — right on desktop, below on mobile */}
+      <div class="points-wrap">
+        {n.points.map(([head, body]) => (
+          <div class="point">
+            <div class="point-head font-serif text-ink">{head}</div>
+            <p class="point-body font-sans text-ink-soft">{body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <div class="footer-desktop-wrap">
+    <Footer strings={t.footer} locale={lang} locales={locales} layout="desktop" />
+  </div>
+  <div class="footer-mobile-wrap">
+    <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
+  </div>
+</BaseLayout>
+
+<style>
+  /* ── Nav visibility ── */
+  .nav-mobile  { display: block; }
+  .nav-desktop { display: none; }
+
+  @media (min-width: 768px) {
+    .nav-mobile  { display: none; }
+    .nav-desktop { display: block; }
+  }
+
+  /* ── Footer visibility ── */
+  .footer-mobile-wrap  { display: block; }
+  .footer-desktop-wrap { display: none; }
+
+  @media (min-width: 768px) {
+    .footer-mobile-wrap  { display: none; }
+    .footer-desktop-wrap { display: block; }
+  }
+
+  /* ── Breadcrumb ── */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    border-bottom: 1px solid var(--color-hair);
+  }
+
+  @media (min-width: 768px) {
+    .breadcrumb { padding: 14px 64px; }
+  }
+
+  .bc-link {
+    color: var(--color-ink-muted);
+    text-decoration: none;
+  }
+  .bc-link:hover { color: var(--color-ink); }
+  .bc-sep     { color: var(--color-hair); }
+  .bc-current { color: var(--color-ink-soft); }
+
+  /* ── Shared ── */
+  .section-border { border-bottom: 1px solid var(--color-hair); }
+
+  /* ── Page header ── */
+  .page-head {
+    padding: 36px 20px 32px;
+  }
+
+  @media (min-width: 768px) {
+    .page-head { padding: 64px 64px 56px; }
+  }
+
+  .page-head-title {
+    font-size: 32px;
+    line-height: 1.1;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    margin: 14px 0 16px;
+    text-wrap: balance;
+  }
+
+  @media (min-width: 768px) {
+    .page-head-title {
+      font-size: 48px;
+      line-height: 1.08;
+      margin: 16px 0 20px;
+      letter-spacing: -0.8px;
+    }
+  }
+
+  .page-head-sub {
+    font-size: 17px;
+    line-height: 1.55;
+    margin: 0;
+    font-style: italic;
+  }
+
+  @media (min-width: 768px) {
+    .page-head-sub {
+      font-size: 20px;
+      max-width: 560px;
+    }
+  }
+
+  /* ── Body section ── */
+  .body-section {
+    padding: 32px 20px 48px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .body-section {
+      padding: 64px 64px 80px;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 72px;
+      align-items: start;
+    }
+  }
+
+  /* ── Email capture wrapper ── */
+  .capture-wrap {
+    background: var(--color-surface-soft);
+    border: 1px solid var(--color-hair);
+    padding: 28px 22px;
+  }
+
+  @media (min-width: 768px) {
+    .capture-wrap { padding: 40px 44px; }
+  }
+
+  /* ── Points ── */
+  .points-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  @media (min-width: 768px) {
+    .points-wrap { gap: 24px; }
+  }
+
+  .point {
+    padding-top: 16px;
+    border-top: 2px solid var(--color-accent);
+  }
+
+  .point-head {
+    font-size: 17px;
+    letter-spacing: -0.2px;
+    margin-bottom: 5px;
+  }
+
+  @media (min-width: 768px) {
+    .point-head { font-size: 19px; }
+  }
+
+  .point-body {
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 0;
+  }
+</style>

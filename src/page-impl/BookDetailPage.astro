@@ -1,0 +1,518 @@
+---
+// BookDetailPage.astro — Book detail page implementation (M2).
+// One DOM, responsive: desktop ≥768px primary fidelity, functional mobile.
+
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Footer from '@components/footer/Footer.astro';
+import Kicker from '@components/common/Kicker.astro';
+import BookCover from '@components/book/BookCover.astro';
+import BookShelf from '@components/book/BookShelf.astro';
+import RetailerLinks from '@components/book/RetailerLinks.astro';
+import Button from '@components/common/Button.astro';
+import OldNewCompare from '@components/common/OldNewCompare.astro';
+import PullQuote from '@components/article/PullQuote.astro';
+
+import { useTranslations } from '@i18n';
+import { booksFor, slugOf } from '@lib/content';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+import type { Locale } from '@lib/locales';
+
+interface Props {
+  lang: Locale;
+  entry: CollectionEntry<'books'>;
+}
+
+const { lang, entry } = Astro.props;
+const t = useTranslations(lang as any);
+
+const { Content } = await render(entry);
+
+const slug = slugOf(entry.id);
+const coverRule = entry.data.cover.rule === 'T.accent'
+  ? 'var(--color-accent)'
+  : entry.data.cover.rule;
+
+// All books for cross-promo (other books in cycle)
+const allBooks = await booksFor(lang);
+const otherBooks = allBooks
+  .filter((e) => e.id !== entry.id)
+  .map((e) => ({
+    id: slugOf(e.id),
+    num: e.data.num,
+    title: e.data.title,
+    themes: e.data.themes,
+    status: e.data.status,
+    cover: {
+      bg: e.data.cover.bg,
+      fg: e.data.cover.fg,
+      rule: e.data.cover.rule === 'T.accent' ? 'var(--color-accent)' : e.data.cover.rule,
+      tagline: e.data.cover.tagline,
+    },
+  }));
+
+// Nav
+const navItems = [
+  { key: 'articles',   label: t.nav.articles,   href: `/${lang}/articles`   },
+  { key: 'books',      label: t.nav.books,       href: `/${lang}/books`      },
+  { key: 'about',      label: t.nav.about,       href: `/${lang}/about`      },
+  { key: 'newsletter', label: t.nav.newsletter,  href: `/${lang}/newsletter` },
+];
+
+const locales = buildLocaleSwitcherItems(lang, `books/${slug}`);
+
+const crumb = [t.nav.books, entry.data.title];
+---
+
+<BaseLayout
+  locale={lang}
+  path={`books/${slug}`}
+  title={`${entry.data.title} · georgewhole`}
+  description={entry.data.lead ?? entry.data.subtitle}
+>
+  <!-- Desktop nav -->
+  <div class="hidden md:block">
+    <Nav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      brandTagline={t.brandTagline}
+      items={navItems}
+      locale={lang}
+      locales={locales}
+      active="books"
+      wide
+    />
+  </div>
+
+  <!-- Mobile nav -->
+  <div class="md:hidden">
+    <MobileNav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      navItems={navItems}
+      locales={locales}
+      currentLocale={lang}
+      labels={t.mobileNav}
+    />
+  </div>
+
+  <main>
+    <!-- Hero section: breadcrumb + cover + facts column -->
+    <section class="hero-section" style="border-bottom:1px solid var(--color-hair);">
+
+      <!-- Breadcrumb -->
+      <div class="breadcrumb font-mono text-ink-muted">
+        {crumb.map((s, i) => (
+          <>
+            <span style={i === crumb.length - 1 ? 'color:var(--color-ink)' : undefined}>{s}</span>
+            {i < crumb.length - 1 && <span style="opacity:0.4;">/</span>}
+          </>
+        ))}
+      </div>
+
+      <!-- Two-column hero layout: cover sticky | facts -->
+      <div class="hero-grid">
+        <!-- Cover (sticky on desktop) -->
+        <div class="cover-col">
+          <BookCover
+            title={entry.data.title}
+            num={entry.data.num}
+            bg={entry.data.cover.bg}
+            fg={entry.data.cover.fg}
+            rule={coverRule}
+            tagline={entry.data.cover.tagline}
+            w={300}
+            h={432}
+          />
+        </div>
+
+        <!-- Facts column -->
+        <div class="facts-col">
+          <Kicker color="var(--color-ink-muted)">{entry.data.num}</Kicker>
+          <h1 class="book-title font-serif text-ink">{entry.data.title}</h1>
+          {entry.data.subtitle && (
+            <p class="book-sub font-serif text-ink-soft">{entry.data.subtitle}</p>
+          )}
+          {entry.data.lead && (
+            <p class="book-lead text-ink-soft">{entry.data.lead}</p>
+          )}
+
+          <!-- Primary CTA -->
+          <div style="margin-bottom:20px;">
+            <Button variant="primary" href="#">{t.common.getBook}</Button>
+          </div>
+
+          <!-- Retailer links -->
+          {entry.data.retailers && entry.data.retailers.length > 0 && (
+            <RetailerLinks
+              items={entry.data.retailers}
+              status={entry.data.retailerStatus}
+              label={t.bookDetail.retailLabel}
+            />
+          )}
+
+          <!-- Facts grid + languages -->
+          <div class="meta-row">
+            {entry.data.facts && entry.data.facts.length > 0 && (
+              <div class="facts-grid" style="display:flex;gap:1px;background:var(--color-hair);border:1px solid var(--color-hair);">
+                {entry.data.facts.map(([k, val]: [string, string]) => (
+                  <div class="fact-cell bg-bg" style="padding:16px 24px;min-width:88px;">
+                    <div class="font-mono text-ink-muted" style="font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">{k}</div>
+                    <div class="font-serif text-ink" style="font-size:17px;">{val}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {entry.data.languages && entry.data.languages.length > 0 && (
+              <div class="langs-block">
+                <div class="font-mono text-ink-muted" style="font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">{t.bookDetail.langLabel}</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                  {entry.data.languages.map((l: string) => (
+                    <span class="lang-pill font-sans text-ink bg-bg" style="font-size:13px;padding:7px 14px;border:1px solid var(--color-accent-hair);border-radius:var(--radius-pill);">{l}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About + TOC (desktop: two-col; mobile: stacked) -->
+    <section class="about-section" style="border-bottom:1px solid var(--color-hair);">
+      <div class="about-grid">
+        <!-- Left: prose body -->
+        <div class="about-main">
+          <Kicker>{t.bookDetail.aboutLabel}</Kicker>
+          <div class="body-prose font-serif text-ink">
+            <Content />
+          </div>
+
+          <!-- Excerpt as PullQuote -->
+          {entry.data.excerpt && (
+            <PullQuote attribution={t.bookDetail.excerptLabel} marks={['', '']}>
+              {entry.data.excerpt}
+            </PullQuote>
+          )}
+        </div>
+
+        <!-- Right: TOC + praise (sticky on desktop) -->
+        <aside class="toc-aside">
+          {entry.data.toc && entry.data.toc.length > 0 && (
+            <div class="toc-block">
+              <div class="font-mono text-ink-muted" style="font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px;">{t.bookDetail.tocLabel}</div>
+              {entry.data.toc.map(([n, toc_title]: [string, string]) => (
+                <div style="display:grid;grid-template-columns:34px 1fr;gap:8px;padding:12px 0;border-top:1px solid var(--color-hair-soft);">
+                  <span class="font-mono text-accent" style="font-size:11px;">{n}</span>
+                  <span class="font-serif text-ink" style="font-size:16px;line-height:1.35;">{toc_title}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <!-- Praise -->
+          {entry.data.praise && entry.data.praise.length > 0 && (
+            <div class="praise-block">
+              <div class="font-mono text-ink-muted" style="font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px;">{t.bookDetail.praiseLabel}</div>
+              {entry.data.praise.map(([quote, by]: [string, string]) => (
+                <div style="padding:14px 0;border-top:1px solid var(--color-hair-soft);">
+                  <p class="font-serif text-ink" style="font-size:15.5px;font-style:italic;line-height:1.5;margin:0 0 6px;">{quote}</p>
+                  <div class="font-mono text-ink-muted" style="font-size:10.5px;letter-spacing:0.6px;text-transform:uppercase;">{by}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </aside>
+      </div>
+    </section>
+
+    <!-- Main idea / manifesto section -->
+    <section class="idea-section" style="border-bottom:1px solid var(--color-hair);">
+      <div class="idea-inner">
+        <Kicker>{t.bookDetail.ideaKicker}</Kicker>
+        <h2 class="idea-title font-serif text-ink">{t.bookDetail.ideaTitle}</h2>
+
+        {entry.data.manifesto && entry.data.manifesto.length > 0 && (
+          <>
+            <!-- Desktop compare -->
+            <div class="hidden md:block" style="margin-top:40px;">
+              <OldNewCompare
+                pairs={entry.data.manifesto}
+                layout="desktop"
+                labels={{
+                  oldHead: t.idea.oldHead,
+                  newHead: t.idea.newHead,
+                  oldLabel: t.idea.oldK,
+                  newLabel: t.idea.newK,
+                }}
+              />
+            </div>
+            <!-- Mobile compare -->
+            <div class="md:hidden" style="margin-top:28px;">
+              <OldNewCompare
+                pairs={entry.data.manifesto}
+                layout="mobile"
+                labels={{
+                  oldHead: t.idea.oldHead,
+                  newHead: t.idea.newHead,
+                  oldLabel: t.idea.oldK,
+                  newLabel: t.idea.newK,
+                }}
+              />
+            </div>
+          </>
+        )}
+      </div>
+    </section>
+
+    <!-- Cross-promo: other books in cycle -->
+    {otherBooks.length > 0 && (
+      <section class="cross-section">
+        <div class="cross-header">
+          <Kicker>{t.bookDetail.crossLabel}</Kicker>
+        </div>
+        <BookShelf
+          books={otherBooks}
+          labels={{ statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon }}
+        />
+      </section>
+    )}
+  </main>
+
+  <!-- Footer -->
+  <div class="hidden md:block">
+    <Footer layout="desktop" strings={t.footer} locale={lang} locales={locales} />
+  </div>
+  <div class="md:hidden">
+    <Footer layout="mobile" strings={t.footer} locale={lang} locales={locales} />
+  </div>
+</BaseLayout>
+
+<style>
+  /* ── Hero ── */
+  .hero-section {
+    padding: 28px 20px 36px;
+  }
+
+  .breadcrumb {
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .hero-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .cover-col {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Shrink cover on mobile */
+  .cover-col :global(.bookcover) {
+    width: 180px !important;
+    height: 260px !important;
+  }
+
+  .book-title {
+    font-size: 36px;
+    line-height: 1.05;
+    font-weight: 400;
+    letter-spacing: -0.6px;
+    margin: 12px 0 8px;
+  }
+
+  .book-sub {
+    font-size: 19px;
+    font-style: italic;
+    line-height: 1.4;
+    margin: 0 0 16px;
+  }
+
+  .book-lead {
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0 0 22px;
+    font-family: var(--font-sans);
+  }
+
+  .meta-row {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 28px;
+  }
+
+  .langs-block {
+    margin-top: 4px;
+  }
+
+  /* ── About section ── */
+  .about-section {
+    padding: 40px 20px;
+  }
+
+  .about-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .body-prose {
+    margin-top: 18px;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .body-prose :global(p) {
+    margin: 0 0 18px;
+  }
+
+  .body-prose :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .toc-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .toc-block {
+    margin-bottom: 28px;
+  }
+
+  .praise-block {
+    margin-top: 8px;
+  }
+
+  /* ── Idea section ── */
+  .idea-section {
+    padding: 40px 20px;
+  }
+
+  .idea-inner {
+    max-width: 100%;
+  }
+
+  .idea-title {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+    margin: 14px 0 0;
+  }
+
+  /* ── Cross-promo ── */
+  .cross-section {
+    border-top: 1px solid var(--color-hair);
+  }
+
+  .cross-header {
+    padding: 40px 20px 0;
+  }
+
+  /* ── Desktop overrides ── */
+  @media (min-width: 768px) {
+    .hero-section {
+      padding: 40px 64px 64px;
+    }
+
+    .breadcrumb {
+      font-size: 11px;
+      margin-bottom: 32px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 64px;
+      align-items: flex-start;
+    }
+
+    .cover-col {
+      position: sticky;
+      top: 32px;
+      justify-content: flex-start;
+    }
+
+    /* Restore full cover size on desktop */
+    .cover-col :global(.bookcover) {
+      width: 300px !important;
+      height: 432px !important;
+    }
+
+    .book-title {
+      font-size: 54px;
+      letter-spacing: -0.9px;
+      margin: 14px 0 10px;
+    }
+
+    .book-sub {
+      font-size: 24px;
+      margin: 0 0 22px;
+    }
+
+    .book-lead {
+      font-size: 16px;
+      margin: 0 0 28px;
+      max-width: 560px;
+    }
+
+    .meta-row {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 40px;
+      margin-top: 36px;
+    }
+
+    /* ── About section desktop ── */
+    .about-section {
+      padding: 72px 64px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 64px;
+      align-items: flex-start;
+    }
+
+    .body-prose {
+      font-size: 20px;
+    }
+
+    .toc-aside {
+      position: sticky;
+      top: 32px;
+    }
+
+    /* ── Idea section desktop ── */
+    .idea-section {
+      padding: 72px 64px;
+    }
+
+    .idea-title {
+      font-size: 36px;
+      letter-spacing: -0.5px;
+      margin: 16px 0 0;
+    }
+
+    /* ── Cross-promo desktop ── */
+    .cross-header {
+      padding: 40px 64px 0;
+    }
+  }
+</style>

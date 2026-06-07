@@ -1,0 +1,234 @@
+---
+// BooksIndexPage.astro — Books index page implementation (M2).
+// One DOM, responsive: desktop ≥768px primary fidelity, functional mobile.
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Footer from '@components/footer/Footer.astro';
+import Kicker from '@components/common/Kicker.astro';
+import BookShelf from '@components/book/BookShelf.astro';
+import BookBlock from '@components/book/BookBlock.astro';
+
+import { useTranslations } from '@i18n';
+import { booksFor, slugOf } from '@lib/content';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+import type { Locale } from '@lib/locales';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang as any);
+
+const allBooks = await booksFor(lang);
+
+// Map entries to the BookShelf item shape
+const shelfBooks = allBooks.map((e) => ({
+  id: slugOf(e.id),
+  href: `/${lang}/books/${slugOf(e.id)}/`,
+  num: e.data.num,
+  title: e.data.title,
+  themes: e.data.themes,
+  status: e.data.status,
+  cover: {
+    bg: e.data.cover.bg,
+    fg: e.data.cover.fg,
+    rule: e.data.cover.rule === 'T.accent' ? 'var(--color-accent)' : e.data.cover.rule,
+    tagline: e.data.cover.tagline,
+  },
+}));
+
+// The published book (status='out') — novy-kod
+const publishedEntry = allBooks.find((e) => e.data.status === 'out');
+
+// Nav items from t.nav
+const navItems = [
+  { key: 'articles',   label: t.nav.articles,   href: `/${lang}/articles`   },
+  { key: 'books',      label: t.nav.books,       href: `/${lang}/books`      },
+  { key: 'about',      label: t.nav.about,       href: `/${lang}/about`      },
+  { key: 'newsletter', label: t.nav.newsletter,  href: `/${lang}/newsletter` },
+];
+
+const locales = buildLocaleSwitcherItems(lang, 'books');
+---
+
+<BaseLayout
+  locale={lang}
+  path="books"
+  title={`${t.booksIndex.title} · georgewhole`}
+  description={t.booksIndex.sub}
+>
+  <!-- Desktop nav -->
+  <div class="hidden md:block">
+    <Nav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      brandTagline={t.brandTagline}
+      items={navItems}
+      locale={lang}
+      locales={locales}
+      active="books"
+      wide
+    />
+  </div>
+
+  <!-- Mobile nav -->
+  <div class="md:hidden">
+    <MobileNav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      navItems={navItems}
+      locales={locales}
+      currentLocale={lang}
+      labels={t.mobileNav}
+    />
+  </div>
+
+  <main>
+    <!-- Page header -->
+    <header style="border-bottom:1px solid var(--color-hair);">
+      <div class="page-header-inner">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb font-mono text-ink-muted">
+          {t.booksIndex.crumb.map((s: string, i: number) => (
+            <>
+              <span style={i === t.booksIndex.crumb.length - 1 ? 'color:var(--color-ink)' : undefined}>{s}</span>
+              {i < t.booksIndex.crumb.length - 1 && <span style="opacity:0.4;">/</span>}
+            </>
+          ))}
+        </div>
+        <div style="max-width:820px;">
+          <Kicker>{t.booksIndex.kicker}</Kicker>
+          <h1 class="page-title font-serif text-ink">{t.booksIndex.title}</h1>
+          <p class="page-sub font-serif text-ink-soft">{t.booksIndex.sub}</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- BookShelf: all books in the cycle -->
+    <BookShelf
+      books={shelfBooks}
+      labels={{ statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon }}
+    />
+
+    <!-- Expanded block for published book -->
+    {publishedEntry && (
+      <section class="published-section" style="border-bottom:1px solid var(--color-hair);">
+        <Kicker>{t.booksIndex.publishedLabel}</Kicker>
+        <div style="margin-top:28px;">
+          <BookBlock
+            kicker={publishedEntry.data.line}
+            title={publishedEntry.data.title}
+            subtitle={publishedEntry.data.subtitle}
+            body={publishedEntry.data.lead}
+            cta={t.common.getBook}
+            retailers={publishedEntry.data.retailers}
+            retailerStatus={publishedEntry.data.retailerStatus}
+            retailerLabel={t.bookDetail.retailLabel}
+            cover={{
+              title: publishedEntry.data.title,
+              num: publishedEntry.data.num,
+              bg: publishedEntry.data.cover.bg,
+              fg: publishedEntry.data.cover.fg,
+              rule: publishedEntry.data.cover.rule === 'T.accent' ? 'var(--color-accent)' : publishedEntry.data.cover.rule,
+              tagline: publishedEntry.data.cover.tagline,
+            }}
+          />
+        </div>
+      </section>
+    )}
+
+    <!-- Forthcoming note -->
+    <section class="forthcoming-note" style="border-bottom:1px solid var(--color-hair);">
+      <p class="font-serif text-ink-muted forthcoming-text">{t.booksIndex.forthcomingNote}</p>
+    </section>
+  </main>
+
+  <!-- Footer: desktop layout on md+, mobile below -->
+  <div class="hidden md:block">
+    <Footer layout="desktop" strings={t.footer} locale={lang} locales={locales} />
+  </div>
+  <div class="md:hidden">
+    <Footer layout="mobile" strings={t.footer} locale={lang} locales={locales} />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header-inner {
+    padding: 28px 20px 32px;
+  }
+
+  .breadcrumb {
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .page-title {
+    font-size: 32px;
+    line-height: 1.06;
+    margin: 16px 0 18px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    text-wrap: balance;
+  }
+
+  .page-sub {
+    font-size: 17px;
+    line-height: 1.5;
+    margin: 0;
+    font-style: italic;
+    max-width: 680px;
+  }
+
+  .published-section {
+    padding: 36px 20px;
+  }
+
+  .forthcoming-note {
+    padding: 28px 20px;
+  }
+
+  .forthcoming-text {
+    font-size: 15px;
+    line-height: 1.55;
+    margin: 0;
+    font-style: italic;
+  }
+
+  @media (min-width: 768px) {
+    .page-header-inner {
+      padding: 40px 64px 48px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 28px;
+    }
+
+    .page-title {
+      font-size: 52px;
+      letter-spacing: -0.9px;
+    }
+
+    .page-sub {
+      font-size: 20px;
+    }
+
+    .published-section {
+      padding: 64px 64px;
+    }
+
+    .forthcoming-note {
+      padding: 32px 64px;
+    }
+
+    .forthcoming-text {
+      font-size: 16px;
+    }
+  }
+</style>

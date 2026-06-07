@@ -1,0 +1,636 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import AtmosImage from '@components/common/AtmosImage.astro';
+import Kicker from '@components/common/Kicker.astro';
+import AuthorByline from '@components/article/AuthorByline.astro';
+import Sources from '@components/article/Sources.astro';
+import ArticleCard from '@components/article/ArticleCard.astro';
+import EmailCapture from '@components/forms/EmailCapture.astro';
+import Footer from '@components/footer/Footer.astro';
+import BookCover from '@components/book/BookCover.astro';
+import { useTranslations } from '@i18n/index';
+import { articlesFor, slugOf } from '@lib/content';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+
+interface Props {
+  lang: string;
+  entry: CollectionEntry<'articles'>;
+}
+
+const { lang, entry } = Astro.props;
+const t = useTranslations(lang as any);
+const locales = buildLocaleSwitcherItems(lang as any, `articles/${slugOf(entry.id)}`);
+
+const navItems = [
+  { key: 'articles',   label: t.nav.articles,   href: `/${lang}/articles`   },
+  { key: 'books',      label: t.nav.books,      href: `/${lang}/books`      },
+  { key: 'about',      label: t.nav.about,      href: `/${lang}/about`      },
+  { key: 'newsletter', label: t.nav.newsletter, href: `/${lang}/newsletter` },
+];
+
+// Render markdown body
+const { Content } = await render(entry);
+
+// Format date (RU-style)
+const dateStr = entry.data.date
+  ? entry.data.date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })
+  : '';
+
+// Resolve related articles
+const allArticles = await articlesFor(lang as any);
+const relatedEntries = entry.data.related
+  ? allArticles.filter((a) => entry.data.related!.includes(a.data.transKey)).slice(0, 3)
+  : allArticles.filter((a) => a.id !== entry.id).slice(0, 3);
+
+
+// Sources — static design-faithful items; real items come from frontmatter in a future pass
+const sourceItems = [
+  'Tribole, E. &amp; Resch, E. <em>Intuitive Eating</em>, 4-е изд. (2020).',
+  'Bacon, L. <em>Health at Every Size</em> (2010).',
+  'Linehan, M. M. <em>DBT Skills Training Manual</em> (2014).',
+];
+---
+
+<BaseLayout
+  locale={lang as any}
+  path={`articles/${slugOf(entry.id)}`}
+  title={`${entry.data.title} · georgewhole`}
+  description={entry.data.summary}
+>
+  <!-- Desktop nav -->
+  <div class="hidden-mobile">
+    <Nav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      brandTagline={t.brandTagline}
+      items={navItems}
+      active="articles"
+      locale={lang}
+      locales={locales}
+      wide
+    />
+  </div>
+  <!-- Mobile nav -->
+  <div class="hidden-desktop">
+    <MobileNav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      navItems={navItems}
+      locales={locales}
+      currentLocale={lang}
+      labels={t.mobileNav}
+    />
+  </div>
+
+  <!-- Reading progress bar (mobile) -->
+  <div class="progress-bar hidden-desktop" aria-hidden="true">
+    <div class="progress-fill"></div>
+  </div>
+
+  <!-- Article header -->
+  <header class="article-header">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href={`/${lang}/`} class="crumb-link">Главная</a>
+      <span class="crumb-sep" aria-hidden="true">/</span>
+      <a href={`/${lang}/articles/`} class="crumb-link">{t.nav.articles}</a>
+      <span class="crumb-sep" aria-hidden="true">/</span>
+      <span class="crumb-current">{entry.data.title}</span>
+    </nav>
+
+    <div class="header-inner">
+      {entry.data.kicker && <Kicker>{entry.data.kicker}</Kicker>}
+      <h1 class="article-title">{entry.data.title}</h1>
+      <p class="article-summary">{entry.data.summary}</p>
+
+      <div class="byline-row">
+        <AuthorByline
+          name="georgewhole"
+          blurb="пишет медленно — несколько книг об одном."
+          date={dateStr}
+          readtime={entry.data.readingTime}
+          layout="stack"
+        />
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero image -->
+  <section class="hero-image">
+    <AtmosImage
+      height={440}
+      label={entry.data.image ?? 'утренний свет · север Испании'}
+      tone={entry.data.imageTone ?? 'morning'}
+      accentTint
+    />
+  </section>
+
+  <!-- Three-column body grid (desktop) / single column (mobile) -->
+  <div class="body-grid">
+    <!-- Left sidebar: TOC placeholder — desktop only -->
+    <aside class="toc-sidebar hidden-mobile" aria-label="Содержание">
+      <div class="sidebar-label">Содержание</div>
+      <nav>
+        <div class="toc-note">— прокрутите —</div>
+      </nav>
+    </aside>
+
+    <!-- Main prose -->
+    <article class="prose-column">
+      <div class="article-body">
+        <Content />
+      </div>
+
+      <!-- Inline email capture -->
+      <div class="inline-capture">
+        <EmailCapture
+          variant="newsletter"
+          compact
+          strings={t.newsletter}
+        />
+      </div>
+
+      <!-- End-of-article author blurb -->
+      <div class="author-end">
+        <AuthorByline
+          name="georgewhole"
+          blurb="пишет медленно — несколько книг об одном."
+          layout="stack"
+        />
+      </div>
+
+      <!-- Sources -->
+      <Sources label={t.sourcesLabel} items={sourceItems} />
+    </article>
+
+    <!-- Right sidebar: book promo — desktop only -->
+    <aside class="book-sidebar hidden-mobile" aria-label="Книга автора">
+      <div class="book-promo-card">
+        <Kicker>{t.booksPromo.kicker}</Kicker>
+        <p class="book-promo-quote">{t.booksPromo.sub}</p>
+        <div class="book-promo-inner">
+          <BookCover title="Новый Код" w={64} h={92} />
+          <div class="book-promo-text">
+            <div class="book-promo-title">Новый Код</div>
+            <div class="book-promo-sub">Тихий способ кормить себя.</div>
+            <a href={`/${lang}/books/novy-kod/`} class="book-promo-cta">
+              {t.common.getBook} →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related links label -->
+      <div class="sidebar-theme-label">По теме</div>
+      {relatedEntries.slice(0, 3).map((rel) => (
+        <a
+          href={`/${lang}/articles/${slugOf(rel.id)}/`}
+          class="sidebar-related-link"
+        >
+          {rel.data.title}
+        </a>
+      ))}
+    </aside>
+  </div>
+
+  <!-- Related articles grid -->
+  {relatedEntries.length > 0 && (
+    <section class="related-section">
+      <Kicker>Читать далее</Kicker>
+      <div class="related-grid">
+        {relatedEntries.map((rel) => (
+          <a href={`/${lang}/articles/${slugOf(rel.id)}/`} class="related-card-link">
+            <ArticleCard
+              title={rel.data.title}
+              kicker={rel.data.kicker}
+              summary={rel.data.summary}
+              image={rel.data.image}
+              imageTone={rel.data.imageTone}
+              meta={rel.data.readingTime}
+            />
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <Footer
+    layout="desktop"
+    strings={t.footer}
+    locale={lang}
+    locales={locales}
+  />
+</BaseLayout>
+
+<style>
+  /* ── Visibility toggles ── */
+  .hidden-mobile { display: block; }
+  .hidden-desktop { display: none; }
+
+  @media (max-width: 767px) {
+    .hidden-mobile { display: none; }
+    .hidden-desktop { display: block; }
+  }
+
+  /* ── Progress bar (mobile) ── */
+  .progress-bar {
+    height: 3px;
+    background: var(--color-hair-soft);
+    position: relative;
+  }
+  .progress-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 34%;
+    background: var(--color-accent);
+  }
+
+  /* ── Article header ── */
+  .article-header {
+    padding: 32px 64px 56px;
+    border-bottom: 1px solid var(--color-hair);
+  }
+
+  @media (max-width: 767px) {
+    .article-header {
+      padding: 28px 20px 28px;
+    }
+  }
+
+  .breadcrumb {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 767px) {
+    .breadcrumb {
+      font-size: 10px;
+      margin-bottom: 14px;
+      gap: 6px;
+    }
+  }
+
+  .crumb-link {
+    color: var(--color-ink-muted);
+    text-decoration: none;
+  }
+  .crumb-link:hover { color: var(--color-ink); }
+  .crumb-sep { opacity: 0.4; }
+  .crumb-current { color: var(--color-ink); }
+
+  .header-inner {
+    max-width: 880px;
+  }
+
+  .article-title {
+    font-family: var(--font-serif);
+    font-size: 58px;
+    line-height: 1.06;
+    margin: 20px 0 28px;
+    font-weight: 400;
+    color: var(--color-ink);
+    letter-spacing: -0.9px;
+    text-wrap: balance;
+  }
+
+  @media (max-width: 767px) {
+    .article-title {
+      font-size: 32px;
+      line-height: 1.1;
+      margin: 14px 0 18px;
+      letter-spacing: -0.5px;
+    }
+  }
+
+  .article-summary {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--color-ink-soft);
+    margin: 0 0 36px;
+    font-style: italic;
+    max-width: 720px;
+  }
+
+  @media (max-width: 767px) {
+    .article-summary {
+      font-size: 17px;
+      line-height: 1.55;
+      margin: 0 0 22px;
+    }
+  }
+
+  .byline-row {
+    padding-top: 24px;
+    border-top: 1px solid var(--color-hair-soft);
+  }
+
+  @media (max-width: 767px) {
+    .byline-row {
+      padding-top: 16px;
+    }
+  }
+
+  /* ── Hero image ── */
+  .hero-image {
+    padding: 48px 64px 0;
+  }
+
+  @media (max-width: 767px) {
+    .hero-image {
+      padding: 0 20px 8px;
+    }
+  }
+
+  /* ── Three-column body grid ── */
+  .body-grid {
+    display: grid;
+    grid-template-columns: 220px 1fr 220px;
+    gap: 56px;
+    padding: 64px 64px 80px;
+    max-width: 1280px;
+    margin: 0 auto;
+    align-items: flex-start;
+  }
+
+  @media (max-width: 767px) {
+    .body-grid {
+      display: block;
+      padding: 8px 20px 32px;
+    }
+  }
+
+  /* ── TOC sidebar ── */
+  .toc-sidebar {
+    position: sticky;
+    top: 32px;
+    font-family: var(--font-sans);
+  }
+
+  .sidebar-label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    margin-bottom: 14px;
+  }
+
+  .toc-note {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--color-ink-muted);
+    letter-spacing: 0.8px;
+    opacity: 0.6;
+  }
+
+  /* ── Prose column ── */
+  .prose-column {
+    max-width: 70ch;
+    justify-self: center;
+    width: 100%;
+  }
+
+  /* ── Styled markdown body ── */
+  .article-body {
+    font-family: var(--font-serif);
+    color: var(--color-ink);
+    font-size: 20px;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 767px) {
+    .article-body {
+      font-size: 19px;
+    }
+  }
+
+  .article-body :global(p) {
+    margin: 0 0 24px;
+  }
+
+  .article-body :global(h2) {
+    font-family: var(--font-serif);
+    font-size: 30px;
+    line-height: 1.25;
+    font-weight: 400;
+    color: var(--color-ink);
+    letter-spacing: -0.4px;
+    margin: 48px 0 18px;
+  }
+
+  @media (max-width: 767px) {
+    .article-body :global(h2) {
+      font-size: 24px;
+      line-height: 1.25;
+      letter-spacing: -0.3px;
+      margin: 36px 0 14px;
+    }
+  }
+
+  .article-body :global(h3) {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    line-height: 1.3;
+    font-weight: 400;
+    color: var(--color-ink);
+    letter-spacing: -0.2px;
+    margin: 36px 0 14px;
+  }
+
+  .article-body :global(blockquote) {
+    margin: 36px 0;
+    padding: 24px 0 4px 28px;
+    border-left: 2px solid var(--color-accent);
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--color-ink);
+    letter-spacing: -0.2px;
+  }
+
+  .article-body :global(blockquote p) {
+    margin: 0;
+  }
+
+  .article-body :global(em) {
+    font-style: italic;
+  }
+
+  .article-body :global(strong) {
+    font-weight: 600;
+  }
+
+  .article-body :global(ul),
+  .article-body :global(ol) {
+    padding-left: 20px;
+    margin: 0 0 24px;
+  }
+
+  .article-body :global(li) {
+    margin-bottom: 8px;
+    line-height: 1.65;
+  }
+
+  .article-body :global(a) {
+    color: var(--color-accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-accent-hair, rgba(63,107,94,0.3));
+  }
+
+  .article-body :global(a:hover) {
+    border-bottom-color: var(--color-accent);
+  }
+
+  /* Drop cap on first paragraph */
+  .article-body :global(> p:first-child) {
+    font-size: 22px;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+    font-style: italic;
+    margin: 0 0 32px;
+  }
+
+  /* ── Inline email capture ── */
+  .inline-capture {
+    margin: 48px 0;
+    padding: 36px 32px;
+    background: var(--color-surface-soft);
+    border: 1px solid var(--color-hair);
+  }
+
+  /* ── Author end card ── */
+  .author-end {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--color-hair-soft);
+  }
+
+  /* ── Book sidebar ── */
+  .book-sidebar {
+    position: sticky;
+    top: 32px;
+    font-family: var(--font-sans);
+  }
+
+  .book-promo-card {
+    padding: 20px;
+    border: 1px solid var(--color-hair);
+    background: var(--color-surface-soft);
+  }
+
+  .book-promo-quote {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    color: var(--color-ink);
+    margin: 10px 0 16px;
+    line-height: 1.45;
+    font-style: italic;
+  }
+
+  .book-promo-inner {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-top: 16px;
+  }
+
+  .book-promo-text {
+    flex: 1;
+  }
+
+  .book-promo-title {
+    font-size: 13px;
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  .book-promo-sub {
+    font-size: 12px;
+    color: var(--color-ink-soft);
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .book-promo-cta {
+    color: var(--color-accent);
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-accent-hair, rgba(63,107,94,0.3));
+  }
+
+  .sidebar-theme-label {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--color-hair-soft);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    margin-bottom: 12px;
+  }
+
+  .sidebar-related-link {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    color: var(--color-ink);
+    line-height: 1.4;
+    padding: 12px 0;
+    border-top: 1px solid var(--color-hair-soft);
+    text-decoration: none;
+  }
+
+  .sidebar-related-link:hover {
+    color: var(--color-accent);
+  }
+
+  /* ── Related articles ── */
+  .related-section {
+    padding: 56px 64px 72px;
+    border-top: 1px solid var(--color-hair);
+  }
+
+  @media (max-width: 767px) {
+    .related-section {
+      padding: 36px 20px 48px;
+    }
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 28px;
+  }
+
+  @media (max-width: 767px) {
+    .related-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  .related-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .related-card-link:hover :global(.title) {
+    color: var(--color-accent);
+  }
+</style>
