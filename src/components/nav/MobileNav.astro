@@ -26,7 +26,8 @@ interface Props {
   labels: Labels;
 }
 
-const { brand, navItems, locales, currentLocale, labels } = Astro.props;
+const { brand, navItems, locales, labels } = Astro.props;
+const currentLocale = Astro.props.currentLocale.toUpperCase();
 ---
 
 <header class="mobile-nav">

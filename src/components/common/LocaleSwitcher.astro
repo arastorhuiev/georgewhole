@@ -1,0 +1,61 @@
+---
+import Icon from '@components/common/Icon.astro';
+
+interface LocaleOption {
+  code: string;
+  name: string;
+  href?: string;
+}
+
+interface Props {
+  current: string;
+  locales?: LocaleOption[];
+  class?: string;
+}
+
+const {
+  current: currentRaw,
+  locales = [
+    { code: 'EN', name: 'English' },
+    { code: 'UK', name: 'Українська' },
+    { code: 'RU', name: 'Русский' },
+    { code: 'ES', name: 'Español' },
+  ],
+  class: className,
+} = Astro.props;
+const current = currentRaw.toUpperCase();
+---
+
+<div
+  style="display:inline-flex;align-items:center;gap:8px;padding:6px 10px;font-size:11px;letter-spacing:0.6px;"
+  class:list={['border', 'border-hair', 'rounded-pill', 'font-mono', 'text-ink-soft', className]}
+>
+  <Icon name="globe" size={11} />
+  {locales.map((locale, i) => (
+    <>
+      {i > 0 && <span style="opacity:0.35;">·</span>}
+      {locale.href ? (
+        <a
+          href={locale.href}
+          class:list={[
+            'localeopt',
+            locale.code === current ? 'text-accent' : 'text-ink-soft',
+          ]}
+          style={locale.code === current ? 'font-weight:700;' : 'font-weight:400;'}
+        >
+          {locale.code}
+        </a>
+      ) : (
+        <span
+          class:list={[
+            'localeopt',
+            locale.code === current ? 'text-accent' : 'text-ink-soft',
+          ]}
+          style={locale.code === current ? 'font-weight:700;' : 'font-weight:400;'}
+        >
+          {locale.code}
+        </span>
+      )}
+    </>
+  ))}
+</div>
