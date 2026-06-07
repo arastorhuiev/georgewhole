@@ -1,4 +1,4 @@
 # Cloudflare Pages redirects.
-# Root → home locale (= HOME_LOCALE in src/lib/locales.ts). RU is first live;
-# update this target to /en/ when EN goes live (HOME_LOCALE flips to en).
-/    /ru/    301
+# Root → home locale (= HOME_LOCALE in src/lib/locales.ts). EN is the default
+# and now live, so root → /en/. (Was /ru/ while only RU shipped.)
+/    /en/    301

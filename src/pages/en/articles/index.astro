@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ArticleIndexPage from '@/page-impl/ArticleIndexPage.astro';
+import { useTranslations } from '@i18n';
+import { absUrl } from '@lib/seo';
+import { breadcrumb, collectionPageNode } from '@lib/schema';
+
+const lang = 'en';
+const t = useTranslations(lang);
+const url = absUrl(lang, 'articles');
+const jsonLd = [
+  collectionPageNode(url, lang, t.articlesIndex.title, t.articlesIndex.sub),
+  breadcrumb([
+    { name: t.brand, url: absUrl(lang, '') },
+    { name: t.nav.articles, url },
+  ]),
+];
+---
+
+<BaseLayout
+  locale={lang}
+  path="articles"
+  title={`${t.articlesIndex.title} · ${t.brand}`}
+  description={t.articlesIndex.sub}
+  jsonLd={jsonLd}
+>
+  <ArticleIndexPage lang={lang} />
+</BaseLayout>

@@ -1,11 +1,12 @@
 import type { Locale } from '@lib/locales';
 import { ru } from '@i18n/ru';
+import { en } from '@i18n/en';
 
 // UI chrome + singular page copy per locale. Repeatable content (articles,
 // books) lives in Content Collections, not here. RU is the launch locale;
 // en/uk/es dictionaries are added in M5 as each is localized. Until then,
 // any non-RU locale falls back to RU (never shipped thin — LIVE_LOCALES gates).
-const dicts = { ru } as const;
+const dicts = { ru, en } as const;
 
 export type UI = typeof ru;
 

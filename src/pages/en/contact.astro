@@ -1,0 +1,17 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ContactPage from '@/page-impl/ContactPage.astro';
+import { useTranslations } from '@i18n';
+
+const lang = 'en';
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  locale={lang}
+  path="contact"
+  title={`${t.contactPage.title} · ${t.brand}`}
+  description={t.contactPage.sub}
+>
+  <ContactPage lang={lang} />
+</BaseLayout>
