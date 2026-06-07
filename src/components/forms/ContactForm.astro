@@ -1,0 +1,363 @@
+---
+import Icon from '@components/common/Icon.astro';
+
+interface Props {
+  layout?: 'desktop' | 'mobile';
+  sent?: boolean;
+  action?: string;
+  strings: {
+    topicsLabel: string;
+    topics: string[];
+    nameLabel: string;
+    namePh: string;
+    emailLabel: string;
+    emailPh: string;
+    msgLabel: string;
+    msgPh: string;
+    submit: string;
+    fine: string;
+    sentTitle: string;
+    sentBody: string;
+    sentAgain: string;
+    elsewhereLabel: string;
+  };
+  elsewhere?: Array<[string, string]>;
+}
+
+const {
+  layout = 'desktop',
+  sent = false,
+  action,
+  strings,
+  elsewhere = [],
+} = Astro.props;
+
+const wide = layout === 'desktop';
+---
+
+<div class:list={['root font-sans', wide ? 'root--desktop' : 'root--mobile']}>
+
+  {/* ── Form col / success state ── */}
+  {sent ? (
+    <div class:list={['sent', wide && 'sent--desktop']}>
+      <div class="check-circle">
+        <Icon name="check" size={19} />
+      </div>
+      <h3
+        class="sent-title font-serif text-ink"
+        style={wide ? 'font-size:30px' : 'font-size:24px'}
+      >
+        {strings.sentTitle}
+      </h3>
+      <p class="sent-body text-ink-soft">{strings.sentBody}</p>
+      {/* sentAgain is a static anchor back to form — backend wires the real reset */}
+      <button type="button" class="btn-ghost again border-hair text-ink rounded-pill font-sans">
+        {strings.sentAgain}
+      </button>
+    </div>
+  ) : (
+    <form method="post" action={action ?? '#'} class="form">
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="honeypot" aria-hidden="true" />
+
+      {/* Topic chips */}
+      <div class="field-group">
+        <span class="label font-mono text-ink-muted">{strings.topicsLabel}</span>
+        <div class="chips">
+          {strings.topics.map((topic, i) => (
+            <button
+              type="button"
+              name="topic"
+              value={topic}
+              class:list={[
+                'topicchip font-sans',
+                i === 0
+                  ? 'topicchip--active bg-accent text-accent-fg border-accent'
+                  : 'topicchip--idle text-ink-soft border-hair',
+              ]}
+            >
+              {topic}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Name + Email row */}
+      <div class:list={['name-email', wide && 'name-email--desktop']}>
+        <label class="label-wrap">
+          <span class="label font-mono text-ink-muted">{strings.nameLabel}</span>
+          <input
+            type="text"
+            name="name"
+            placeholder={strings.namePh}
+            class="field border-hair bg-bg text-ink rounded-md font-sans"
+          />
+        </label>
+        <label class="label-wrap">
+          <span class="label font-mono text-ink-muted">{strings.emailLabel}</span>
+          <input
+            type="email"
+            name="email"
+            placeholder={strings.emailPh}
+            required
+            class="field border-hair bg-bg text-ink rounded-md font-sans"
+          />
+        </label>
+      </div>
+
+      {/* Message */}
+      <label class="label-wrap msg-wrap">
+        <span class="label font-mono text-ink-muted">{strings.msgLabel}</span>
+        <textarea
+          name="message"
+          placeholder={strings.msgPh}
+          rows={5}
+          class="field field--textarea border-hair bg-bg text-ink rounded-md font-sans"
+        ></textarea>
+      </label>
+
+      {/* Submit row */}
+      <div class="submit-row">
+        <button
+          type="submit"
+          class="btn-primary submit bg-accent text-accent-fg rounded-pill font-sans"
+        >
+          {strings.submit}
+          <Icon name="arrow" size={13} />
+        </button>
+        <span class="fine text-ink-muted font-sans">{strings.fine}</span>
+      </div>
+    </form>
+  )}
+
+  {/* ── Aside: elsewhere ── */}
+  <aside class="aside">
+    <div class="elsewhere-label font-mono text-ink-muted">{strings.elsewhereLabel}</div>
+    {elsewhere.map(([name, note]) => (
+      <a class="elsewhere-row text-ink" href="#">
+        <span class="elsewhere-name font-serif">{name}</span>
+        <span class="elsewhere-note text-ink-muted font-sans">{note}</span>
+      </a>
+    ))}
+  </aside>
+
+</div>
+
+<style>
+  .root {
+    display: grid;
+    align-items: flex-start;
+    font-family: var(--font-sans);
+  }
+
+  .root--desktop {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 64px;
+  }
+
+  .root--mobile {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  /* ── Success state ── */
+  .sent {
+    padding: 0;
+  }
+
+  .sent--desktop {
+    padding: 8px 0;
+  }
+
+  .check-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    margin-bottom: 18px;
+  }
+
+  .sent-title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.4px;
+    margin: 0 0 10px;
+  }
+
+  .sent-body {
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0 0 24px;
+    max-width: 420px;
+  }
+
+  .again {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    background: transparent;
+    border: 1px solid var(--color-hair);
+    border-radius: var(--radius-pill);
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  /* ── Form ── */
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .field-group {
+    margin-bottom: 22px;
+  }
+
+  .label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .topicchip {
+    padding: 9px 16px;
+    border-radius: var(--radius-pill);
+    border: 1px solid;
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--font-sans);
+  }
+
+  .topicchip--active {
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+    border-color: var(--color-accent);
+  }
+
+  .topicchip--idle {
+    background: transparent;
+    color: var(--color-ink-soft);
+    border-color: var(--color-hair);
+  }
+
+  .name-email {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .name-email--desktop {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .label-wrap {
+    display: block;
+  }
+
+  .msg-wrap {
+    margin-bottom: 18px;
+  }
+
+  .field {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    font-size: 14.5px;
+    font-family: var(--font-sans);
+    border: 1px solid var(--color-hair);
+    border-radius: var(--radius-md);
+    outline: none;
+  }
+
+  .field--textarea {
+    resize: vertical;
+    line-height: 1.6;
+  }
+
+  .submit-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 22px;
+    font-size: 14.5px;
+    font-weight: 500;
+    border: none;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    font-family: var(--font-sans);
+  }
+
+  .fine {
+    font-size: 12px;
+    max-width: 260px;
+    line-height: 1.5;
+  }
+
+  /* ── Aside ── */
+  .aside {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .elsewhere-label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .elsewhere-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 0;
+    border-top: 1px solid var(--color-hair-soft);
+    text-decoration: none;
+  }
+
+  .elsewhere-name {
+    font-family: var(--font-serif);
+    font-size: 16px;
+  }
+
+  .elsewhere-note {
+    font-size: 12px;
+    text-align: right;
+  }
+</style>

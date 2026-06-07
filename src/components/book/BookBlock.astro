@@ -1,0 +1,102 @@
+---
+// BookBlock.astro — book row: cover | text with CTA and retailer links.
+// Ported from design-reference/project/blocks-ru.jsx → BookBlockRU.
+
+import BookCover from '@components/book/BookCover.astro';
+import RetailerLinks from '@components/book/RetailerLinks.astro';
+import Kicker from '@components/common/Kicker.astro';
+import Button from '@components/common/Button.astro';
+
+interface CoverProps {
+  title: string;
+  num?: string;
+  bg?: string;
+  fg?: string;
+  rule?: string;
+  tagline?: string;
+}
+
+interface Props {
+  kicker: string;
+  title: string;
+  subtitle?: string;
+  body?: string;
+  cta: string;
+  retailers?: Array<[string, string]>;
+  retailerStatus?: string;
+  retailerLabel?: string;
+  compact?: boolean;
+  cover?: CoverProps;
+}
+
+const {
+  kicker,
+  title,
+  subtitle,
+  body,
+  cta,
+  retailers,
+  retailerStatus,
+  retailerLabel,
+  compact = false,
+  cover,
+} = Astro.props;
+
+const coverW = compact ? 120 : 180;
+const coverH = compact ? 172 : 260;
+const titleFontSize = compact ? '24px' : '28px';
+const bodyFontSize = compact ? '15px' : '16px';
+const gridCols = compact ? '120px 1fr' : '180px 1fr';
+const gridGap = compact ? '20px' : '32px';
+---
+
+<article
+  class="font-sans"
+  style={`display:grid;grid-template-columns:${gridCols};gap:${gridGap};align-items:flex-start;`}
+>
+  <BookCover
+    title={cover?.title ?? title}
+    num={cover?.num}
+    w={coverW}
+    h={coverH}
+    bg={cover?.bg}
+    fg={cover?.fg}
+    rule={cover?.rule}
+    tagline={cover?.tagline}
+  />
+  <div>
+    <Kicker color="var(--color-ink-muted)">{kicker}</Kicker>
+    <h3
+      class="font-serif text-ink"
+      style={`font-size:${titleFontSize};line-height:1.2;font-weight:400;margin:8px 0 6px;letter-spacing:-0.3px;`}
+    >
+      {title}
+    </h3>
+    {subtitle && (
+      <p
+        class="font-serif text-ink-soft"
+        style={`font-size:${bodyFontSize};font-style:italic;line-height:1.5;margin:0 0 14px;`}
+      >
+        {subtitle}
+      </p>
+    )}
+    {!compact && body && (
+      <p
+        class="text-ink-soft"
+        style="font-size:14.5px;line-height:1.65;margin:0 0 22px;max-width:480px;"
+      >
+        {body}
+      </p>
+    )}
+    <Button variant="primary" size="sm">{cta}</Button>
+    {retailers && retailers.length > 0 && (
+      <div style="margin-top:22px;">
+        <RetailerLinks
+          items={retailers}
+          status={retailerStatus}
+          label={retailerLabel}
+        />
+      </div>
+    )}
+  </div>
+</article>

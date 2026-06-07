@@ -1,0 +1,28 @@
+---
+interface Props {
+  color?: string;
+  class?: string;
+}
+
+const { color, class: className } = Astro.props;
+---
+
+<div
+  style={color ? `color:${color}` : undefined}
+  class:list={[
+    'font-mono',
+    !color && 'text-accent',
+    className,
+  ]}
+>
+  <slot />
+</div>
+
+<style>
+  div {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+    font-weight: 500;
+  }
+</style>

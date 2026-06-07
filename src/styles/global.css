@@ -1,0 +1,271 @@
+@import "tailwindcss";
+
+/* Self-hosted variable fonts (Fontsource). Each @font-face carries a
+   unicode-range, so the browser fetches only the subset a page needs —
+   Cyrillic on ru/uk, Latin (incl. Spanish ñ ¿ ¡ á, in the latin subset) on
+   en/es. Subset-level import trimming is an M0 perf follow-up. */
+@import "@fontsource-variable/literata";
+@import "@fontsource-variable/source-serif-4";
+@import "@fontsource-variable/source-sans-3";
+@import "@fontsource/source-code-pro";
+
+/* ── Design tokens → Tailwind theme (colours / radii / shadow / fonts) ──
+   Editorial type scale (hero/display/etc.) stays in component-scoped CSS for
+   pixel-fidelity; @theme carries the system primitives. */
+@theme {
+  --color-bg: #faf6ef;
+  --color-surface: #f2ecdf;
+  --color-surface-soft: #f7f2e6;
+  --color-ink: #2a2723;
+  --color-ink-soft: #5c5349;
+  --color-ink-muted: #8c8478;
+  --color-accent: #3f6b5e;
+  --color-accent-deep: #2f5246;
+  --color-accent-fg: #faf6ef;
+  --color-callout: #ede9de;
+  --color-crisis-bg: #f0ebde;
+  --color-crisis-border: #7a6a4e;
+  --color-hair: rgba(42, 39, 35, 0.12);
+  --color-hair-soft: rgba(42, 39, 35, 0.06);
+  --color-accent-soft: rgba(63, 107, 94, 0.1);
+  --color-accent-hair: rgba(63, 107, 94, 0.22);
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-pill: 999px;
+
+  --shadow-paper: 0 1px 0 rgba(42, 39, 35, 0.04), 0 1px 2px rgba(42, 39, 35, 0.06);
+
+  /* Font utilities resolve to per-locale-overridable stacks (see :root). */
+  --font-serif: var(--font-serif-stack);
+  --font-sans: var(--font-sans-stack);
+  --font-mono: var(--font-mono-stack);
+}
+
+/* Per-locale serif: Literata for Cyrillic (ru/uk), Source Serif 4 for Latin
+   (en/es). One attribute — data-locale on <html> — swaps the whole subtree. */
+:root {
+  --font-serif-stack: "Literata Variable", Georgia, "Times New Roman", serif;
+  --font-sans-stack: "Source Sans 3 Variable", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Helvetica, Arial, "Noto Sans", sans-serif;
+  --font-mono-stack: "Source Code Pro", ui-monospace, "SF Mono", Menlo, Consolas,
+    monospace;
+}
+[data-locale="en"],
+[data-locale="es"] {
+  --font-serif-stack: "Source Serif 4 Variable", Georgia, "Times New Roman", serif;
+}
+[data-locale="ru"],
+[data-locale="uk"] {
+  --font-serif-stack: "Literata Variable", Georgia, "Times New Roman", serif;
+}
+
+@layer base {
+  html {
+    background: var(--color-bg);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+  a,
+  button {
+    transition: color 0.18s ease, background-color 0.18s ease,
+      border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ── Component hover / focus affordances — ported 1:1 from the mockup's
+   <style> block (design-reference/project/The New Code.html). Literal accent
+   hexes replaced with the theme vars. The prefers-reduced-motion guard in
+   @layer base neutralises these transitions for users who ask. ── */
+@layer components {
+  .artrow .artrow-t,
+  .feat-t {
+    transition: color 0.18s ease;
+  }
+  .artrow .artrow-a,
+  .feat-a {
+    transition: transform 0.22s cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+  .artrow:hover .artrow-t,
+  .feat:hover .feat-t {
+    color: var(--color-accent) !important;
+  }
+  .artrow:hover .artrow-a,
+  .feat:hover .feat-a {
+    transform: translateX(4px);
+  }
+  .artrow:hover {
+    background: rgba(63, 107, 94, 0.025);
+  }
+  .retailer:hover {
+    border-color: var(--color-accent) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 7px rgba(42, 39, 35, 0.08);
+  }
+  .topicchip:hover,
+  .quizopt:hover {
+    border-color: var(--color-accent) !important;
+  }
+  .tagchip:hover {
+    border-color: var(--color-accent) !important;
+    color: var(--color-ink) !important;
+  }
+  .reslink:hover {
+    color: var(--color-accent) !important;
+  }
+  .elsewhere:hover {
+    opacity: 0.65;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    cursor: pointer;
+  }
+  .btn-primary:disabled {
+    cursor: default;
+  }
+  .btn-primary:not(:disabled):hover {
+    background: var(--color-accent-deep) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(47, 82, 70, 0.22);
+  }
+  .btn-primary:not(:disabled):active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(47, 82, 70, 0.2);
+  }
+  .btn-ghost {
+    cursor: pointer;
+  }
+  .btn-ghost:disabled {
+    cursor: default;
+  }
+  .btn-ghost:not(:disabled):hover {
+    border-color: var(--color-accent) !important;
+    background: rgba(63, 107, 94, 0.07) !important;
+    color: var(--color-accent-deep) !important;
+  }
+  .btn-ghost:not(:disabled):active {
+    background: rgba(63, 107, 94, 0.12) !important;
+  }
+
+  /* Text & nav links */
+  .textlink {
+    cursor: pointer;
+  }
+  .textlink:hover {
+    color: var(--color-accent-deep) !important;
+    border-bottom-color: var(--color-accent) !important;
+  }
+  .textlink:hover .artrow-a,
+  .textlink:hover svg {
+    transform: translateX(3px);
+  }
+  .textlink svg {
+    transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+  .navlink {
+    cursor: pointer;
+  }
+  .navlink:hover {
+    color: var(--color-accent) !important;
+    border-bottom-color: rgba(63, 107, 94, 0.5) !important;
+  }
+  .brandlink {
+    cursor: pointer;
+  }
+  .brandlink:hover {
+    opacity: 0.68;
+  }
+  .footerlink {
+    cursor: pointer;
+  }
+  .footerlink:hover {
+    color: var(--color-accent) !important;
+  }
+
+  /* Locale options (desktop switcher) */
+  .localeopt {
+    cursor: pointer;
+    transition: color 0.16s ease;
+  }
+  .localeopt:hover {
+    color: var(--color-accent) !important;
+  }
+
+  /* Book shelf cards */
+  .bookcover {
+    transition:
+      transform 0.24s cubic-bezier(0.2, 0.7, 0.3, 1),
+      box-shadow 0.24s ease;
+  }
+  .bookcard {
+    cursor: pointer;
+  }
+  .bookcard:hover .bookcover {
+    transform: translateY(-5px) rotate(-0.6deg);
+    box-shadow:
+      6px 12px 0 rgba(42, 39, 35, 0.1),
+      0 6px 18px rgba(0, 0, 0, 0.2) !important;
+  }
+  .bookcard:hover .bookcard-t {
+    color: var(--color-accent) !important;
+  }
+
+  /* Icon / pill buttons (mobile nav) */
+  .iconbtn {
+    cursor: pointer;
+  }
+  .iconbtn:hover,
+  .iconbtn.is-open {
+    border-color: var(--color-accent) !important;
+    color: var(--color-accent) !important;
+  }
+  .iconbtn.is-open {
+    background: rgba(63, 107, 94, 0.07) !important;
+  }
+  .iconbtn .chev-i {
+    transition: transform 0.2s ease;
+  }
+  .iconbtn.is-open .chev-i {
+    transform: rotate(180deg);
+  }
+
+  /* Mobile menu rows */
+  .menurow {
+    cursor: pointer;
+    transition:
+      background 0.14s ease,
+      color 0.14s ease;
+  }
+  .menurow:hover {
+    background: rgba(63, 107, 94, 0.06) !important;
+    color: var(--color-accent) !important;
+  }
+
+  /* Forms */
+  input,
+  textarea {
+    transition:
+      border-color 0.16s ease,
+      box-shadow 0.16s ease;
+  }
+  input:focus,
+  textarea:focus {
+    border-color: var(--color-accent) !important;
+    box-shadow: 0 0 0 3px rgba(63, 107, 94, 0.1);
+  }
+}

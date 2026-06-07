@@ -1,0 +1,178 @@
+---
+import Icon from '@components/common/Icon.astro';
+import Kicker from '@components/common/Kicker.astro';
+
+interface Props {
+  variant?: 'newsletter' | 'quiz';
+  compact?: boolean;
+  bare?: boolean;
+  sent?: boolean;
+  action?: string;
+  strings: {
+    kicker?: string;
+    title: string;
+    sub?: string;
+    placeholder: string;
+    submit: string;
+    note?: string;
+    sentTitle: string;
+    sentBody: string;
+  };
+}
+
+const {
+  variant = 'newsletter',
+  compact = false,
+  bare = false,
+  sent = false,
+  action,
+  strings,
+} = Astro.props;
+
+const isQuiz = variant === 'quiz';
+---
+
+{sent ? (
+  <div class="wrap font-sans">
+    <div class="check-circle">
+      <Icon name="check" size={18} />
+    </div>
+    <h3
+      class="sent-title font-serif text-ink"
+      style={compact ? 'font-size:22px' : 'font-size:26px'}
+    >
+      {strings.sentTitle}
+    </h3>
+    <p class="sent-body text-ink-soft">{strings.sentBody}</p>
+  </div>
+) : (
+  <div class="wrap font-sans">
+    {isQuiz && strings.kicker && (
+      <Kicker>{strings.kicker}</Kicker>
+    )}
+    {!bare && (
+      <h3
+        class:list={['title font-serif text-ink', isQuiz ? 'title--quiz' : 'title--newsletter']}
+        style={
+          isQuiz
+            ? compact ? 'font-size:26px;margin:12px 0 10px' : 'font-size:32px;margin:12px 0 10px'
+            : compact ? 'font-size:22px;margin:0 0 8px' : 'font-size:26px;margin:0 0 8px'
+        }
+      >
+        {strings.title}
+      </h3>
+    )}
+    {!bare && strings.sub && (
+      <p class="sub text-ink-soft">{strings.sub}</p>
+    )}
+    <form method="post" action={action ?? '#'} class="form">
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+      <input
+        type="email"
+        name="email"
+        placeholder={strings.placeholder}
+        required
+        class="field border-hair bg-bg text-ink rounded-md font-sans"
+      />
+      <button
+        type="submit"
+        class="btn-primary submit bg-accent text-accent-fg rounded-md font-sans"
+      >
+        {strings.submit}
+      </button>
+    </form>
+    {strings.note && (
+      <p class="note text-ink-muted">{strings.note}</p>
+    )}
+  </div>
+)}
+
+<style>
+  .wrap {
+    font-family: var(--font-sans);
+  }
+
+  /* ── Sent / success state ── */
+  .check-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 19px;
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    margin-bottom: 16px;
+  }
+
+  .sent-title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+    margin: 0 0 8px;
+  }
+
+  .sent-body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── Form state ── */
+  .title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+  }
+
+  .sub {
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin: 0 0 18px;
+    max-width: 480px;
+  }
+
+  .form {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    max-width: 460px;
+  }
+
+  .field {
+    flex: 1 1 220px;
+    padding: 12px 14px;
+    font-size: 14px;
+    border: 1px solid var(--color-hair);
+    border-radius: var(--radius-md);
+    outline: none;
+  }
+
+  .submit {
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+  }
+
+  .note {
+    font-size: 11.5px;
+    margin-top: 12px;
+    margin-bottom: 0;
+  }
+
+  /* Honeypot — must stay invisible */
+  .hidden {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>

@@ -1,0 +1,110 @@
+---
+import Icon from '@components/common/Icon.astro';
+
+interface Props {
+  variant: 'primary' | 'ghost' | 'text';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  type?: 'button' | 'submit';
+  icon?: boolean;
+  disabled?: boolean;
+  class?: string;
+}
+
+const {
+  variant,
+  size = 'md',
+  href,
+  type = 'button',
+  disabled = false,
+  class: className,
+} = Astro.props;
+
+// icon default: primary→true, text→true, ghost→false
+const icon = Astro.props.icon ?? (variant === 'ghost' ? false : true);
+
+// Exact paddings and font-sizes from the JSX source
+const pad: string = (() => {
+  if (variant === 'primary') {
+    if (size === 'lg') return '14px 22px';
+    if (size === 'sm') return '8px 14px';
+    return '11px 18px'; // md
+  }
+  if (variant === 'ghost') {
+    if (size === 'lg') return '13px 22px';
+    if (size === 'sm') return '8px 14px';
+    return '10px 18px'; // md
+  }
+  return '0'; // text — no block padding, bottom-border + paddingBottom 1px instead
+})();
+
+const fs: number = (() => {
+  if (variant === 'text') return 14;
+  if (size === 'lg') return 15;
+  if (size === 'sm') return 13;
+  return 14; // md
+})();
+
+// Inline style built per variant to match JSX pixel-for-pixel
+const styleMap: Record<string, string> = {
+  primary: [
+    'display:inline-flex',
+    'align-items:center',
+    'gap:10px',
+    `padding:${pad}`,
+    `font-size:${fs}px`,
+    'font-weight:500',
+    'letter-spacing:0.1px',
+    'text-decoration:none',
+    'border:none',
+  ].join(';'),
+  ghost: [
+    'display:inline-flex',
+    'align-items:center',
+    'gap:10px',
+    `padding:${pad}`,
+    `font-size:${fs}px`,
+    'font-weight:500',
+    'text-decoration:none',
+  ].join(';'),
+  text: [
+    'display:inline-flex',
+    'align-items:center',
+    'gap:6px',
+    `font-size:${fs}px`,
+    'font-weight:500',
+    'text-decoration:none',
+    'border-bottom:1px solid var(--color-accent-hair)',
+    'padding-bottom:1px',
+  ].join(';'),
+};
+
+const variantClasses: Record<string, string> = {
+  primary: 'btn-primary bg-accent text-accent-fg rounded-pill font-sans',
+  ghost: 'btn-ghost border border-hair text-ink rounded-pill font-sans',
+  text: 'textlink text-accent font-sans',
+};
+
+const iconSize = variant === 'text' ? 12 : 13;
+---
+
+{href ? (
+  <a
+    href={href}
+    style={styleMap[variant]}
+    class:list={[variantClasses[variant], className]}
+  >
+    <slot />
+    {icon && <Icon name="arrow" size={iconSize} />}
+  </a>
+) : (
+  <button
+    type={type}
+    disabled={disabled}
+    style={styleMap[variant]}
+    class:list={[variantClasses[variant], className]}
+  >
+    <slot />
+    {icon && <Icon name="arrow" size={iconSize} />}
+  </button>
+)}

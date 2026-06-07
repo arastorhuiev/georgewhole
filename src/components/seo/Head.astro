@@ -1,0 +1,31 @@
+---
+import type { Locale } from '@lib/locales';
+import { absUrl } from '@lib/seo';
+import Hreflang from '@components/seo/Hreflang.astro';
+
+interface Props {
+  locale: Locale;
+  /** locale-less logical path */
+  path?: string;
+  title: string;
+  description?: string;
+  /** non-live locales & internal pages → keep out of the index */
+  noindex?: boolean;
+}
+const { locale, path = '', title, description, noindex = false } = Astro.props;
+const canonical = absUrl(locale, path);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+{description && <meta name="description" content={description} />}
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+<link rel="canonical" href={canonical} />
+<Hreflang path={path} />
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:url" content={canonical} />
+{description && <meta property="og:description" content={description} />}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="generator" content={Astro.generator} />

@@ -1,0 +1,114 @@
+---
+// OldNewCompare.astro — symmetric "ledger" comparison with central numbered spine.
+// Ported pixel-perfect from design-reference/project/blocks-ru.jsx → OldNewCompareRU.
+// Desktop: 1fr | 64px spine | 1fr mirrored with numbered nodes.
+// Mobile: stacked cards per pair.
+
+import Icon from '@components/common/Icon.astro';
+
+interface Props {
+  pairs: Array<[string, string]>;
+  layout?: 'desktop' | 'mobile';
+  labels: {
+    oldHead: string;
+    newHead: string;
+    oldLabel?: string;
+    newLabel?: string;
+  };
+}
+
+const { pairs, layout = 'desktop', labels } = Astro.props;
+---
+
+{layout === 'mobile' ? (
+  <div style="display:flex;flex-direction:column;gap:14px;">
+    {pairs.map(([oldR, newR], i) => (
+      <div
+        class="bg-surface-soft"
+        style="border:1px solid var(--color-hair);padding:18px 18px 16px;position:relative;"
+      >
+        <div
+          class="font-mono text-ink-muted"
+          style="position:absolute;top:14px;right:14px;font-size:11px;letter-spacing:0.6px;"
+        >
+          0{i + 1}
+        </div>
+        <div
+          class="font-mono text-ink-muted"
+          style="font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:6px;"
+        >
+          {labels.oldLabel ?? labels.oldHead}
+        </div>
+        <div
+          class="font-serif text-ink-muted"
+          style="font-size:17px;line-height:1.4;text-decoration:line-through;text-decoration-color:rgba(140,132,120,0.5);text-decoration-thickness:1px;"
+        >
+          {oldR}
+        </div>
+        <div style="height:1px;background:var(--color-hair);margin:14px 0 12px;" />
+        <div
+          class="font-mono text-accent"
+          style="font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px;"
+        >
+          <Icon name="check" size={12} />
+          {labels.newLabel ?? labels.newHead}
+        </div>
+        <div class="font-serif text-ink" style="font-size:18px;line-height:1.4;">
+          {newR}
+        </div>
+      </div>
+    ))}
+  </div>
+) : (
+  <div class="oldnew font-serif">
+    {/* column headers */}
+    <div style="display:grid;grid-template-columns:1fr 64px 1fr;align-items:end;margin-bottom:4px;">
+      <div
+        class="font-mono text-ink-muted"
+        style="text-align:right;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;padding-bottom:14px;"
+      >
+        {labels.oldHead}
+      </div>
+      <div />
+      <div
+        class="font-mono text-accent"
+        style="text-align:left;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;padding-bottom:14px;"
+      >
+        {labels.newHead}
+      </div>
+    </div>
+
+    {pairs.map(([oldR, newR], i) => (
+      <div style="display:grid;grid-template-columns:1fr 64px 1fr;align-items:stretch;">
+        {/* old — right-aligned, muted, struck */}
+        <div
+          class="text-ink-muted"
+          style="text-align:right;padding:22px 0;border-top:1px solid var(--color-hair);font-size:19px;line-height:1.4;text-decoration:line-through;text-decoration-color:rgba(140,132,120,0.45);text-decoration-thickness:1px;display:flex;align-items:center;justify-content:flex-end;"
+        >
+          {oldR}
+        </div>
+
+        {/* spine node */}
+        <div style="position:relative;border-top:1px solid var(--color-hair);">
+          <div
+            style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--color-hair);transform:translateX(-0.5px);"
+          />
+          <div
+            class="font-mono text-accent bg-bg"
+            style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:32px;height:32px;border-radius:16px;border:1px solid var(--color-accent-hair);display:flex;align-items:center;justify-content:center;font-size:12px;letter-spacing:0.4px;"
+          >
+            0{i + 1}
+          </div>
+        </div>
+
+        {/* new — left-aligned, ink */}
+        <div
+          class="text-ink"
+          style="text-align:left;padding:22px 0;border-top:1px solid var(--color-hair);font-size:19px;line-height:1.4;display:flex;align-items:center;"
+        >
+          {newR}
+        </div>
+      </div>
+    ))}
+  </div>
+)}

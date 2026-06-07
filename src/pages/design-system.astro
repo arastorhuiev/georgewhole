@@ -1,0 +1,268 @@
+---
+// Internal design-system reference (noindex, excluded from sitemap).
+// Assembles every M1 component for 1:1 fidelity verification against
+// design-reference/project/screenshots/. Not a shipped page.
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Footer from '@components/footer/Footer.astro';
+import Button from '@components/common/Button.astro';
+import Kicker from '@components/common/Kicker.astro';
+import LocaleSwitcher from '@components/common/LocaleSwitcher.astro';
+import AtmosImage from '@components/common/AtmosImage.astro';
+import AuthorPortrait from '@components/common/AuthorPortrait.astro';
+import NextSteps from '@components/common/NextSteps.astro';
+import CrisisResources from '@components/common/CrisisResources.astro';
+import OldNewCompare from '@components/common/OldNewCompare.astro';
+import BookCover from '@components/book/BookCover.astro';
+import BookShelf from '@components/book/BookShelf.astro';
+import BookBlock from '@components/book/BookBlock.astro';
+import RetailerLinks from '@components/book/RetailerLinks.astro';
+import ShelfStatus from '@components/book/ShelfStatus.astro';
+import ArticleCard from '@components/article/ArticleCard.astro';
+import PullQuote from '@components/article/PullQuote.astro';
+import ReframeCallout from '@components/article/ReframeCallout.astro';
+import AuthorByline from '@components/article/AuthorByline.astro';
+import Sources from '@components/article/Sources.astro';
+import ArticleFigure from '@components/article/ArticleFigure.astro';
+import EmailCapture from '@components/forms/EmailCapture.astro';
+import ContactForm from '@components/forms/ContactForm.astro';
+
+const navItems = [
+  { key: 'articles', label: 'Статьи', href: '#' },
+  { key: 'books', label: 'Книги', href: '#' },
+  { key: 'about', label: 'Об авторе', href: '#' },
+  { key: 'newsletter', label: 'Рассылка', href: '#' },
+];
+const locales = [
+  { code: 'EN', name: 'English', href: '#' },
+  { code: 'UK', name: 'Українська', href: '#' },
+  { code: 'RU', name: 'Русский' },
+  { code: 'ES', name: 'Español', href: '#' },
+];
+
+const neutrals = [
+  ['Фон', '#FAF6EF'],
+  ['Поверхность', '#F2ECDF'],
+  ['Мягкая пов.', '#F7F2E6'],
+  ['Чернила', '#2A2723'],
+  ['Чернила мягк.', '#5C5349'],
+  ['Чернила прим.', '#8C8478'],
+];
+const accents = [
+  ['Основной', '#3F6B5E'],
+  ['Глубокий', '#2F5246'],
+  ['Заливка', 'rgba(63,107,94,.10)'],
+  ['Линия', 'rgba(63,107,94,.22)'],
+];
+
+const typeRows = [
+  ['Дисплей / hero · 64 · Literata', 64, 1.05, -0.8, 'serif', 'Дело не в силе воли.'],
+  ['Дисплей small · 44', 44, 1.1, -0.5, 'serif', 'Старый Код, на который мы не подписывались.'],
+  ['H1 · статья · 32', 32, 1.2, -0.3, 'serif', 'Что тело помнит, когда ум спорит.'],
+  ['H2 · секция · 24', 24, 1.3, -0.2, 'serif', 'Более тихий способ кормить себя.'],
+  ['Тело / чтение · 20 · lh 1.7 · 65–75ch', 20, 1.7, 0, 'serif', 'Для читателя, который попробовал всё, это не очередной план. Это разрешение положить планы.'],
+  ['UI / мета · 15 · Source Sans', 15, 1.6, 0, 'sans', 'Автор: georgewhole · 8 мин · 14 апреля 2026'],
+  ['Kicker · 11 · моно · ВЕРХН.', 11, 1.5, 1.6, 'mono', 'СТАТЬИ · СТАРЫЙ КОД · 02'],
+];
+const spacing = [4, 8, 12, 16, 24, 32, 48, 64, 96];
+
+const books = [
+  { id: 'slozhnye', num: '01', title: 'Сложные отношения с едой', themes: ['вес', 'любовь', 'красота'], status: 'soon' as const, cover: { bg: '#7A5747', fg: '#FAF6EF', rule: '#3F6B5E', tagline: 'готовится' } },
+  { id: 'eda-psyche', num: '02', title: 'Еда: психика против тела', themes: ['культура', 'религия', 'гендер'], status: 'soon' as const, cover: { bg: '#3F6B5E', fg: '#FAF6EF', rule: '#EDE9DE', tagline: 'готовится' } },
+  { id: 'krasota', num: '03', title: 'Красота', themes: ['тело', 'внешность', 'внутренний мир'], status: 'soon' as const, cover: { bg: '#EDE9DE', fg: '#2A2723', rule: '#3F6B5E', tagline: 'готовится' } },
+  { id: 'diety', num: '04', title: 'Диеты', themes: ['медицина', 'таблетки', 'операции'], status: 'soon' as const, cover: { bg: '#4F4636', fg: '#FAF6EF', rule: '#3F6B5E', tagline: 'готовится' } },
+  { id: 'novy-kod', num: '05', title: 'Новый Код', themes: ['еда', 'тело', 'движение'], status: 'out' as const, cover: { bg: '#2A2723', fg: '#FAF6EF', rule: '#3F6B5E', tagline: 'вышла · 2026' } },
+];
+
+const articleCard = {
+  kicker: 'Серия «Старый код» · 02',
+  title: 'Что мы имеем в виду, когда говорим «сила воли»',
+  summary: 'Возвращение к правилу, что тело — что-то, чем надо управлять. И к более тихому правилу под ним.',
+  meta: 'СТАТЬЯ · 9 МИН · АПРЕЛЬ',
+  image: 'утренний свет',
+  imageTone: 'morning' as const,
+};
+
+const pairs: Array<[string, string]> = [
+  ['Заслужить следующий приём пищи', 'Кормить себя без условий'],
+  ['Меньше — всегда лучше', 'Достаточно — уже хорошо'],
+  ['Дисциплина равна ценности', 'Ценность не зарабатывается телом'],
+  ['Дискомфорт — это опасность', 'Дискомфорт — это просто дискомфорт'],
+];
+
+const footerStrings = {
+  deskTitle: 'Стол автора',
+  deskBlurb: 'Статьи и книги о правилах, по которым мы живём, не выбирая их, — и о тех, что мы можем выбрать.',
+  cols: [
+    ['Читать', ['Все статьи', 'По темам', 'Тест']],
+    ['Книги', ['Новый Код', 'Готовятся', 'Об авторе']],
+    ['Поддержка', ['Контакты', 'Пресса', 'Рассылка']],
+  ] as Array<[string, string[]]>,
+  copy: '© 2026 · georgewhole · СНАЧАЛА НА БУМАГЕ',
+  legal: ['УСЛОВИЯ'],
+};
+
+const sectionLabel = 'font-mono text-[11px] uppercase tracking-[0.16em] text-ink-muted';
+---
+
+<BaseLayout locale="ru" path="design-system" title="Дизайн-система · georgewhole" noindex>
+  <div class="hidden md:block"><Nav brand="georgewhole" brandHref="#" brandTagline="книги и письма" items={navItems} locale="ru" locales={locales} wide /></div>
+  <div class="md:hidden"><MobileNav brand="georgewhole" brandHref="#" navItems={navItems} locales={locales} currentLocale="ru" labels={{ lang: 'Язык сайта', menu: 'Меню' }} /></div>
+
+  <main class="mx-auto max-w-[1100px] px-6 py-16 md:px-16">
+    <header class="mb-14 border-b border-hair pb-8">
+      <p class={sectionLabel}>Дизайн-система · M1 · авторская платформа</p>
+      <h1 class="mt-3 max-w-4xl font-serif text-[48px] leading-[1.05] tracking-[-0.8px] text-ink md:text-[56px]">
+        Тихая редакторская система для автора, который не продаёт хайп.
+      </h1>
+      <p class="mt-5 max-w-2xl font-mono text-[11px] uppercase leading-relaxed tracking-[0.1em] text-ink-muted">
+        Доверие важнее хайпа · EN · UK · RU · (ES) · редакторская, не SaaS
+      </p>
+    </header>
+
+    <!-- 01 Colour -->
+    <section class="mb-16">
+      <p class={sectionLabel}>§ 01 · Цвет</p>
+      <div class="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-6">
+        {neutrals.map(([name, c]) => (
+          <div>
+            <div class="h-16 border border-hair" style={`background:${c}`}></div>
+            <div class="mt-1.5 text-xs font-medium text-ink">{name}</div>
+            <div class="font-mono text-[10.5px] text-ink-muted">{c}</div>
+          </div>
+        ))}
+      </div>
+      <div class="mt-6 grid max-w-md grid-cols-4 gap-2">
+        {accents.map(([name, c]) => (
+          <div>
+            <div class="h-16 border border-hair" style={`background:${c}`}></div>
+            <div class="mt-1.5 text-xs font-medium text-ink">{name}</div>
+            <div class="font-mono text-[10.5px] text-ink-muted">{c}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 02 Type -->
+    <section class="mb-16">
+      <p class={sectionLabel}>§ 02 · Типографика</p>
+      <div class="mt-2">
+        {typeRows.map(([label, size, lh, ls, family, text]) => (
+          <div class="border-t border-hair-soft py-5">
+            <div class="mb-2.5 font-mono text-[10.5px] uppercase tracking-[0.1em] text-ink-muted">{label}</div>
+            <div
+              class:list={[family === 'serif' ? 'font-serif' : family === 'mono' ? 'font-mono' : 'font-sans', family === 'mono' && 'uppercase']}
+              style={`font-size:${size}px;line-height:${lh};letter-spacing:${ls}px;color:var(--color-ink);text-wrap:pretty;`}
+            >{text}</div>
+          </div>
+        ))}
+      </div>
+      <div class="mt-8 grid grid-cols-2 gap-px border border-hair bg-hair">
+        {[['ru', 'Русский', 'Literata', 'Дело не в силе воли. Дело в коде.'], ['en', 'English', 'Source Serif 4', 'It isn’t willpower. It’s the code.'], ['uk', 'Українська', 'Literata', 'Справа не в силі волі. Справа в коді.'], ['es', 'Español', 'Source Serif 4', 'No es fuerza de voluntad. Es el código.']].map(([loc, name, font, txt]) => (
+          <div data-locale={loc} class="bg-bg p-5">
+            <div class="mb-2.5 flex justify-between font-mono text-[10px] uppercase tracking-wider text-ink-muted"><span>{name}</span><span class="text-accent">{font}</span></div>
+            <div class="font-serif text-2xl leading-tight tracking-[-0.3px] text-ink">{txt}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 03 Spacing / radii / shadow -->
+    <section class="mb-16">
+      <p class={sectionLabel}>§ 03 · Ритм, радиусы, тень</p>
+      <div class="mt-6 flex items-end gap-3">
+        {spacing.map((n) => (
+          <div class="flex flex-col items-center gap-1.5">
+            <div style={`width:28px;height:${n}px;background:var(--color-ink);opacity:.85`}></div>
+            <div class="font-mono text-[10.5px] text-ink-muted">{n}</div>
+          </div>
+        ))}
+      </div>
+      <div class="mt-8 flex flex-wrap items-center gap-7">
+        <div class="flex items-center gap-3"><div class="h-9 w-14 border border-hair bg-surface rounded-sm"></div><span class="font-mono text-[10.5px] text-ink-muted">r=3 sm</span></div>
+        <div class="flex items-center gap-3"><div class="h-9 w-14 border border-hair bg-surface rounded-md"></div><span class="font-mono text-[10.5px] text-ink-muted">r=6 md</span></div>
+        <div class="flex items-center gap-3"><div class="h-9 w-14 border border-hair bg-surface rounded-pill"></div><span class="font-mono text-[10.5px] text-ink-muted">r=999 pill</span></div>
+        <div class="flex items-center gap-3"><div class="h-9 w-24 border border-hair bg-bg shadow-paper"></div><span class="font-mono text-[10.5px] text-ink-muted">paper shadow</span></div>
+      </div>
+    </section>
+
+    <!-- 04 Components -->
+    <section class="space-y-12">
+      <p class={sectionLabel}>§ 04 · Компоненты</p>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <Button variant="primary">С чего начать</Button>
+        <Button variant="primary" size="lg">Большая</Button>
+        <Button variant="primary" size="sm">Маленькая</Button>
+        <Button variant="ghost">История автора</Button>
+        <Button variant="text">Пройти тест</Button>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <Kicker>Серия «Старый код» · 02</Kicker>
+        <LocaleSwitcher current="RU" locales={locales} />
+        <AuthorPortrait size={48} />
+      </div>
+
+      <AuthorByline layout="stack" name="georgewhole" blurb="Пишет из личного опыта восстановления (р. 1962)." date="14 АПРЕЛЯ 2026" readtime="8 МИН ЧТЕНИЯ" />
+
+      <ReframeCallout label="Мягкая рамка">
+        Дело не в силе воли. Это код — унаследованный, в основном невысказанный — говорит, что считать хорошим днём, хорошей тарелкой, хорошим телом.
+      </ReframeCallout>
+
+      <PullQuote attribution="Читательница, 47 лет, в письме">
+        Я думала, проблема в громких правилах. Оказалось — в тихих.
+      </PullQuote>
+
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <ArticleCard {...articleCard} width="100%" />
+        <ArticleCard {...articleCard} compact width="100%" />
+      </div>
+
+      <ArticleFigure caption="Кухня на севере Испании, где написана большая часть книги." credit="ИЗОБРАЖЕНИЕ · ПЛЕЙСХОЛДЕР" />
+
+      <div class="flex flex-wrap items-end gap-4">
+        <BookCover title="Новый Код" num="05" tagline="вышла · 2026" />
+        <BookCover title="Сложные отношения с едой" num="01" w={120} h={172} bg="#7A5747" fg="#FAF6EF" tagline="готовится" />
+        <ShelfStatus status="out" label="Вышла" />
+        <ShelfStatus status="soon" label="Готовится" />
+      </div>
+
+      <BookShelf books={books} labels={{ statusOut: 'Вышла', statusSoon: 'Готовится' }} heading={{ kicker: 'Цикл · пять книг', title: 'Пять книг, одна линия.', sub: 'Цикл идёт от сложных отношений с едой — через тело, красоту и диеты — к более тихому коду.', all: 'Все книги' }} />
+
+      <BookBlock kicker="Книга · первое издание" title="Новый Код" subtitle="Тихий способ кормить себя." body="Короткая, человеческая книга о правилах, на которые мы никогда не подписывались." cta="Купить книгу" retailers={[['Amazon', 'бумага · Kindle'], ['Gumroad', 'PDF · epub']]} retailerStatus="Доступна" retailerLabel="Также напрямую" cover={{ title: 'Новый Код' }} />
+
+      <RetailerLinks items={[['Amazon', 'бумага и Kindle'], ['Gumroad', 'PDF и epub'], ['Ozon', 'доставка по СНГ']]} status="Доступна" label="Где купить" />
+
+      <OldNewCompare pairs={pairs} labels={{ oldHead: 'Старый код говорит', newHead: 'Новый код говорит', oldLabel: 'Старый код', newLabel: 'Новый код' }} />
+
+      <div class="grid gap-10 lg:grid-cols-2">
+        <EmailCapture variant="newsletter" strings={{ title: 'Письмо раз в неделю.', sub: 'Одна статья, отрывок и вопрос. Без акций, без срочности.', placeholder: 'ваш@email', submit: 'Подписаться', note: 'Адрес не передаётся третьим лицам.', sentTitle: 'Спасибо, что подписались.', sentBody: 'Первое письмо придёт в воскресенье утром.' }} />
+        <EmailCapture variant="newsletter" sent strings={{ title: 'Письмо раз в неделю.', sub: '', placeholder: 'ваш@email', submit: 'Подписаться', sentTitle: 'Спасибо, что подписались.', sentBody: 'Первое письмо придёт в воскресенье утром. Можно закрыть вкладку.' }} />
+      </div>
+
+      <EmailCapture variant="quiz" strings={{ kicker: 'Тест к «Новому Коду» · 4 минуты', title: 'Какой у вас Старый Код?', sub: 'Двенадцать мягких вопросов. Результат можно получить без подписки.', placeholder: 'ваш@email', submit: 'Начать тест', note: 'Можно пройти без указания почты.', sentTitle: '', sentBody: '' }} />
+
+      <ContactForm
+        strings={{ topicsLabel: 'О чём письмо', topics: ['Вопрос', 'Пресса', 'Соавторство'], nameLabel: 'Как к вам обращаться', namePh: 'Имя', emailLabel: 'Почта для ответа', emailPh: 'ваш@email', msgLabel: 'Сообщение', msgPh: 'Коротко, своими словами…', submit: 'Отправить письмо', fine: 'Письмо приходит на личную почту автора.', sentTitle: 'Письмо отправлено.', sentBody: 'Спасибо. Отвечаю не сразу, но отвечаю сам.', sentAgain: 'Написать ещё одно', elsewhereLabel: 'Где ещё читать' }}
+        elsewhere={[['Рассылка', 'письмо по воскресеньям'], ['Goodreads', 'заметки на полях книг']]}
+      />
+
+      <NextSteps kicker="Куда идти дальше" title="Не обязательно решать сегодня." sub="Возьмите тест, начните со статьи или с книги — нет правильного ответа." ctas={['Пройти тест', 'Начать со статьи', 'Купить книгу']} />
+
+      <CrisisResources label="Если нужна поддержка" resources={[{ name: 'National Alliance for Eating Disorders', contact: '+1-866-662-1235', href: '#' }]} note="Это книги и письма, а не лечение. Если тяжело — обратитесь за профессиональной помощью." />
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <AtmosImage tone="paper" label="бумажный стол" />
+        <AtmosImage tone="morning" label="утренний свет" />
+        <AtmosImage tone="dusk" label="дерево у окна" />
+        <AtmosImage tone="deep" label="глубокий тон" accentTint />
+      </div>
+
+      <Sources label="Источники и дальнейшее чтение" items={['Tribole, E. & Resch, E. Intuitive Eating, 4th ed. (2020).', 'Bacon, L. Health at Every Size (2010).', 'Linehan, M. M. DBT Skills Training Manual (2014).']} />
+    </section>
+  </main>
+
+  <Footer layout="desktop" strings={footerStrings} locale="ru" locales={locales} />
+</BaseLayout>

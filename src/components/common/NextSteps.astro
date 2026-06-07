@@ -1,0 +1,79 @@
+---
+import Kicker from '@components/common/Kicker.astro';
+import Button from '@components/common/Button.astro';
+
+interface Props {
+  kicker: string;
+  title: string;
+  sub: string;
+  ctas: string[];
+  layout?: 'desktop' | 'mobile';
+}
+
+const {
+  kicker,
+  title,
+  sub,
+  ctas,
+  layout = 'desktop',
+} = Astro.props;
+
+const wide = layout === 'desktop';
+---
+
+<div class="root font-sans">
+  <Kicker>{kicker}</Kicker>
+  <h2
+    class="title font-serif text-ink"
+    style={wide ? 'font-size:36px' : 'font-size:26px'}
+  >
+    {title}
+  </h2>
+  <p
+    class="sub font-serif text-ink-soft"
+    style={wide ? 'font-size:16px' : 'font-size:15px'}
+  >
+    {sub}
+  </p>
+  <div class:list={['ctas', wide ? 'ctas--desktop' : 'ctas--mobile']}>
+    {ctas[0] && <Button variant="primary">{ctas[0]}</Button>}
+    {ctas[1] && <Button variant="ghost">{ctas[1]}</Button>}
+    {ctas[2] && <Button variant="ghost">{ctas[2]}</Button>}
+  </div>
+</div>
+
+<style>
+  .root {
+    font-family: var(--font-sans);
+  }
+
+  .title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.4px;
+    margin: 14px 0 16px;
+  }
+
+  .sub {
+    font-family: var(--font-serif);
+    font-style: italic;
+    line-height: 1.65;
+    margin: 0 0 28px;
+    max-width: 460px;
+  }
+
+  .ctas {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .ctas--desktop {
+    flex-direction: row;
+  }
+
+  .ctas--mobile {
+    flex-direction: column;
+  }
+</style>

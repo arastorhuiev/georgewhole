@@ -1,0 +1,50 @@
+---
+interface Props {
+  attribution?: string;
+  marks?: [string, string];
+}
+
+const {
+  attribution,
+  marks = ['«', '»'],
+} = Astro.props;
+
+const [open, close] = marks;
+---
+
+<figure>
+  <blockquote>
+    {open}<slot />{close}
+  </blockquote>
+  {attribution && (
+    <figcaption>{attribution}</figcaption>
+  )}
+</figure>
+
+<style>
+  figure {
+    margin: 36px 0;
+    padding: 24px 0 24px 28px;
+    border-left: 2px solid var(--color-accent);
+    font-family: var(--font-serif);
+  }
+
+  blockquote {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.45;
+    color: var(--color-ink);
+    font-style: italic;
+    letter-spacing: -0.2px;
+    font-weight: 400;
+  }
+
+  figcaption {
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+</style>

@@ -1,0 +1,96 @@
+---
+import AuthorPortrait from '@components/common/AuthorPortrait.astro';
+
+interface Props {
+  name: string;
+  layout?: 'inline' | 'stack';
+  blurb?: string;
+  date?: string;
+  readtime?: string;
+}
+
+const {
+  name,
+  layout = 'inline',
+  blurb,
+  date,
+  readtime,
+} = Astro.props;
+---
+
+<div class:list={['byline', layout === 'stack' ? 'byline--stack' : 'byline--inline']}>
+  <AuthorPortrait size={layout === 'stack' ? 48 : 36} />
+  <div class="body">
+    <div class="name">{name}</div>
+    {blurb && <div class="blurb">{blurb}</div>}
+    {(date || readtime) && (
+      <div class="meta">
+        {date && <span>{date}</span>}
+        {date && readtime && <span class="sep">·</span>}
+        {readtime && <span>{readtime}</span>}
+      </div>
+    )}
+  </div>
+</div>
+
+<style>
+  .byline {
+    display: flex;
+    align-items: center;
+    font-family: var(--font-sans);
+  }
+
+  .byline--inline {
+    gap: 12px;
+  }
+
+  .byline--stack {
+    gap: 14px;
+  }
+
+  .byline--inline .name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-ink);
+    display: inline;
+  }
+
+  .byline--stack .name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  .byline--inline .body {
+    font-size: 13px;
+    color: var(--color-ink-soft);
+    line-height: 1.45;
+  }
+
+  .byline--stack .body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .blurb {
+    font-size: 13px;
+    color: var(--color-ink-soft);
+    line-height: 1.4;
+  }
+
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-ink-muted);
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sep {
+    opacity: 0.5;
+  }
+</style>

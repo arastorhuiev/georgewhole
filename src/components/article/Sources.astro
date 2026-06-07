@@ -1,0 +1,39 @@
+---
+import Kicker from '@components/common/Kicker.astro';
+
+interface Props {
+  label?: string;
+  items: string[];
+}
+
+const {
+  label = 'Sources & further reading',
+  items,
+} = Astro.props;
+---
+
+<section>
+  <Kicker color="var(--color-ink-muted)">{label}</Kicker>
+  <ol>
+    {items.map((item) => (
+      <li set:html={item} />
+    ))}
+  </ol>
+</section>
+
+<style>
+  section {
+    margin: 40px 0 0;
+    padding: 24px 0;
+    border-top: 1px solid var(--color-hair);
+    font-family: var(--font-sans);
+    color: var(--color-ink-soft);
+  }
+
+  ol {
+    margin: 14px 0 0;
+    padding-left: 18px;
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+</style>

@@ -1,0 +1,153 @@
+---
+// BookShelf.astro — 5-col desktop grid / stacked mobile rows of book covers.
+// Ported pixel-perfect from design-reference/project/books-ru.jsx → BookShelfRU.
+
+import BookCover from '@components/book/BookCover.astro';
+import ShelfStatus from '@components/book/ShelfStatus.astro';
+import ShelfThemes from '@components/book/ShelfThemes.astro';
+import Kicker from '@components/common/Kicker.astro';
+import Button from '@components/common/Button.astro';
+
+interface BookItem {
+  id: string;
+  num: string;
+  title: string;
+  themes: string[];
+  status: 'out' | 'soon';
+  cover: {
+    bg: string;
+    fg: string;
+    rule: string;
+    tagline: string;
+  };
+}
+
+interface Props {
+  books: BookItem[];
+  labels: {
+    statusOut: string;
+    statusSoon: string;
+  };
+  layout?: 'desktop' | 'mobile';
+  heading?: {
+    kicker: string;
+    title: string;
+    sub: string;
+    all: string;
+  };
+}
+
+const { books, labels, layout = 'desktop', heading } = Astro.props;
+const wide = layout === 'desktop';
+---
+
+<section
+  style={wide
+    ? 'padding:88px 64px;border-bottom:1px solid var(--color-hair);'
+    : 'padding:48px 20px;border-bottom:1px solid var(--color-hair);'}
+>
+  {heading && (
+    <div
+      style={`display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:${wide ? '52px' : '28px'};flex-wrap:wrap;`}
+    >
+      <div style={wide ? 'max-width:660px;' : 'max-width:100%;'}>
+        <Kicker>{heading.kicker}</Kicker>
+        <h2
+          class="font-serif text-ink"
+          style={`font-size:${wide ? '40px' : '28px'};line-height:1.12;margin:14px 0 12px;font-weight:400;letter-spacing:-0.5px;`}
+        >
+          {heading.title}
+        </h2>
+        <p
+          class="font-serif text-ink-soft"
+          style={`font-size:${wide ? '18px' : '15.5px'};line-height:1.55;margin:0;font-style:italic;`}
+        >
+          {heading.sub}
+        </p>
+      </div>
+      <Button variant="text" href="#">{heading.all}</Button>
+    </div>
+  )}
+
+  {wide ? (
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:24px;align-items:start;">
+      {books.map((b) => (
+        <a
+          href={`#${b.id}`}
+          class="bookcard"
+          style="display:flex;flex-direction:column;text-decoration:none;"
+        >
+          {/* cover zone — fixed height so every spine sits on one shelf line */}
+          <div
+            style={`height:224px;display:flex;align-items:flex-end;justify-content:center;border-bottom:${b.status === 'out' ? '2px solid var(--color-accent)' : '1px solid var(--color-hair)'};`}
+          >
+            <BookCover
+              title={b.title}
+              num={b.num}
+              w={148}
+              h={210}
+              bg={b.cover.bg}
+              fg={b.cover.fg}
+              rule={b.cover.rule}
+              tagline={b.cover.tagline}
+            />
+          </div>
+          <div style="margin-top:16px;">
+            <ShelfStatus
+              status={b.status}
+              label={b.status === 'out' ? labels.statusOut : labels.statusSoon}
+            />
+            <h3
+              class="bookcard-t font-serif text-ink"
+              style="font-size:18px;line-height:1.22;font-weight:400;letter-spacing:-0.3px;margin:10px 0 8px;text-wrap:pretty;"
+            >
+              {b.title}
+            </h3>
+            <ShelfThemes themes={b.themes} />
+          </div>
+        </a>
+      ))}
+    </div>
+  ) : (
+    <div style="display:flex;flex-direction:column;">
+      {books.map((b) => (
+        <a
+          href={`#${b.id}`}
+          class="bookcard"
+          style="display:grid;grid-template-columns:72px 1fr;gap:18px;align-items:center;padding:20px 0;border-top:1px solid var(--color-hair-soft);text-decoration:none;"
+        >
+          <div style="display:flex;justify-content:center;">
+            <BookCover
+              title={b.title}
+              num={b.num}
+              w={72}
+              h={104}
+              bg={b.cover.bg}
+              fg={b.cover.fg}
+              rule={b.cover.rule}
+              tagline={b.cover.tagline}
+            />
+          </div>
+          <div>
+            <ShelfStatus
+              status={b.status}
+              label={b.status === 'out' ? labels.statusOut : labels.statusSoon}
+            />
+            <h3
+              class="bookcard-t font-serif text-ink"
+              style="font-size:19px;line-height:1.2;font-weight:400;letter-spacing:-0.2px;margin:8px 0 7px;text-wrap:pretty;"
+            >
+              {b.title}
+            </h3>
+            <ShelfThemes themes={b.themes} size={10} />
+          </div>
+        </a>
+      ))}
+      {heading && (
+        <div style="margin-top:20px;">
+          <Button variant="text" href="#">{heading.all}</Button>
+        </div>
+      )}
+    </div>
+  )}
+</section>

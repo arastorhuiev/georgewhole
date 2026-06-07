@@ -1,0 +1,31 @@
+---
+import '@styles/global.css';
+import type { Locale } from '@lib/locales';
+import Head from '@components/seo/Head.astro';
+
+interface Props {
+  locale: Locale;
+  /** locale-less logical path */
+  path?: string;
+  title: string;
+  description?: string;
+  noindex?: boolean;
+}
+const { locale, path = '', title, description, noindex = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang={locale} data-locale={locale}>
+  <head>
+    <Head
+      locale={locale}
+      path={path}
+      title={title}
+      description={description}
+      noindex={noindex}
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

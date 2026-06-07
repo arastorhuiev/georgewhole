@@ -1,0 +1,83 @@
+---
+import AtmosImage from '@components/common/AtmosImage.astro';
+import Kicker from '@components/common/Kicker.astro';
+
+interface Props {
+  title: string;
+  kicker?: string;
+  summary?: string;
+  meta?: string;
+  image?: string;
+  imageTone?: 'paper' | 'dusk' | 'morning' | 'deep';
+  compact?: boolean;
+  width?: string;
+}
+
+const {
+  title,
+  kicker,
+  summary,
+  meta,
+  image,
+  imageTone = 'paper',
+  compact = false,
+  width,
+} = Astro.props;
+---
+
+<article style={width ? `width:${width};` : undefined}>
+  {image && (
+    <AtmosImage
+      height={compact ? 140 : 200}
+      label={image}
+      tone={imageTone}
+    />
+  )}
+  {kicker && <Kicker>{kicker}</Kicker>}
+  <h3 class="title" class:list={[compact ? 'title--compact' : 'title--default']}>
+    {title}
+  </h3>
+  {summary && <p class="summary">{summary}</p>}
+  {meta && <div class="meta">{meta}</div>}
+</article>
+
+<style>
+  article {
+    font-family: var(--font-sans);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--color-ink);
+    margin: 0;
+    letter-spacing: -0.2px;
+  }
+
+  .title--default {
+    font-size: 24px;
+  }
+
+  .title--compact {
+    font-size: 20px;
+  }
+
+  .summary {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+    margin: 0;
+    font-family: var(--font-sans);
+  }
+
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-ink-muted);
+    letter-spacing: 0.6px;
+  }
+</style>

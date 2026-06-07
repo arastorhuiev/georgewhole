@@ -1,0 +1,56 @@
+---
+// RetailerLinks.astro — highlighted store links with accent-hair border.
+// Ported from design-reference/project/blocks-ru.jsx → RetailerLinksRU.
+
+import Icon from '@components/common/Icon.astro';
+
+interface Props {
+  items: Array<[string, string]>;
+  status?: string;
+  label?: string;
+}
+
+const { items, status, label } = Astro.props;
+---
+
+<div>
+  {label && (
+    <div
+      class="font-mono text-ink-muted"
+      style="font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:12px;"
+    >
+      {label}
+    </div>
+  )}
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+    {items.map(([name, note]) => (
+      <a
+        href="#"
+        class="retailer font-sans text-ink bg-bg"
+        style="display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid var(--color-accent-hair);border-radius:var(--radius-md);text-decoration:none;"
+      >
+        <span style="font-size:13.5px;font-weight:600;">{name}</span>
+        {note && (
+          <span
+            class="font-mono text-ink-muted"
+            style="font-size:11.5px;letter-spacing:0.3px;"
+          >
+            {note}
+          </span>
+        )}
+        <span class="text-accent" style="display:inline-flex;">
+          <Icon name="extArrow" size={11} />
+        </span>
+      </a>
+    ))}
+    {status && (
+      <span
+        class="font-mono text-accent"
+        style="display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:0.6px;text-transform:uppercase;padding:8px 0;margin-left:2px;"
+      >
+        <span style="width:6px;height:6px;border-radius:3px;background:var(--color-accent);flex-shrink:0;" />
+        {status}
+      </span>
+    )}
+  </div>
+</div>

@@ -1,0 +1,215 @@
+---
+import LocaleSwitcher from '@components/common/LocaleSwitcher.astro';
+
+interface LocaleOption {
+  code: string;
+  name: string;
+  href?: string;
+}
+
+interface FooterStrings {
+  deskTitle: string;
+  deskBlurb: string;
+  /** Up to 3 columns: each entry is [heading, string[]] */
+  cols: Array<[string, string[]]>;
+  copy: string;
+  legal: string[];
+}
+
+interface Props {
+  layout?: 'desktop' | 'mobile';
+  strings: FooterStrings;
+  locale: string;
+  locales?: LocaleOption[];
+}
+
+const { layout = 'desktop', strings: c, locale, locales } = Astro.props;
+const wide = layout === 'desktop';
+---
+
+{wide ? (
+  <footer class="footer-desktop">
+    {/* Main grid: 2fr brand col + up to 3 link cols */}
+    <div class="footer-grid">
+      <div class="brand-col">
+        <div class="desk-title">{c.deskTitle}</div>
+        <p class="desk-blurb">{c.deskBlurb}</p>
+      </div>
+      {c.cols.slice(0, 3).map(([head, links]) => (
+        <div class="link-col">
+          <div class="col-head">{head}</div>
+          {links.map((l) => (
+            <a class="footerlink footer-link-item">{l}</a>
+          ))}
+        </div>
+      ))}
+    </div>
+
+    {/* Bottom bar: copy / legal / LocaleSwitcher */}
+    <div class="bottom-bar">
+      <div class="bottom-copy">{c.copy}</div>
+      <div class="bottom-legal">
+        {c.legal.map((l) => <span>{l}</span>)}
+      </div>
+      <LocaleSwitcher current={locale} locales={locales} />
+    </div>
+  </footer>
+) : (
+  <footer class="footer-mobile">
+    <div class="mob-title">{c.deskTitle}</div>
+    <p class="mob-blurb">{c.deskBlurb}</p>
+
+    {/* 2-col link groups */}
+    <div class="mob-links-grid">
+      {c.cols.slice(0, 2).map(([head, links]) => (
+        <div class="link-col">
+          <div class="col-head">{head}</div>
+          {links.map((l) => (
+            <a class="footerlink footer-link-item-mob">{l}</a>
+          ))}
+        </div>
+      ))}
+    </div>
+
+    {/* Vertical bottom bar: LocaleSwitcher → legal → copy */}
+    <div class="mob-bottom">
+      <LocaleSwitcher current={locale} locales={locales} />
+      <div class="mob-legal">
+        {c.legal.map((l) => <span>{l}</span>)}
+      </div>
+      <div class="mob-copy">{c.copy}</div>
+    </div>
+  </footer>
+)}
+
+<style>
+  /* ── Desktop ── */
+  .footer-desktop {
+    border-top: 1px solid var(--color-hair);
+    padding: 48px 64px 32px;
+    font-family: var(--font-sans);
+    color: var(--color-ink-soft);
+    font-size: 13.5px;
+    background: var(--color-bg);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+  }
+
+  .brand-col .desk-title {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    color: var(--color-ink);
+    margin-bottom: 8px;
+  }
+
+  .brand-col .desk-blurb {
+    margin: 0;
+    line-height: 1.65;
+    max-width: 340px;
+    color: var(--color-ink-soft);
+  }
+
+  .col-head {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    margin-bottom: 12px;
+  }
+
+  .footer-link-item {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--color-ink);
+    font-size: 13.5px;
+    text-decoration: none;
+  }
+
+  .bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-hair-soft);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-ink-muted);
+    letter-spacing: 0.5px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .bottom-legal {
+    display: flex;
+    gap: 18px;
+  }
+
+  /* ── Mobile ── */
+  .footer-mobile {
+    border-top: 1px solid var(--color-hair);
+    padding: 36px 20px 28px;
+    font-family: var(--font-sans);
+    color: var(--color-ink-soft);
+    font-size: 13.5px;
+    background: var(--color-bg);
+  }
+
+  .mob-title {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    color: var(--color-ink);
+    margin-bottom: 8px;
+  }
+
+  .mob-blurb {
+    margin: 0 0 28px;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+    font-size: 14px;
+  }
+
+  .mob-links-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 28px;
+  }
+
+  .footer-link-item-mob {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--color-ink);
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  .mob-bottom {
+    padding-top: 22px;
+    border-top: 1px solid var(--color-hair-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .mob-legal {
+    display: flex;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--color-ink-muted);
+    letter-spacing: 0.5px;
+  }
+
+  .mob-copy {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--color-ink-muted);
+    letter-spacing: 0.5px;
+  }
+</style>
