@@ -84,7 +84,7 @@ const { brand, navItems, locales, currentLocale, labels } = Astro.props;
           ) : (
             <span
               class:list={['menurow', 'locale-row', active && 'locale-row--active']}
-              tabindex="0"
+              role="presentation"
             >
               <span class="locale-row__left">
                 <span
