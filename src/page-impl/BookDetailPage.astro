@@ -276,10 +276,20 @@ const crumb = [t.nav.books, entry.data.title];
         <div class="cross-header">
           <Kicker>{t.bookDetail.crossLabel}</Kicker>
         </div>
-        <BookShelf
-          books={otherBooks}
-          labels={{ statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon }}
-        />
+        <div class="hidden md:block">
+          <BookShelf
+            books={otherBooks}
+            labels={{ statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon }}
+            layout="desktop"
+          />
+        </div>
+        <div class="md:hidden">
+          <BookShelf
+            books={otherBooks}
+            labels={{ statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon }}
+            layout="mobile"
+          />
+        </div>
       </section>
     )}
   </main>
