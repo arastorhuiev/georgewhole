@@ -12,13 +12,13 @@ const { themes, size = 10.5 } = Astro.props;
 
 {themes && themes.length > 0 && (
   <div
-    class="font-mono"
-    style={`font-size:${size}px;line-height:1.6;letter-spacing:0.4px;display:flex;flex-wrap:wrap;gap:2px 8px;`}
+    class="font-mono leading-[1.6] tracking-[0.4px] flex flex-wrap gap-x-2 gap-y-[2px]"
+    style={`font-size:${size}px;`}
   >
     {themes.map((t, i) => (
-      <span style="white-space:nowrap;" class="text-ink-muted">
+      <span class="whitespace-nowrap text-ink-muted">
         {i > 0 && (
-          <span style="opacity:0.4;margin-right:8px;">·</span>
+          <span class="opacity-40 mr-2">·</span>
         )}
         {t}
       </span>

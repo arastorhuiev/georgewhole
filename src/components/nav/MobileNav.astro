@@ -31,26 +31,28 @@ const { brand, brandHref = '/', navItems, locales, labels } = Astro.props;
 const currentLocale = Astro.props.currentLocale.toUpperCase();
 ---
 
-<header class="mobile-nav">
-  <a href={brandHref} class="brandlink" style="font-family:var(--font-serif);font-size:18px;font-weight:400;color:var(--color-ink);text-decoration:none;">
+<header class="border-b border-hair bg-bg px-5 py-[14px] flex items-center justify-between relative font-sans">
+  <a
+    href={brandHref}
+    class="font-serif text-[18px] font-normal text-ink no-underline hover:opacity-[0.68] transition-opacity"
+  >
     {brand}
   </a>
 
-  <div class="controls">
+  <div class="flex items-center gap-[6px]">
     <!-- Language dropdown -->
     <details class="nav-details">
       <summary
-        class="iconbtn lang-summary"
+        class="iconbtn font-mono text-[12px] tracking-[0.4px] border border-hair bg-transparent text-ink px-[10px] py-[6px] rounded-md flex items-center gap-[5px] list-none cursor-pointer transition-colors"
         aria-label={labels.lang}
-        style="border:1px solid var(--color-hair);background:transparent;color:var(--color-ink);padding:6px 10px;border-radius:var(--radius-md);font-size:12px;font-family:var(--font-mono);display:flex;align-items:center;gap:5px;letter-spacing:0.4px;list-style:none;"
       >
         {currentLocale}
-        <Icon name="chev" size={8} class="chev-i" />
+        <Icon name="chev" size={8} class="chev-i transition-transform duration-200 ease" />
       </summary>
 
-      <div class="panel lang-panel">
+      <div class="panel absolute top-[calc(100%+8px)] right-5 z-30 bg-bg border border-hair rounded-md shadow-[0_8px_28px_rgba(42,39,35,0.14),0_2px_6px_rgba(42,39,35,0.08)] overflow-hidden min-w-[208px]">
         <!-- Mono header row -->
-        <div class="panel-header">
+        <div class="px-4 pt-[10px] pb-2 font-mono text-[9.5px] tracking-[1.4px] uppercase text-ink-muted border-b border-hair-soft flex items-center gap-[7px]">
           <Icon name="globe" size={11} />
           {labels.lang}
         </div>
@@ -60,22 +62,26 @@ const currentLocale = Astro.props.currentLocale.toUpperCase();
           const active = locale.code === currentLocale;
           const inner = (
             <>
-              <span class="locale-row__left">
+              <span class="flex items-baseline gap-[10px]">
                 <span
-                  class:list={['locale-code', 'font-mono', active ? 'text-accent' : 'text-ink-muted']}
-                  style={active ? 'font-weight:700;' : 'font-weight:400;'}
+                  class:list={[
+                    'font-mono text-[11px] tracking-[0.6px] w-[22px] inline-block',
+                    active ? 'text-accent font-bold' : 'text-ink-muted font-normal',
+                  ]}
                 >
                   {locale.code}
                 </span>
                 <span
-                  class:list={['locale-name', active ? 'text-ink' : 'text-ink-soft']}
-                  style={active ? 'font-weight:600;' : 'font-weight:400;'}
+                  class:list={[
+                    'font-sans text-[14.5px]',
+                    active ? 'text-ink font-semibold' : 'text-ink-soft font-normal',
+                  ]}
                 >
                   {locale.name}
                 </span>
               </span>
               {active && (
-                <span class="check-icon text-accent">
+                <span class="inline-flex text-accent">
                   <Icon name="check" size={13} />
                 </span>
               )}
@@ -84,13 +90,19 @@ const currentLocale = Astro.props.currentLocale.toUpperCase();
           return locale.href ? (
             <a
               href={locale.href}
-              class:list={['menurow', 'locale-row', active && 'locale-row--active']}
+              class:list={[
+                'menurow w-full flex items-center justify-between gap-3 px-4 py-3 text-left no-underline text-ink cursor-pointer transition-[background,color] duration-[0.14s] ease hover:bg-[rgba(63,107,94,0.06)] hover:text-accent',
+                active ? 'bg-[rgba(63,107,94,0.07)]' : 'bg-transparent',
+              ]}
             >
               {inner}
             </a>
           ) : (
             <span
-              class:list={['menurow', 'locale-row', active && 'locale-row--active']}
+              class:list={[
+                'menurow w-full flex items-center justify-between gap-3 px-4 py-3 text-left no-underline text-ink cursor-pointer transition-[background,color] duration-[0.14s] ease hover:bg-[rgba(63,107,94,0.06)] hover:text-accent',
+                active ? 'bg-[rgba(63,107,94,0.07)]' : 'bg-transparent',
+              ]}
               role="presentation"
             >
               {inner}
@@ -103,22 +115,24 @@ const currentLocale = Astro.props.currentLocale.toUpperCase();
     <!-- Nav dropdown -->
     <details class="nav-details">
       <summary
-        class="iconbtn nav-summary"
+        class="iconbtn border border-hair bg-transparent text-ink w-[34px] h-[30px] rounded-md flex items-center justify-center list-none cursor-pointer transition-colors"
         aria-label={labels.menu}
-        style="border:1px solid var(--color-hair);background:transparent;color:var(--color-ink);width:34px;height:30px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;list-style:none;"
       >
         <Icon name="hamburger" size={16} />
       </summary>
 
-      <div class="panel nav-panel">
+      <div class="panel absolute top-[calc(100%+8px)] right-5 z-30 bg-bg border border-hair rounded-md shadow-[0_8px_28px_rgba(42,39,35,0.14),0_2px_6px_rgba(42,39,35,0.08)] overflow-hidden min-w-[208px]">
         <nav>
-          {navItems.map((item) => (
+          {navItems.map((item, i) => (
             <a
               href={item.href}
-              class="menurow nav-row"
+              class:list={[
+                'menurow flex items-center justify-between px-4 py-[13px] no-underline text-ink font-sans text-[15px] font-medium cursor-pointer transition-[background,color] duration-[0.14s] ease hover:bg-[rgba(63,107,94,0.06)] hover:text-accent',
+                i > 0 ? 'border-t border-hair-soft' : '',
+              ]}
             >
               {item.label}
-              <span class="text-accent" style="display:inline-flex;">
+              <span class="text-accent inline-flex">
                 <Icon name="arrow" size={13} />
               </span>
             </a>
@@ -130,32 +144,15 @@ const currentLocale = Astro.props.currentLocale.toUpperCase();
 </header>
 
 <style>
-  .mobile-nav {
-    border-bottom: 1px solid var(--color-hair);
-    background: var(--color-bg);
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-  }
-
-  .controls {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  /* Strip default <details> marker / disclosure triangle */
+  /* Strip default <details> marker */
   summary {
     list-style: none;
-    cursor: pointer;
   }
   summary::-webkit-details-marker {
     display: none;
   }
 
-  /* Open-state: summary gets is-open look via CSS (no JS needed) */
+  /* Open-state: accent border + tint on the summary button */
   details[open] > summary.iconbtn {
     border-color: var(--color-accent) !important;
     color: var(--color-accent) !important;
@@ -166,92 +163,4 @@ const currentLocale = Astro.props.currentLocale.toUpperCase();
   details[open] .chev-i {
     transform: rotate(180deg);
   }
-
-  /* Dropdown panel */
-  .panel {
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 20px;
-    z-index: 30;
-    background: var(--color-bg);
-    border: 1px solid var(--color-hair);
-    border-radius: var(--radius-md);
-    box-shadow: 0 8px 28px rgba(42, 39, 35, 0.14), 0 2px 6px rgba(42, 39, 35, 0.08);
-    overflow: hidden;
-    min-width: 208px;
-  }
-
-  /* Lang panel header row */
-  .panel-header {
-    padding: 10px 16px 8px;
-    font-family: var(--font-mono);
-    font-size: 9.5px;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-    border-bottom: 1px solid var(--color-hair-soft);
-    display: flex;
-    align-items: center;
-    gap: 7px;
-  }
-
-  /* Locale rows */
-  .locale-row {
-    width: 100%;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 12px 16px;
-    text-align: left;
-    text-decoration: none;
-    background: transparent;
-    color: var(--color-ink);
-  }
-
-  .locale-row--active {
-    background: var(--color-accent-soft);
-  }
-
-  .locale-row__left {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-
-  .locale-code {
-    font-size: 11px;
-    letter-spacing: 0.6px;
-    width: 22px;
-    display: inline-block;
-  }
-
-  .locale-name {
-    font-family: var(--font-sans);
-    font-size: 14.5px;
-  }
-
-  .check-icon {
-    display: inline-flex;
-  }
-
-  /* Nav rows */
-  .nav-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 13px 16px;
-    text-decoration: none;
-    border-top: 1px solid var(--color-hair-soft);
-    color: var(--color-ink);
-    font-family: var(--font-sans);
-    font-size: 15px;
-    font-weight: 500;
-  }
-
-  .nav-row:first-child {
-    border-top: none;
-  }
-
 </style>

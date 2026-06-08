@@ -35,44 +35,46 @@ const {
 const wide = layout === 'desktop';
 ---
 
-<div class:list={['root font-sans', wide ? 'root--desktop' : 'root--mobile']}>
+<div class:list={['font-sans grid items-start', wide ? 'grid-cols-[1.2fr_1fr] gap-[64px]' : 'grid-cols-1 gap-[32px]']}>
 
   {/* ── Form col / success state ── */}
   {sent ? (
-    <div class:list={['sent', wide && 'sent--desktop']}>
-      <div class="check-circle">
+    <div class:list={[wide && 'py-[8px]']}>
+      <div class="inline-flex items-center justify-center w-[40px] h-[40px] rounded-[20px] bg-[rgba(63,107,94,0.1)] text-accent mb-[18px]">
         <Icon name="check" size={19} />
       </div>
       <h3
-        class="sent-title font-serif text-ink"
-        style={wide ? 'font-size:30px' : 'font-size:24px'}
+        class:list={['font-serif text-ink font-normal leading-[1.2] tracking-[-0.4px] mt-0 mb-[10px]', wide ? 'text-[30px]' : 'text-[24px]']}
       >
         {strings.sentTitle}
       </h3>
-      <p class="sent-body text-ink-soft">{strings.sentBody}</p>
+      <p class="text-ink-soft text-[15px] leading-[1.6] mt-0 mb-[24px] max-w-[420px]">{strings.sentBody}</p>
       {/* sentAgain is a static anchor back to form — backend wires the real reset */}
-      <button type="button" class="btn-ghost again border-hair text-ink rounded-pill font-sans">
+      <button
+        type="button"
+        class="inline-flex items-center gap-[8px] px-[18px] py-[11px] bg-transparent border border-hair rounded-pill font-sans text-[13.5px] font-medium text-ink cursor-pointer disabled:cursor-default enabled:hover:border-accent enabled:hover:bg-[rgba(63,107,94,0.07)] enabled:hover:text-accent-deep enabled:active:bg-[rgba(63,107,94,0.12)]"
+      >
         {strings.sentAgain}
       </button>
     </div>
   ) : (
-    <form method="post" action={action ?? '#'} class="form">
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="honeypot" aria-hidden="true" />
+    <form method="post" action={action ?? '#'} class="flex flex-col">
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="absolute left-[-9999px] w-px h-px overflow-hidden opacity-0 pointer-events-none" aria-hidden="true" />
 
       {/* Topic chips */}
-      <div class="field-group">
-        <span class="label font-mono text-ink-muted">{strings.topicsLabel}</span>
-        <div class="chips">
+      <div class="mb-[22px]">
+        <span class="block font-mono text-ink-muted text-[10.5px] tracking-[1.2px] uppercase mb-[8px]">{strings.topicsLabel}</span>
+        <div class="flex gap-[8px] flex-wrap">
           {strings.topics.map((topic, i) => (
             <button
               type="button"
               name="topic"
               value={topic}
               class:list={[
-                'topicchip font-sans',
+                'px-[16px] py-[9px] rounded-pill border font-sans text-[13.5px] font-medium cursor-pointer hover:border-accent',
                 i === 0
-                  ? 'topicchip--active bg-accent text-accent-fg border-accent'
-                  : 'topicchip--idle text-ink-soft border-hair',
+                  ? 'bg-accent text-accent-fg border-accent'
+                  : 'bg-transparent text-ink-soft border-hair',
               ]}
             >
               {topic}
@@ -82,282 +84,62 @@ const wide = layout === 'desktop';
       </div>
 
       {/* Name + Email row */}
-      <div class:list={['name-email', wide && 'name-email--desktop']}>
-        <label class="label-wrap">
-          <span class="label font-mono text-ink-muted">{strings.nameLabel}</span>
+      <div class:list={['grid gap-[16px] mb-[16px]', wide ? 'grid-cols-2' : 'grid-cols-1']}>
+        <label class="block">
+          <span class="block font-mono text-ink-muted text-[10.5px] tracking-[1.2px] uppercase mb-[8px]">{strings.nameLabel}</span>
           <input
             type="text"
             name="name"
             placeholder={strings.namePh}
-            class="field border-hair bg-bg text-ink rounded-md font-sans"
+            class="w-full box-border px-[14px] py-[12px] text-[14.5px] font-sans border border-hair bg-bg text-ink rounded-md outline-none transition-[border-color,box-shadow] duration-[0.16s] ease focus:border-accent focus:shadow-[0_0_0_3px_rgba(63,107,94,0.1)]"
           />
         </label>
-        <label class="label-wrap">
-          <span class="label font-mono text-ink-muted">{strings.emailLabel}</span>
+        <label class="block">
+          <span class="block font-mono text-ink-muted text-[10.5px] tracking-[1.2px] uppercase mb-[8px]">{strings.emailLabel}</span>
           <input
             type="email"
             name="email"
             placeholder={strings.emailPh}
             required
-            class="field border-hair bg-bg text-ink rounded-md font-sans"
+            class="w-full box-border px-[14px] py-[12px] text-[14.5px] font-sans border border-hair bg-bg text-ink rounded-md outline-none transition-[border-color,box-shadow] duration-[0.16s] ease focus:border-accent focus:shadow-[0_0_0_3px_rgba(63,107,94,0.1)]"
           />
         </label>
       </div>
 
       {/* Message */}
-      <label class="label-wrap msg-wrap">
-        <span class="label font-mono text-ink-muted">{strings.msgLabel}</span>
+      <label class="block mb-[18px]">
+        <span class="block font-mono text-ink-muted text-[10.5px] tracking-[1.2px] uppercase mb-[8px]">{strings.msgLabel}</span>
         <textarea
           name="message"
           placeholder={strings.msgPh}
           rows={5}
-          class="field field--textarea border-hair bg-bg text-ink rounded-md font-sans"
+          class="w-full box-border px-[14px] py-[12px] text-[14.5px] font-sans border border-hair bg-bg text-ink rounded-md outline-none resize-y leading-[1.6] transition-[border-color,box-shadow] duration-[0.16s] ease focus:border-accent focus:shadow-[0_0_0_3px_rgba(63,107,94,0.1)]"
         ></textarea>
       </label>
 
       {/* Submit row */}
-      <div class="submit-row">
+      <div class="flex items-center gap-[16px] flex-wrap">
         <button
           type="submit"
-          class="btn-primary submit bg-accent text-accent-fg rounded-pill font-sans"
+          class="inline-flex items-center gap-[10px] px-[22px] py-[13px] text-[14.5px] font-medium font-sans bg-accent text-accent-fg rounded-pill border-none cursor-pointer disabled:cursor-default enabled:hover:bg-accent-deep enabled:hover:-translate-y-px enabled:hover:shadow-[0_5px_14px_rgba(47,82,70,0.22)] enabled:active:translate-y-0 enabled:active:shadow-[0_2px_6px_rgba(47,82,70,0.2)]"
         >
           {strings.submit}
           <Icon name="arrow" size={13} />
         </button>
-        <span class="fine text-ink-muted font-sans">{strings.fine}</span>
+        <span class="text-ink-muted font-sans text-[12px] max-w-[260px] leading-[1.5]">{strings.fine}</span>
       </div>
     </form>
   )}
 
   {/* ── Aside: elsewhere ── */}
-  <aside class="aside">
-    <div class="elsewhere-label font-mono text-ink-muted">{strings.elsewhereLabel}</div>
+  <aside class="flex flex-col gap-0">
+    <div class="font-mono text-ink-muted text-[10.5px] tracking-[1.4px] uppercase mb-[6px]">{strings.elsewhereLabel}</div>
     {elsewhere.map(([name, note]) => (
-      <a class="elsewhere-row text-ink" href="#">
-        <span class="elsewhere-name font-serif">{name}</span>
-        <span class="elsewhere-note text-ink-muted font-sans">{note}</span>
+      <a class="flex items-baseline justify-between gap-[12px] px-0 py-[13px] border-t border-hair-soft text-ink no-underline" href="#">
+        <span class="font-serif text-[16px]">{name}</span>
+        <span class="text-ink-muted font-sans text-[12px] text-right">{note}</span>
       </a>
     ))}
   </aside>
 
 </div>
-
-<style>
-  .root {
-    display: grid;
-    align-items: flex-start;
-    font-family: var(--font-sans);
-  }
-
-  .root--desktop {
-    grid-template-columns: 1.2fr 1fr;
-    gap: 64px;
-  }
-
-  .root--mobile {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  /* ── Success state ── */
-  .sent {
-    padding: 0;
-  }
-
-  .sent--desktop {
-    padding: 8px 0;
-  }
-
-  .check-circle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    background: var(--color-accent-soft);
-    color: var(--color-accent);
-    margin-bottom: 18px;
-  }
-
-  .sent-title {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    line-height: 1.2;
-    letter-spacing: -0.4px;
-    margin: 0 0 10px;
-  }
-
-  .sent-body {
-    font-size: 15px;
-    line-height: 1.6;
-    margin: 0 0 24px;
-    max-width: 420px;
-  }
-
-  .again {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 11px 18px;
-    background: transparent;
-    border: 1px solid var(--color-hair);
-    border-radius: var(--radius-pill);
-    font-size: 13.5px;
-    font-weight: 500;
-    cursor: pointer;
-  }
-
-  /* ── Form ── */
-  .form {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .honeypot {
-    position: absolute;
-    left: -9999px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .field-group {
-    margin-bottom: 22px;
-  }
-
-  .label {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .chips {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .topicchip {
-    padding: 9px 16px;
-    border-radius: var(--radius-pill);
-    border: 1px solid;
-    font-size: 13.5px;
-    font-weight: 500;
-    cursor: pointer;
-    font-family: var(--font-sans);
-  }
-
-  .topicchip--active {
-    background: var(--color-accent);
-    color: var(--color-accent-fg);
-    border-color: var(--color-accent);
-  }
-
-  .topicchip--idle {
-    background: transparent;
-    color: var(--color-ink-soft);
-    border-color: var(--color-hair);
-  }
-
-  .name-email {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-
-  .name-email--desktop {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .label-wrap {
-    display: block;
-  }
-
-  .msg-wrap {
-    margin-bottom: 18px;
-  }
-
-  .field {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 12px 14px;
-    font-size: 14.5px;
-    font-family: var(--font-sans);
-    border: 1px solid var(--color-hair);
-    border-radius: var(--radius-md);
-    outline: none;
-  }
-
-  .field--textarea {
-    resize: vertical;
-    line-height: 1.6;
-  }
-
-  .submit-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .submit {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 13px 22px;
-    font-size: 14.5px;
-    font-weight: 500;
-    border: none;
-    border-radius: var(--radius-pill);
-    cursor: pointer;
-    font-family: var(--font-sans);
-  }
-
-  .fine {
-    font-size: 12px;
-    max-width: 260px;
-    line-height: 1.5;
-  }
-
-  /* ── Aside ── */
-  .aside {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .elsewhere-label {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .elsewhere-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 13px 0;
-    border-top: 1px solid var(--color-hair-soft);
-    text-decoration: none;
-  }
-
-  .elsewhere-name {
-    font-family: var(--font-serif);
-    font-size: 16px;
-  }
-
-  .elsewhere-note {
-    font-size: 12px;
-    text-align: right;
-  }
-</style>

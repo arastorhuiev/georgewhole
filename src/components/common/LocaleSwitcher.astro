@@ -27,31 +27,28 @@ const current = currentRaw.toUpperCase();
 ---
 
 <div
-  style="display:inline-flex;align-items:center;gap:8px;padding:6px 10px;font-size:11px;letter-spacing:0.6px;"
-  class:list={['border', 'border-hair', 'rounded-pill', 'font-mono', 'text-ink-soft', className]}
+  class:list={['inline-flex items-center gap-[8px] px-[10px] py-[6px] text-[11px] tracking-[0.6px] border border-hair rounded-pill font-mono text-ink-soft', className]}
 >
   <Icon name="globe" size={11} />
   {locales.map((locale, i) => (
     <>
-      {i > 0 && <span style="opacity:0.35;">·</span>}
+      {i > 0 && <span class="opacity-35">·</span>}
       {locale.href ? (
         <a
           href={locale.href}
           class:list={[
-            'localeopt',
-            locale.code === current ? 'text-accent' : 'text-ink-soft',
+            'cursor-pointer transition-colors hover:text-accent',
+            locale.code === current ? 'text-accent font-bold' : 'text-ink-soft font-normal',
           ]}
-          style={locale.code === current ? 'font-weight:700;' : 'font-weight:400;'}
         >
           {locale.code}
         </a>
       ) : (
         <span
           class:list={[
-            'localeopt',
-            locale.code === current ? 'text-accent' : 'text-ink-soft',
+            'cursor-pointer transition-colors hover:text-accent',
+            locale.code === current ? 'text-accent font-bold' : 'text-ink-soft font-normal',
           ]}
-          style={locale.code === current ? 'font-weight:700;' : 'font-weight:400;'}
         >
           {locale.code}
         </span>

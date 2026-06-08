@@ -36,21 +36,26 @@ const {
 } = Astro.props;
 ---
 
-<header class="site-header" style={wide ? 'padding:20px 64px;' : 'padding:18px 32px;'}>
-  <div class="brand-group">
-    <a href={brandHref} class="brandlink brand-name">{brand}</a>
+<header class:list={[
+  'border-b border-hair bg-bg flex items-center justify-between font-sans',
+  wide ? 'px-[64px] py-[20px]' : 'px-[32px] py-[18px]',
+]}>
+  <div class="flex items-baseline gap-[10px]">
+    <a href={brandHref} class="font-serif text-[22px] font-normal tracking-[-0.3px] text-ink no-underline leading-none hover:opacity-[0.68] transition-opacity">{brand}</a>
     {brandTagline && (
-      <span class="brand-tagline">{brandTagline}</span>
+      <span class="font-mono text-[10px] text-ink-muted tracking-[0.6px] uppercase">{brandTagline}</span>
     )}
   </div>
-  <nav class="nav-group" aria-label="Main navigation">
+  <nav class="flex items-center gap-[28px]" aria-label="Main navigation">
     {items.map((item) => (
       <a
         href={item.href}
-        class:list={['navlink', 'nav-item']}
-        style={item.key === active
-          ? 'color:var(--color-accent);border-bottom-color:var(--color-accent);'
-          : undefined}
+        class:list={[
+          'text-[14px] no-underline font-medium border-b pb-[2px] hover:text-accent hover:border-[rgba(63,107,94,0.5)] transition-colors',
+          item.key === active
+            ? 'text-accent border-accent'
+            : 'text-ink border-transparent',
+        ]}
         aria-current={item.key === active ? 'page' : undefined}
       >
         {item.label}
@@ -59,53 +64,3 @@ const {
     <LocaleSwitcher current={locale} locales={locales} />
   </nav>
 </header>
-
-<style>
-  .site-header {
-    border-bottom: 1px solid var(--color-hair);
-    background: var(--color-bg);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: var(--font-sans);
-  }
-
-  .brand-group {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-
-  .brand-name {
-    font-family: var(--font-serif);
-    font-size: 22px;
-    font-weight: 400;
-    letter-spacing: -0.3px;
-    color: var(--color-ink);
-    text-decoration: none;
-    line-height: 1;
-  }
-
-  .brand-tagline {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--color-ink-muted);
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-  }
-
-  .nav-group {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-  }
-
-  .nav-item {
-    font-size: 14px;
-    color: var(--color-ink);
-    text-decoration: none;
-    font-weight: 500;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 2px;
-  }
-</style>

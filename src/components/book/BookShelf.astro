@@ -44,25 +44,33 @@ const wide = layout === 'desktop';
 ---
 
 <section
-  style={wide
-    ? 'padding:88px 64px;border-bottom:1px solid var(--color-hair);'
-    : 'padding:48px 20px;border-bottom:1px solid var(--color-hair);'}
+  class:list={[
+    'border-b border-hair',
+    wide ? 'px-16 py-[88px]' : 'px-5 py-12',
+  ]}
 >
   {heading && (
     <div
-      style={`display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:${wide ? '52px' : '28px'};flex-wrap:wrap;`}
+      class:list={[
+        'flex items-end justify-between gap-6 flex-wrap',
+        wide ? 'mb-[52px]' : 'mb-7',
+      ]}
     >
-      <div style={wide ? 'max-width:660px;' : 'max-width:100%;'}>
+      <div class:list={[wide ? 'max-w-[660px]' : 'max-w-full']}>
         <Kicker>{heading.kicker}</Kicker>
         <h2
-          class="font-serif text-ink"
-          style={`font-size:${wide ? '40px' : '28px'};line-height:1.12;margin:14px 0 12px;font-weight:400;letter-spacing:-0.5px;`}
+          class:list={[
+            'font-serif text-ink font-normal tracking-[-0.5px] mt-[14px] mb-3',
+            wide ? 'text-[40px] leading-[1.12]' : 'text-[28px] leading-[1.12]',
+          ]}
         >
           {heading.title}
         </h2>
         <p
-          class="font-serif text-ink-soft"
-          style={`font-size:${wide ? '18px' : '15.5px'};line-height:1.55;margin:0;font-style:italic;`}
+          class:list={[
+            'font-serif text-ink-soft italic leading-[1.55] m-0',
+            wide ? 'text-[18px]' : 'text-[15.5px]',
+          ]}
         >
           {heading.sub}
         </p>
@@ -72,16 +80,22 @@ const wide = layout === 'desktop';
   )}
 
   {wide ? (
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:24px;align-items:start;">
+    <div class="grid grid-cols-5 gap-6 items-start">
       {books.map((b) => (
         <a
           href={b.href ?? `#${b.id}`}
-          class="bookcard"
-          style="display:flex;flex-direction:column;text-decoration:none;"
+          class:list={[
+            'group cursor-pointer flex flex-col no-underline',
+          ]}
         >
           {/* cover zone — fixed height so every spine sits on one shelf line */}
           <div
-            style={`height:224px;display:flex;align-items:flex-end;justify-content:center;border-bottom:${b.status === 'out' ? '2px solid var(--color-accent)' : '1px solid var(--color-hair)'};`}
+            class:list={[
+              'h-[224px] flex items-end justify-center',
+              b.status === 'out'
+                ? 'border-b-2 border-accent'
+                : 'border-b border-hair',
+            ]}
           >
             <BookCover
               title={b.title}
@@ -92,16 +106,16 @@ const wide = layout === 'desktop';
               fg={b.cover.fg}
               rule={b.cover.rule}
               tagline={b.cover.tagline}
+              class="group-hover:-translate-y-[5px] group-hover:rotate-[-0.6deg] group-hover:shadow-[6px_12px_0_rgba(42,39,35,0.1),0_6px_18px_rgba(0,0,0,0.2)]"
             />
           </div>
-          <div style="margin-top:16px;">
+          <div class="mt-4">
             <ShelfStatus
               status={b.status}
               label={b.status === 'out' ? labels.statusOut : labels.statusSoon}
             />
             <h3
-              class="bookcard-t font-serif text-ink"
-              style="font-size:18px;line-height:1.22;font-weight:400;letter-spacing:-0.3px;margin:10px 0 8px;text-wrap:pretty;"
+              class="bookcard-t font-serif text-ink font-normal text-[18px] leading-[1.22] tracking-[-0.3px] mt-[10px] mb-2 text-wrap-pretty transition-colors group-hover:text-accent"
             >
               {b.title}
             </h3>
@@ -111,14 +125,16 @@ const wide = layout === 'desktop';
       ))}
     </div>
   ) : (
-    <div style="display:flex;flex-direction:column;">
+    <div class="flex flex-col">
       {books.map((b) => (
         <a
           href={b.href ?? `#${b.id}`}
-          class="bookcard"
-          style="display:grid;grid-template-columns:72px 1fr;gap:18px;align-items:center;padding:20px 0;border-top:1px solid var(--color-hair-soft);text-decoration:none;"
+          class:list={[
+            'group cursor-pointer grid grid-cols-[72px_1fr] gap-[18px] items-center py-5',
+            'border-t border-hair-soft no-underline',
+          ]}
         >
-          <div style="display:flex;justify-content:center;">
+          <div class="flex justify-center">
             <BookCover
               title={b.title}
               num={b.num}
@@ -128,6 +144,7 @@ const wide = layout === 'desktop';
               fg={b.cover.fg}
               rule={b.cover.rule}
               tagline={b.cover.tagline}
+              class="group-hover:-translate-y-[5px] group-hover:rotate-[-0.6deg] group-hover:shadow-[6px_12px_0_rgba(42,39,35,0.1),0_6px_18px_rgba(0,0,0,0.2)]"
             />
           </div>
           <div>
@@ -136,8 +153,7 @@ const wide = layout === 'desktop';
               label={b.status === 'out' ? labels.statusOut : labels.statusSoon}
             />
             <h3
-              class="bookcard-t font-serif text-ink"
-              style="font-size:19px;line-height:1.2;font-weight:400;letter-spacing:-0.2px;margin:8px 0 7px;text-wrap:pretty;"
+              class="bookcard-t font-serif text-ink font-normal text-[19px] leading-[1.2] tracking-[-0.2px] mt-2 mb-[7px] text-wrap-pretty transition-colors group-hover:text-accent"
             >
               {b.title}
             </h3>
@@ -146,7 +162,7 @@ const wide = layout === 'desktop';
         </a>
       ))}
       {heading && (
-        <div style="margin-top:20px;">
+        <div class="mt-5">
           <Button variant="text" href={heading.allHref ?? '#'}>{heading.all}</Button>
         </div>
       )}

@@ -15,40 +15,30 @@ const { items, status, label } = Astro.props;
 
 <div>
   {label && (
-    <div
-      class="font-mono text-ink-muted"
-      style="font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:12px;"
-    >
+    <div class="font-mono text-ink-muted text-[10.5px] tracking-[1.4px] uppercase mb-3">
       {label}
     </div>
   )}
-  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+  <div class="flex gap-[10px] flex-wrap items-center">
     {items.map(([name, note]) => (
       <a
         href="#"
-        class="retailer font-sans text-ink bg-bg"
-        style="display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid var(--color-accent-hair);border-radius:var(--radius-md);text-decoration:none;"
+        class="retailer font-sans text-ink bg-bg inline-flex items-center gap-2 px-[14px] py-[9px] border border-accent rounded-md no-underline hover:border-accent hover:-translate-y-px hover:shadow-[0_2px_7px_rgba(42,39,35,0.08)]"
       >
-        <span style="font-size:13.5px;font-weight:600;">{name}</span>
+        <span class="text-[13.5px] font-semibold">{name}</span>
         {note && (
-          <span
-            class="font-mono text-ink-muted"
-            style="font-size:11.5px;letter-spacing:0.3px;"
-          >
+          <span class="font-mono text-ink-muted text-[11.5px] tracking-[0.3px]">
             {note}
           </span>
         )}
-        <span class="text-accent" style="display:inline-flex;">
+        <span class="text-accent inline-flex">
           <Icon name="extArrow" size={11} />
         </span>
       </a>
     ))}
     {status && (
-      <span
-        class="font-mono text-accent"
-        style="display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:0.6px;text-transform:uppercase;padding:8px 0;margin-left:2px;"
-      >
-        <span style="width:6px;height:6px;border-radius:3px;background:var(--color-accent);flex-shrink:0;" />
+      <span class="font-mono text-accent inline-flex items-center gap-[6px] text-[11px] tracking-[0.6px] uppercase py-2 ml-[2px]">
+        <span class="w-[6px] h-[6px] rounded-[3px] bg-accent flex-shrink-0" />
         {status}
       </span>
     )}

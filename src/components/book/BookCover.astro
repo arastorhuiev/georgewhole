@@ -45,20 +45,20 @@ const titleWords = title.split(' ');
 ---
 
 <div
-  class:list={['bookcover', 'font-serif', className]}
+  class:list={[
+    'bookcover',
+    'font-serif',
+    'relative overflow-hidden box-border flex flex-col justify-between',
+    'shadow-[4px_6px_0_rgba(42,39,35,0.08),0_1px_3px_rgba(0,0,0,0.18)]',
+    'transition-[transform,box-shadow] duration-[0.24s] ease-[cubic-bezier(0.2,0.7,0.3,1)]',
+    className,
+  ]}
   style={{
     width: `${w}px`,
     height: `${h}px`,
     background: coverBg,
     color: coverFg,
     padding: '18px',
-    boxSizing: 'border-box',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    boxShadow: '4px 6px 0 rgba(42,39,35,0.08), 0 1px 3px rgba(0,0,0,0.18)',
-    position: 'relative',
-    overflow: 'hidden',
   }}
 >
   {/* Top byline */}

@@ -28,188 +28,56 @@ const wide = layout === 'desktop';
 ---
 
 {wide ? (
-  <footer class="footer-desktop">
+  <footer class="border-t border-hair pt-12 px-[64px] pb-8 font-sans text-[13.5px] text-ink-soft bg-bg">
     {/* Main grid: 2fr brand col + up to 3 link cols */}
-    <div class="footer-grid">
-      <div class="brand-col">
-        <div class="desk-title">{c.deskTitle}</div>
-        <p class="desk-blurb">{c.deskBlurb}</p>
+    <div class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-12">
+      <div>
+        <div class="font-serif text-[18px] text-ink mb-2">{c.deskTitle}</div>
+        <p class="m-0 leading-[1.65] max-w-[340px] text-ink-soft">{c.deskBlurb}</p>
       </div>
       {c.cols.slice(0, 3).map(([head, links]) => (
-        <div class="link-col">
-          <div class="col-head">{head}</div>
+        <div>
+          <div class="font-mono text-[11px] tracking-[1.4px] uppercase text-ink-muted mb-3">{head}</div>
           {links.map((l) => (
-            <a class="footerlink footer-link-item">{l}</a>
+            <a class="block mb-2 text-ink text-[13.5px] no-underline hover:text-accent">{l}</a>
           ))}
         </div>
       ))}
     </div>
 
     {/* Bottom bar: copy / legal / LocaleSwitcher */}
-    <div class="bottom-bar">
-      <div class="bottom-copy">{c.copy}</div>
-      <div class="bottom-legal">
+    <div class="flex justify-between items-center mt-10 pt-5 border-t border-hair-soft font-mono text-[11px] text-ink-muted tracking-[0.5px] flex-wrap gap-4">
+      <div>{c.copy}</div>
+      <div class="flex gap-[18px]">
         {c.legal.map((l) => <span>{l}</span>)}
       </div>
       <LocaleSwitcher current={locale} locales={locales} />
     </div>
   </footer>
 ) : (
-  <footer class="footer-mobile">
-    <div class="mob-title">{c.deskTitle}</div>
-    <p class="mob-blurb">{c.deskBlurb}</p>
+  <footer class="border-t border-hair pt-9 px-5 pb-7 font-sans text-[13.5px] text-ink-soft bg-bg">
+    <div class="font-serif text-[19px] text-ink mb-2">{c.deskTitle}</div>
+    <p class="m-0 mb-[28px] leading-[1.6] text-ink-soft text-[14px]">{c.deskBlurb}</p>
 
     {/* 2-col link groups */}
-    <div class="mob-links-grid">
+    <div class="grid grid-cols-2 gap-[28px] mb-[28px]">
       {c.cols.slice(0, 2).map(([head, links]) => (
-        <div class="link-col">
-          <div class="col-head">{head}</div>
+        <div>
+          <div class="font-mono text-[11px] tracking-[1.4px] uppercase text-ink-muted mb-3">{head}</div>
           {links.map((l) => (
-            <a class="footerlink footer-link-item-mob">{l}</a>
+            <a class="block mb-[10px] text-ink text-[14px] no-underline hover:text-accent">{l}</a>
           ))}
         </div>
       ))}
     </div>
 
     {/* Vertical bottom bar: LocaleSwitcher → legal → copy */}
-    <div class="mob-bottom">
+    <div class="pt-[22px] border-t border-hair-soft flex flex-col gap-4">
       <LocaleSwitcher current={locale} locales={locales} />
-      <div class="mob-legal">
+      <div class="flex gap-4 font-mono text-[10.5px] text-ink-muted tracking-[0.5px]">
         {c.legal.map((l) => <span>{l}</span>)}
       </div>
-      <div class="mob-copy">{c.copy}</div>
+      <div class="font-mono text-[10.5px] text-ink-muted tracking-[0.5px]">{c.copy}</div>
     </div>
   </footer>
 )}
-
-<style>
-  /* ── Desktop ── */
-  .footer-desktop {
-    border-top: 1px solid var(--color-hair);
-    padding: 48px 64px 32px;
-    font-family: var(--font-sans);
-    color: var(--color-ink-soft);
-    font-size: 13.5px;
-    background: var(--color-bg);
-  }
-
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 48px;
-  }
-
-  .brand-col .desk-title {
-    font-family: var(--font-serif);
-    font-size: 18px;
-    color: var(--color-ink);
-    margin-bottom: 8px;
-  }
-
-  .brand-col .desk-blurb {
-    margin: 0;
-    line-height: 1.65;
-    max-width: 340px;
-    color: var(--color-ink-soft);
-  }
-
-  .col-head {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-    margin-bottom: 12px;
-  }
-
-  .footer-link-item {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--color-ink);
-    font-size: 13.5px;
-    text-decoration: none;
-  }
-
-  .bottom-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid var(--color-hair-soft);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--color-ink-muted);
-    letter-spacing: 0.5px;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .bottom-legal {
-    display: flex;
-    gap: 18px;
-  }
-
-  /* ── Mobile ── */
-  .footer-mobile {
-    border-top: 1px solid var(--color-hair);
-    padding: 36px 20px 28px;
-    font-family: var(--font-sans);
-    color: var(--color-ink-soft);
-    font-size: 13.5px;
-    background: var(--color-bg);
-  }
-
-  .mob-title {
-    font-family: var(--font-serif);
-    font-size: 19px;
-    color: var(--color-ink);
-    margin-bottom: 8px;
-  }
-
-  .mob-blurb {
-    margin: 0 0 28px;
-    line-height: 1.6;
-    color: var(--color-ink-soft);
-    font-size: 14px;
-  }
-
-  .mob-links-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
-    margin-bottom: 28px;
-  }
-
-  .footer-link-item-mob {
-    display: block;
-    margin-bottom: 10px;
-    color: var(--color-ink);
-    font-size: 14px;
-    text-decoration: none;
-  }
-
-  .mob-bottom {
-    padding-top: 22px;
-    border-top: 1px solid var(--color-hair-soft);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .mob-legal {
-    display: flex;
-    gap: 16px;
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    color: var(--color-ink-muted);
-    letter-spacing: 0.5px;
-  }
-
-  .mob-copy {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    color: var(--color-ink-muted);
-    letter-spacing: 0.5px;
-  }
-</style>
