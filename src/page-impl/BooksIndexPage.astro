@@ -107,11 +107,21 @@ const locales = buildLocaleSwitcherItems(lang, 'books');
       </div>
     </header>
 
-    <!-- BookShelf: all books in the cycle -->
-    <BookShelf
-      books={shelfBooks}
-      labels={{ statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon }}
-    />
+    <!-- BookShelf: desktop (md+) and mobile variants -->
+    <div class="hidden md:block">
+      <BookShelf
+        books={shelfBooks}
+        labels={{ statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon }}
+        layout="desktop"
+      />
+    </div>
+    <div class="md:hidden">
+      <BookShelf
+        books={shelfBooks}
+        labels={{ statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon }}
+        layout="mobile"
+      />
+    </div>
 
     <!-- Expanded block for published book -->
     {publishedEntry && (
