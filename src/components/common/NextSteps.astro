@@ -21,59 +21,26 @@ const {
 const wide = layout === 'desktop';
 ---
 
-<div class="root font-sans">
+<div class="font-sans">
   <Kicker>{kicker}</Kicker>
-  <h2
-    class="title font-serif text-ink"
-    style={wide ? 'font-size:36px' : 'font-size:26px'}
-  >
+  <h2 class:list={[
+    'font-serif font-normal text-ink leading-[1.2] tracking-[-0.4px] mt-[14px] mb-[16px]',
+    wide ? 'text-[36px]' : 'text-[26px]',
+  ]}>
     {title}
   </h2>
-  <p
-    class="sub font-serif text-ink-soft"
-    style={wide ? 'font-size:16px' : 'font-size:15px'}
-  >
+  <p class:list={[
+    'font-serif italic text-ink-soft leading-[1.65] mb-[28px] mt-0 max-w-[460px]',
+    wide ? 'text-[16px]' : 'text-[15px]',
+  ]}>
     {sub}
   </p>
-  <div class:list={['ctas', wide ? 'ctas--desktop' : 'ctas--mobile']}>
+  <div class:list={[
+    'flex gap-[12px] flex-wrap',
+    wide ? 'flex-row' : 'flex-col',
+  ]}>
     {ctas[0] && <Button variant="primary">{ctas[0]}</Button>}
     {ctas[1] && <Button variant="ghost">{ctas[1]}</Button>}
     {ctas[2] && <Button variant="ghost">{ctas[2]}</Button>}
   </div>
 </div>
-
-<style>
-  .root {
-    font-family: var(--font-sans);
-  }
-
-  .title {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    line-height: 1.2;
-    letter-spacing: -0.4px;
-    margin: 14px 0 16px;
-  }
-
-  .sub {
-    font-family: var(--font-serif);
-    font-style: italic;
-    line-height: 1.65;
-    margin: 0 0 28px;
-    max-width: 460px;
-  }
-
-  .ctas {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .ctas--desktop {
-    flex-direction: row;
-  }
-
-  .ctas--mobile {
-    flex-direction: column;
-  }
-</style>

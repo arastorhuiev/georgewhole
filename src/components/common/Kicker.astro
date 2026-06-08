@@ -8,21 +8,12 @@ const { color, class: className } = Astro.props;
 ---
 
 <div
-  style={color ? `color:${color}` : undefined}
   class:list={[
-    'font-mono',
+    'font-mono text-[11px] uppercase tracking-[1.6px] font-medium',
     !color && 'text-accent',
     className,
   ]}
+  style={color ? `color:${color}` : undefined}
 >
   <slot />
 </div>
-
-<style>
-  div {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1.6px;
-    font-weight: 500;
-  }
-</style>

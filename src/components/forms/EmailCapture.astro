@@ -33,146 +33,55 @@ const isQuiz = variant === 'quiz';
 ---
 
 {sent ? (
-  <div class="wrap font-sans">
-    <div class="check-circle">
+  <div class="font-sans">
+    <div class="inline-flex items-center justify-center w-[38px] h-[38px] rounded-[19px] bg-[rgba(63,107,94,0.1)] text-accent mb-[16px]">
       <Icon name="check" size={18} />
     </div>
     <h3
-      class="sent-title font-serif text-ink"
-      style={compact ? 'font-size:22px' : 'font-size:26px'}
+      class:list={['font-serif text-ink font-normal leading-[1.2] tracking-[-0.3px] mt-0 mb-[8px]', compact ? 'text-[22px]' : 'text-[26px]']}
     >
       {strings.sentTitle}
     </h3>
-    <p class="sent-body text-ink-soft">{strings.sentBody}</p>
+    <p class="text-ink-soft text-[14.5px] leading-[1.6] m-0">{strings.sentBody}</p>
   </div>
 ) : (
-  <div class="wrap font-sans">
+  <div class="font-sans">
     {isQuiz && strings.kicker && (
       <Kicker>{strings.kicker}</Kicker>
     )}
     {!bare && (
       <h3
-        class:list={['title font-serif text-ink', isQuiz ? 'title--quiz' : 'title--newsletter']}
-        style={
+        class:list={[
+          'font-serif text-ink font-normal leading-[1.2] tracking-[-0.3px]',
           isQuiz
-            ? compact ? 'font-size:26px;margin:12px 0 10px' : 'font-size:32px;margin:12px 0 10px'
-            : compact ? 'font-size:22px;margin:0 0 8px' : 'font-size:26px;margin:0 0 8px'
-        }
+            ? compact ? 'text-[26px] mt-[12px] mb-[10px]' : 'text-[32px] mt-[12px] mb-[10px]'
+            : compact ? 'text-[22px] mt-0 mb-[8px]' : 'text-[26px] mt-0 mb-[8px]',
+        ]}
       >
         {strings.title}
       </h3>
     )}
     {!bare && strings.sub && (
-      <p class="sub text-ink-soft">{strings.sub}</p>
+      <p class="text-ink-soft text-[14.5px] leading-[1.6] mt-0 mb-[18px] max-w-[480px]">{strings.sub}</p>
     )}
-    <form method="post" action={action ?? '#'} class="form">
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+    <form method="post" action={action ?? '#'} class="flex gap-[8px] flex-wrap max-w-[460px]">
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="absolute left-[-9999px] w-px h-px overflow-hidden opacity-0 pointer-events-none" aria-hidden="true" />
       <input
         type="email"
         name="email"
         placeholder={strings.placeholder}
         required
-        class="field border-hair bg-bg text-ink rounded-md font-sans"
+        class="flex-[1_1_220px] px-[14px] py-[12px] text-[14px] font-sans border border-hair bg-bg text-ink rounded-md outline-none"
       />
       <button
         type="submit"
-        class="btn-primary submit bg-accent text-accent-fg rounded-md font-sans"
+        class="px-[18px] py-[12px] text-[14px] font-medium font-sans bg-accent text-accent-fg rounded-md border-none cursor-pointer disabled:cursor-default enabled:hover:bg-accent-deep enabled:hover:-translate-y-px enabled:hover:shadow-[0_5px_14px_rgba(47,82,70,0.22)] enabled:active:translate-y-0 enabled:active:shadow-[0_2px_6px_rgba(47,82,70,0.2)]"
       >
         {strings.submit}
       </button>
     </form>
     {strings.note && (
-      <p class="note text-ink-muted">{strings.note}</p>
+      <p class="text-ink-muted text-[11.5px] mt-[12px] mb-0">{strings.note}</p>
     )}
   </div>
 )}
-
-<style>
-  .wrap {
-    font-family: var(--font-sans);
-  }
-
-  /* ── Sent / success state ── */
-  .check-circle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 19px;
-    background: var(--color-accent-soft);
-    color: var(--color-accent);
-    margin-bottom: 16px;
-  }
-
-  .sent-title {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    line-height: 1.2;
-    letter-spacing: -0.3px;
-    margin: 0 0 8px;
-  }
-
-  .sent-body {
-    font-size: 14.5px;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  /* ── Form state ── */
-  .title {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    line-height: 1.2;
-    letter-spacing: -0.3px;
-  }
-
-  .sub {
-    font-size: 14.5px;
-    line-height: 1.6;
-    margin: 0 0 18px;
-    max-width: 480px;
-  }
-
-  .form {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    max-width: 460px;
-  }
-
-  .field {
-    flex: 1 1 220px;
-    padding: 12px 14px;
-    font-size: 14px;
-    border: 1px solid var(--color-hair);
-    border-radius: var(--radius-md);
-    outline: none;
-  }
-
-  .submit {
-    padding: 12px 18px;
-    font-size: 14px;
-    font-weight: 500;
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-  }
-
-  .note {
-    font-size: 11.5px;
-    margin-top: 12px;
-    margin-bottom: 0;
-  }
-
-  /* Honeypot — must stay invisible */
-  .hidden {
-    position: absolute;
-    left: -9999px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
-  }
-</style>
