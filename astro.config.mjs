@@ -12,15 +12,22 @@ const SITE_URL = process.env.SITE_URL ?? 'https://example.com';
 // https://astro.build/config
 export default defineConfig({
   site: SITE_URL,
-  // Pick ONE slash policy and keep it identical across URLs, canonical,
-  // hreflang and sitemap (drift drops hreflang pairs).
-  trailingSlash: 'always',
+  // 'ignore' = the server accepts BOTH /path and /path/ (no 404 on a missing
+  // slash — the old 'always' 404'd every bare URL in dev/preview, and only the
+  // host's redirect saved prod). Canonical/hreflang/sitemap stay slash-CONSISTENT
+  // regardless: every emitted SEO URL is forced trailing-slashed in
+  // src/lib/seo.ts → absUrl(), and internal <a href> are written with slashes.
+  // So there is no hreflang drift — the policy is enforced in code, not config.
+  trailingSlash: 'ignore',
+
+  // Root redirect, framework-level so it ALSO works in dev/preview (the host's
+  // public/_redirects only runs on Cloudflare). Target = HOME_LOCALE (/en/).
+  redirects: { '/': '/en/' },
 
   // Built-in i18n: routing only. It does NOT emit hreflang — we do that
   // manually (src/components/seo/Hreflang.astro) via getAbsoluteLocaleUrl().
   // Ukrainian = `uk` (never `ua`). EN is the permanent default; RU ships first
-  // (see src/lib/locales.ts → LIVE_LOCALES). Root redirect is owned by the
-  // host (public/_redirects), not the framework.
+  // (see src/lib/locales.ts → LIVE_LOCALES).
   i18n: {
     locales: ['en', 'uk', 'ru', 'es'],
     defaultLocale: 'en',
