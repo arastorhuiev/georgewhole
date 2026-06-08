@@ -86,3 +86,20 @@
     }
   }
 }
+
+/* ── Cross-document View Transitions ───────────────────────────────────────
+   Native MPA view transitions: zero JS (no SPA router, no Svelte-island
+   re-hydration risk). Chrome/Edge cross-fade between page loads; browsers
+   without support no-op gracefully. Gated on prefers-reduced-motion so users
+   who ask for less motion get an instant cut (the @layer base reduce-guard
+   also neutralises the generated keyframes). */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.28s;
+    animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+}
