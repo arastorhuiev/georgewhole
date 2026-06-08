@@ -2,7 +2,6 @@
 // BooksIndexPage.astro — Books index page implementation (M2).
 // One DOM, responsive: desktop ≥768px primary fidelity, functional mobile.
 
-import BaseLayout from '@layouts/BaseLayout.astro';
 import Nav from '@components/nav/Nav.astro';
 import MobileNav from '@components/nav/MobileNav.astro';
 import Footer from '@components/footer/Footer.astro';
@@ -54,12 +53,6 @@ const navItems = [
 const locales = buildLocaleSwitcherItems(lang, 'books');
 ---
 
-<BaseLayout
-  locale={lang}
-  path="books"
-  title={`${t.booksIndex.title} · georgewhole`}
-  description={t.booksIndex.sub}
->
   <!-- Desktop nav -->
   <div class="hidden md:block">
     <Nav
@@ -163,7 +156,6 @@ const locales = buildLocaleSwitcherItems(lang, 'books');
   <div class="md:hidden">
     <Footer layout="mobile" strings={t.footer} locale={lang} locales={locales} />
   </div>
-</BaseLayout>
 
 <style>
   .page-header-inner {

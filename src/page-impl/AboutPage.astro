@@ -1,5 +1,4 @@
 ---
-import BaseLayout from '@layouts/BaseLayout.astro';
 import Nav from '@components/nav/Nav.astro';
 import MobileNav from '@components/nav/MobileNav.astro';
 import Kicker from '@components/common/Kicker.astro';
@@ -48,12 +47,6 @@ const credCards: [string, string, string][] = [
 ];
 ---
 
-<BaseLayout
-  locale={lang as any}
-  path="about"
-  title={`Об авторе · georgewhole`}
-  description={a.sub}
->
   {/* Desktop nav — hidden on mobile */}
   <div class="nav-desktop">
     <Nav
@@ -195,7 +188,6 @@ const credCards: [string, string, string][] = [
   <div class="footer-mobile-wrap">
     <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
   </div>
-</BaseLayout>
 
 <style>
   /* ── Nav visibility ── */

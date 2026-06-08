@@ -1,5 +1,4 @@
 ---
-import BaseLayout from '@layouts/BaseLayout.astro';
 import Nav from '@components/nav/Nav.astro';
 import MobileNav from '@components/nav/MobileNav.astro';
 import Kicker from '@components/common/Kicker.astro';
@@ -26,12 +25,6 @@ const navItems = [
 const n = t.newsletterPage;
 ---
 
-<BaseLayout
-  locale={lang as any}
-  path="newsletter"
-  title={`Рассылка · georgewhole`}
-  description={n.sub}
->
   {/* Desktop nav */}
   <div class="nav-desktop">
     <Nav
@@ -101,7 +94,6 @@ const n = t.newsletterPage;
   <div class="footer-mobile-wrap">
     <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
   </div>
-</BaseLayout>
 
 <style>
   /* ── Nav visibility ── */

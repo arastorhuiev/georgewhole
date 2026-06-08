@@ -1,5 +1,4 @@
 ---
-import BaseLayout from '@layouts/BaseLayout.astro';
 import Nav from '@components/nav/Nav.astro';
 import MobileNav from '@components/nav/MobileNav.astro';
 import AtmosImage from '@components/common/AtmosImage.astro';
@@ -42,12 +41,6 @@ const series = [
 ];
 ---
 
-<BaseLayout
-  locale={lang as any}
-  path="articles"
-  title={`${t.articlesIndex.title} · georgewhole`}
-  description={t.articlesIndex.sub}
->
   <!-- Desktop nav -->
   <div class="hidden-mobile">
     <Nav
@@ -181,7 +174,6 @@ const series = [
     locale={lang}
     locales={locales}
   />
-</BaseLayout>
 
 <style>
   /* ── Visibility toggles ── */

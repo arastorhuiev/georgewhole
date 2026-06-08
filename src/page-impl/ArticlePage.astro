@@ -1,6 +1,5 @@
 ---
 import { render, type CollectionEntry } from 'astro:content';
-import BaseLayout from '@layouts/BaseLayout.astro';
 import Nav from '@components/nav/Nav.astro';
 import MobileNav from '@components/nav/MobileNav.astro';
 import AtmosImage from '@components/common/AtmosImage.astro';
@@ -54,12 +53,6 @@ const sourceItems = [
 ];
 ---
 
-<BaseLayout
-  locale={lang as any}
-  path={`articles/${slugOf(entry.id)}`}
-  title={`${entry.data.title} · georgewhole`}
-  description={entry.data.summary}
->
   <!-- Desktop nav -->
   <div class="hidden-mobile">
     <Nav
@@ -223,7 +216,6 @@ const sourceItems = [
     locale={lang}
     locales={locales}
   />
-</BaseLayout>
 
 <style>
   /* ── Visibility toggles ── */

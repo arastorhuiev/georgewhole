@@ -5,7 +5,6 @@
 import { render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
-import BaseLayout from '@layouts/BaseLayout.astro';
 import Nav from '@components/nav/Nav.astro';
 import MobileNav from '@components/nav/MobileNav.astro';
 import Footer from '@components/footer/Footer.astro';
@@ -68,12 +67,6 @@ const locales = buildLocaleSwitcherItems(lang, `books/${slug}`);
 const crumb = [t.nav.books, entry.data.title];
 ---
 
-<BaseLayout
-  locale={lang}
-  path={`books/${slug}`}
-  title={`${entry.data.title} · georgewhole`}
-  description={entry.data.lead ?? entry.data.subtitle}
->
   <!-- Desktop nav -->
   <div class="hidden md:block">
     <Nav
@@ -301,7 +294,6 @@ const crumb = [t.nav.books, entry.data.title];
   <div class="md:hidden">
     <Footer layout="mobile" strings={t.footer} locale={lang} locales={locales} />
   </div>
-</BaseLayout>
 
 <style>
   /* ── Hero ── */
