@@ -1,11 +1,14 @@
 ---
 // RetailerLinks.astro — highlighted store links with accent-hair border.
-// Ported from design-reference/project/blocks-ru.jsx → RetailerLinksRU.
+// Ported from docs/design/project/blocks-ru.jsx → RetailerLinksRU.
 
 import Icon from '@components/common/Icon.astro';
 
+// Each item is [name, note, href?]. When a real store URL is present the chip is
+// a working external link; until then it renders as a non-clickable info chip
+// (never a dead href="#"). Owner drops in real retailer URLs later.
 interface Props {
-  items: Array<[string, string]>;
+  items: Array<[string, string, string?]>;
   status?: string;
   label?: string;
 }
@@ -20,21 +23,24 @@ const { items, status, label } = Astro.props;
     </div>
   )}
   <div class="flex gap-[10px] flex-wrap items-center">
-    {items.map(([name, note]) => (
-      <a
-        href="#"
-        class="retailer font-sans text-ink bg-bg inline-flex items-center gap-2 px-[14px] py-[9px] border border-accent rounded-md no-underline hover:border-accent hover:-translate-y-px hover:shadow-[0_2px_7px_rgba(42,39,35,0.08)]"
-      >
-        <span class="text-[13.5px] font-semibold">{name}</span>
-        {note && (
-          <span class="font-mono text-ink-muted text-[11.5px] tracking-[0.3px]">
-            {note}
-          </span>
-        )}
-        <span class="text-accent inline-flex">
-          <Icon name="extArrow" size={11} />
+    {items.map(([name, note, href]) => (
+      href ? (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="retailer font-sans text-ink bg-bg inline-flex items-center gap-2 px-[14px] py-[9px] border border-accent rounded-md no-underline hover:bg-[rgba(63,107,94,0.06)] hover:-translate-y-px hover:shadow-[0_2px_7px_rgba(42,39,35,0.08)]"
+        >
+          <span class="text-[13.5px] font-semibold">{name}</span>
+          {note && <span class="font-mono text-ink-muted text-[11.5px] tracking-[0.3px]">{note}</span>}
+          <span class="text-accent inline-flex"><Icon name="extArrow" size={11} /></span>
+        </a>
+      ) : (
+        <span class="retailer-static font-sans text-ink bg-bg inline-flex items-center gap-2 px-[14px] py-[9px] border border-accent-hair rounded-md">
+          <span class="text-[13.5px] font-semibold">{name}</span>
+          {note && <span class="font-mono text-ink-muted text-[11.5px] tracking-[0.3px]">{note}</span>}
         </span>
-      </a>
+      )
     ))}
     {status && (
       <span class="font-mono text-accent inline-flex items-center gap-[6px] text-[11px] tracking-[0.6px] uppercase py-2 ml-[2px]">

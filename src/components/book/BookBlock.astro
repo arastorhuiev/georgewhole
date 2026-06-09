@@ -1,6 +1,6 @@
 ---
 // BookBlock.astro — book row: cover | text with CTA and retailer links.
-// Ported from design-reference/project/blocks-ru.jsx → BookBlockRU.
+// Ported from docs/design/project/blocks-ru.jsx → BookBlockRU.
 
 import BookCover from '@components/book/BookCover.astro';
 import RetailerLinks from '@components/book/RetailerLinks.astro';
@@ -22,7 +22,8 @@ interface Props {
   subtitle?: string;
   body?: string;
   cta: string;
-  retailers?: Array<[string, string]>;
+  ctaHref?: string;
+  retailers?: Array<[string, string, string?]>;
   retailerStatus?: string;
   retailerLabel?: string;
   compact?: boolean;
@@ -35,6 +36,7 @@ const {
   subtitle,
   body,
   cta,
+  ctaHref,
   retailers,
   retailerStatus,
   retailerLabel,
@@ -89,7 +91,9 @@ const coverH = compact ? 172 : 260;
         {body}
       </p>
     )}
-    <Button variant="primary" size="sm">{cta}</Button>
+    {ctaHref
+      ? <Button variant="primary" size="sm" href={ctaHref}>{cta}</Button>
+      : <Button variant="primary" size="sm">{cta}</Button>}
     {retailers && retailers.length > 0 && (
       <div class="mt-[22px]">
         <RetailerLinks

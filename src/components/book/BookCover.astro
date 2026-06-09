@@ -1,6 +1,6 @@
 ---
 // BookCover.astro — typographic book-cover placeholder, ported 1:1 from
-// design-reference/project/components.jsx → BookCover.
+// docs/design/project/components.jsx → BookCover.
 // Pixel-perfect: every style number is taken verbatim from the source.
 // Prop-driven / computed px use inline styles; static tokens use CSS classes.
 
@@ -50,7 +50,7 @@ const titleWords = title.split(' ');
     'font-serif',
     'relative overflow-hidden box-border flex flex-col justify-between',
     'shadow-[4px_6px_0_rgba(42,39,35,0.08),0_1px_3px_rgba(0,0,0,0.18)]',
-    'transition-[transform,box-shadow] duration-[0.24s] ease-[cubic-bezier(0.2,0.7,0.3,1)]',
+    'transition-[transform,box-shadow] duration-200 ease-[cubic-bezier(0.2,0.7,0.3,1)] [will-change:transform]',
     className,
   ]}
   style={{

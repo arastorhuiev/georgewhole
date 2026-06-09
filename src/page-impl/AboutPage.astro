@@ -27,23 +27,11 @@ const navItems = [
 
 const a = t.about;
 
-// Credibility trio — 3 cards, no clinical-review card (per decision)
-const credCards: [string, string, string][] = [
-  [
-    'Личный опыт',
-    'Десять лет по эту сторону',
-    'Написано с другой стороны восстановления — без дистанции, без готовых ответов.',
-  ],
-  [
-    'Источники',
-    'Опирается на исследования',
-    'Ссылки на первичные источники — не советы, а то, что стоит за ними.',
-  ],
-  [
-    'Чем это не является',
-    'Не терапия и не план',
-    'Это книги и письма. Если сейчас тяжело — пожалуйста, обратитесь за профессиональной помощью.',
-  ],
+// "Next steps" CTAs carry real destinations (label + locale-prefixed href).
+const nextCtas: Array<[string, string]> = [
+  [a.nextCtas[0], `/${lang}/quiz/`],
+  [a.nextCtas[1], `/${lang}/articles/`],
+  [a.nextCtas[2], `/${lang}/books/novy-kod/`],
 ];
 ---
 
@@ -72,7 +60,7 @@ const credCards: [string, string, string][] = [
     />
   </div>
 
-  <main>
+  <main id="main">
     {/* ── Breadcrumb ── */}
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href={`/${lang}/`} class="bc-link">{a.crumb[0]}</a>
@@ -88,7 +76,7 @@ const credCards: [string, string, string][] = [
         <p class="hero-sub font-serif text-ink-soft">{a.sub}</p>
       </div>
       <div class="hero-img">
-        <AtmosImage height={460} label="автор за столом · плейсхолдер" tone="dusk" accentTint />
+        <AtmosImage height={460} label={t.atmos.aboutDusk} tone="dusk" accentTint />
       </div>
     </section>
 
@@ -132,17 +120,15 @@ const credCards: [string, string, string][] = [
     <section class="cred section-border">
       <div class="cred-inner">
         <div class="cred-intro">
-          <Kicker>Достоверность</Kicker>
-          <h2 class="cred-title font-serif text-ink">Почему этому можно доверять.</h2>
-          <p class="cred-body font-sans text-ink-soft">
-            Не потому что автор — эксперт. Потому что он прошёл это сам, опирается на источники и честен о границах того, что делает.
-          </p>
+          <Kicker>{a.credKicker}</Kicker>
+          <h2 class="cred-title font-serif text-ink">{a.credTitle}</h2>
+          <p class="cred-body font-sans text-ink-soft">{a.credBody}</p>
         </div>
         <div class="cred-cards">
-          {credCards.map(([kicker, title, body]) => (
+          {a.credCards.map(([kicker, title, body]) => (
             <div class="cred-card">
               <Kicker>{kicker}</Kicker>
-              <h4 class="cred-card-title font-serif text-ink">{title}</h4>
+              <h3 class="cred-card-title font-serif text-ink">{title}</h3>
               <p class="cred-card-body font-sans text-ink-soft">{body}</p>
             </div>
           ))}
@@ -166,7 +152,7 @@ const credCards: [string, string, string][] = [
           kicker={a.nextKicker}
           title={a.nextTitle}
           sub={a.nextSub}
-          ctas={[...a.nextCtas]}
+          ctas={nextCtas}
           layout="desktop"
         />
       </div>
@@ -175,7 +161,7 @@ const credCards: [string, string, string][] = [
           kicker={a.nextKicker}
           title={a.nextTitle}
           sub={a.nextSub}
-          ctas={[...a.nextCtas]}
+          ctas={nextCtas}
           layout="mobile"
         />
       </div>

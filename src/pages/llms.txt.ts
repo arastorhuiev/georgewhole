@@ -7,7 +7,7 @@ import { LIVE_LOCALES } from '@lib/locales';
 // (Google doesn't honour it) but cheap; real GEO wins come from on-page
 // structure. Served as text/plain.
 export const GET: APIRoute = async ({ site }) => {
-  const base = (site?.href ?? 'https://example.com/').replace(/\/$/, '');
+  const base = (site?.href ?? 'https://georgewhole.com/').replace(/\/$/, '');
   const locale = LIVE_LOCALES[0];
   const t = useTranslations(locale);
   const books = await booksFor(locale);

@@ -23,6 +23,12 @@ const navItems = [
 ];
 
 const c = t.contactPage;
+
+// Resolve "elsewhere" links: external URLs pass through; bare paths get the locale prefix.
+const elsewhere = t.contact.elsewhere.map(
+  ([name, note, href]) =>
+    [name, note, href.startsWith('http') ? href : `/${lang}/${href}/`] as [string, string, string],
+);
 ---
 
   {/* Desktop nav */}
@@ -50,7 +56,7 @@ const c = t.contactPage;
     />
   </div>
 
-  <main>
+  <main id="main">
     {/* ── Breadcrumb ── */}
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href={`/${lang}/`} class="bc-link">{c.crumb[0]}</a>
@@ -70,7 +76,7 @@ const c = t.contactPage;
       <ContactForm
         layout="desktop"
         strings={t.contact}
-        elsewhere={[...t.contact.elsewhere]}
+        elsewhere={elsewhere}
       />
     </section>
 
@@ -79,7 +85,7 @@ const c = t.contactPage;
       <ContactForm
         layout="mobile"
         strings={t.contact}
-        elsewhere={[...t.contact.elsewhere]}
+        elsewhere={elsewhere}
       />
     </section>
   </main>

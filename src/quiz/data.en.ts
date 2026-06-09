@@ -20,8 +20,9 @@ export const quizQuestions: QuizQuestion[] = [
 export const quizUi = {
   kicker: 'Quiz · no sign-up',
   title: 'What is your Old Code?',
-  sub: 'Twelve gentle questions to hear the inherited rules running in the background. No email needed — you will see your result right away.',
-  startCta: 'Start the quiz',
+  sub: "Twelve calm questions to hear the rules we absorbed and stopped noticing. No email needed — you'll see your result right away.",
+  startCta: 'Take the quiz',
+  optionLetters: 'ABCD',
   meta: ['12 questions', '≈ 4 minutes', 'No sign-up'],
   howLabel: 'How it works',
   how: [
@@ -44,6 +45,8 @@ export const quizUi = {
   resultMailCta: 'Subscribe',
   resultMailPh: 'your@email',
   resultMailSkip: 'The result is enough, thank you',
+  resultMailSentTitle: 'Thank you for subscribing.',
+  resultMailSentSub: 'The first letter arrives this Sunday morning.',
 };
 
 // 4 archetypes. [0] "Earner" uses the design's real result copy; [1..3]

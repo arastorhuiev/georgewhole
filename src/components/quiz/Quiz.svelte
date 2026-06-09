@@ -1,6 +1,6 @@
 <script lang="ts">
   // Interactive 12-question quiz island (Svelte 5 runes). Ported from
-  // design-reference/project/quiz-ru.jsx. The ONLY JS island on the site
+  // docs/design/project/quiz-ru.jsx. The ONLY JS island on the site
   // (hydrated client:visible). Copy comes from props (content-agnostic).
   import { scoreQuiz, type QuizQuestion } from '@quiz/scoring';
 
@@ -8,11 +8,13 @@
   interface ArchetypeView { title: string; body: string; recommended: ResultLink[]; }
   interface Ui {
     kicker: string; title: string; sub: string; startCta: string;
+    optionLetters: string;
     meta: string[]; howLabel: string; how: Array<[string, string, string]>;
     progressLabel: string; of: string; back: string; next: string; finish: string;
     timerNote: string; resultKicker: string; resultStart: string; resultRetake: string;
     resultMailKicker: string; resultMailTitle: string; resultMailSub: string;
     resultMailCta: string; resultMailPh: string; resultMailSkip: string;
+    resultMailSentTitle: string; resultMailSentSub: string;
   }
 
   let { questions, archetypes, ui }: {
@@ -22,7 +24,7 @@
   } = $props();
 
   const total = questions.length;
-  const letters = 'АБВГДЕ';
+  const letters = ui.optionLetters || 'ABCDEF';
 
   let stage = $state<'intro' | 'q' | 'result'>('intro');
   let idx = $state(0);
@@ -127,8 +129,8 @@
     <div class="mail">
       {#if mailSent}
         <div class="mail-kicker">{ui.resultMailKicker}</div>
-        <h3 class="mail-title">Спасибо, что подписались.</h3>
-        <p class="mail-sub">Первое письмо придёт в ближайшее воскресенье.</p>
+        <h3 class="mail-title">{ui.resultMailSentTitle}</h3>
+        <p class="mail-sub">{ui.resultMailSentSub}</p>
       {:else}
         <div class="mail-kicker">{ui.resultMailKicker}</div>
         <h3 class="mail-title">{ui.resultMailTitle}</h3>
@@ -174,6 +176,14 @@
     background: var(--color-accent); color: var(--color-accent-fg); border: none;
     border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: 15px;
     font-weight: 500; cursor: pointer;
+    transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .cta:not(:disabled):hover, .btn-primary:not(:disabled):hover {
+    background: var(--color-accent-deep); transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(47, 82, 70, 0.22);
+  }
+  .cta:not(:disabled):active, .btn-primary:not(:disabled):active {
+    transform: translateY(0); box-shadow: 0 2px 6px rgba(47, 82, 70, 0.2);
   }
   .how { margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--color-hair-soft); }
   .how-label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--color-ink-muted); margin-bottom: 16px; }
@@ -224,8 +234,15 @@
     border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: 13.5px;
     font-weight: 500; cursor: pointer; background: transparent; color: var(--color-ink);
     border: 1px solid var(--color-hair);
+    transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .navbtn:not(.primary):not(:disabled):hover {
+    border-color: var(--color-accent); background: rgba(63, 107, 94, 0.07); color: var(--color-accent-deep);
   }
   .navbtn.primary { background: var(--color-accent); color: var(--color-accent-fg); border: none; font-size: 14px; padding: 11px 20px; }
+  .navbtn.primary:not(:disabled):hover {
+    background: var(--color-accent-deep); transform: translateY(-1px); box-shadow: 0 5px 14px rgba(47, 82, 70, 0.22);
+  }
   .navbtn:disabled { opacity: 0.5; cursor: default; }
   .navbtn.primary:disabled { background: var(--color-hair-soft); color: var(--color-ink-muted); }
   .rev { display: inline-block; transform: rotate(180deg); }

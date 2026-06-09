@@ -21,7 +21,8 @@ interface Props {
     sentAgain: string;
     elsewhereLabel: string;
   };
-  elsewhere?: Array<[string, string]>;
+  /** [label, note, href?] — href ready-to-use (external URL or locale-prefixed). */
+  elsewhere?: Array<[string, string, string?]>;
 }
 
 const {
@@ -33,113 +34,180 @@ const {
 } = Astro.props;
 
 const wide = layout === 'desktop';
+const inputCls =
+  'w-full box-border px-[14px] py-[12px] text-[14.5px] font-sans border border-hair bg-bg text-ink rounded-md outline-none transition-[border-color,box-shadow] duration-[0.16s] ease focus:border-accent focus:shadow-[0_0_0_3px_rgba(63,107,94,0.1)]';
 ---
 
-<div class:list={['font-sans grid items-start', wide ? 'grid-cols-[1.2fr_1fr] gap-[64px]' : 'grid-cols-1 gap-[32px]']}>
+<div class:list={['font-sans grid items-start', wide ? 'grid-cols-[1.2fr_1fr] gap-[64px]' : 'grid-cols-1 gap-[32px]']} data-cf-root>
 
-  {/* ── Form col / success state ── */}
-  {sent ? (
-    <div class:list={[wide && 'py-[8px]']}>
+  {/* ── Form column (form + success) ── */}
+  <div>
+    {/* Form */}
+    <div data-cf-form-wrap class:list={[sent && 'hidden']}>
+      <form method="post" action={action ?? '#'} data-cf-form class="flex flex-col">
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="absolute left-[-9999px] w-px h-px overflow-hidden opacity-0 pointer-events-none" aria-hidden="true" />
+
+        {/* Topic chips — real selection via aria-pressed + hidden input */}
+        <div class="mb-[22px]">
+          <span class="block font-mono text-ink-muted text-[10.5px] tracking-[1.2px] uppercase mb-[8px]">{strings.topicsLabel}</span>
+          <input type="hidden" name="topic" value={strings.topics[0]} data-cf-topic-input />
+          <div class="flex gap-[8px] flex-wrap" data-cf-topics>
+            {strings.topics.map((topic, i) => (
+              <button
+                type="button"
+                class="cf-chip px-[16px] py-[9px] rounded-pill border font-sans text-[13.5px] font-medium cursor-pointer"
+                data-cf-chip
+                data-value={topic}
+                aria-pressed={i === 0 ? 'true' : 'false'}
+              >
+                {topic}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Name + Email row */}
+        <div class:list={['grid gap-[16px] mb-[16px]', wide ? 'grid-cols-2' : 'grid-cols-1']}>
+          <label class="block">
+            <span class="block font-mono text-ink-muted text-[10.5px] tracking-[1.2px] uppercase mb-[8px]">{strings.nameLabel}</span>
+            <input type="text" name="name" placeholder={strings.namePh} class={inputCls} />
+          </label>
+          <label class="block">
+            <span class="block font-mono text-ink-muted text-[10.5px] tracking-[1.2px] uppercase mb-[8px]">{strings.emailLabel}</span>
+            <input type="email" name="email" placeholder={strings.emailPh} required class={inputCls} />
+          </label>
+        </div>
+
+        {/* Message */}
+        <label class="block mb-[18px]">
+          <span class="block font-mono text-ink-muted text-[10.5px] tracking-[1.2px] uppercase mb-[8px]">{strings.msgLabel}</span>
+          <textarea name="message" placeholder={strings.msgPh} rows={5} class={`${inputCls} resize-y leading-[1.6]`}></textarea>
+        </label>
+
+        {/* Submit row */}
+        <div class="flex items-center gap-[16px] flex-wrap">
+          <button
+            type="submit"
+            class="inline-flex items-center gap-[10px] px-[22px] py-[13px] text-[14.5px] font-medium font-sans bg-accent text-accent-fg rounded-pill border-none cursor-pointer disabled:cursor-default disabled:pointer-events-none hover:bg-accent-deep hover:-translate-y-px hover:shadow-[0_5px_14px_rgba(47,82,70,0.22)] active:translate-y-0 active:shadow-[0_2px_6px_rgba(47,82,70,0.2)]"
+          >
+            {strings.submit}
+            <Icon name="arrow" size={13} />
+          </button>
+          <span class="text-ink-muted font-sans text-[12px] max-w-[260px] leading-[1.5]">{strings.fine}</span>
+        </div>
+      </form>
+    </div>
+
+    {/* Success */}
+    <div data-cf-sent hidden={!sent} class:list={[wide && 'py-[8px]']}>
       <div class="inline-flex items-center justify-center w-[40px] h-[40px] rounded-[20px] bg-[rgba(63,107,94,0.1)] text-accent mb-[18px]">
         <Icon name="check" size={19} />
       </div>
       <h3
-        class:list={['font-serif text-ink font-normal leading-[1.2] tracking-[-0.4px] mt-0 mb-[10px]', wide ? 'text-[30px]' : 'text-[24px]']}
+        tabindex="-1"
+        data-cf-sent-title
+        class:list={['font-serif text-ink font-normal leading-[1.2] tracking-[-0.4px] mt-0 mb-[10px] outline-none', wide ? 'text-[30px]' : 'text-[24px]']}
       >
         {strings.sentTitle}
       </h3>
       <p class="text-ink-soft text-[15px] leading-[1.6] mt-0 mb-[24px] max-w-[420px]">{strings.sentBody}</p>
-      {/* sentAgain is a static anchor back to form — backend wires the real reset */}
       <button
         type="button"
-        class="inline-flex items-center gap-[8px] px-[18px] py-[11px] bg-transparent border border-hair rounded-pill font-sans text-[13.5px] font-medium text-ink cursor-pointer disabled:cursor-default enabled:hover:border-accent enabled:hover:bg-[rgba(63,107,94,0.07)] enabled:hover:text-accent-deep enabled:active:bg-[rgba(63,107,94,0.12)]"
+        data-cf-again
+        class="inline-flex items-center gap-[8px] px-[18px] py-[11px] bg-transparent border border-hair rounded-pill font-sans text-[13.5px] font-medium text-ink cursor-pointer hover:border-accent hover:bg-[rgba(63,107,94,0.07)] hover:text-accent-deep active:bg-[rgba(63,107,94,0.12)]"
       >
         {strings.sentAgain}
       </button>
     </div>
-  ) : (
-    <form method="post" action={action ?? '#'} class="flex flex-col">
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="absolute left-[-9999px] w-px h-px overflow-hidden opacity-0 pointer-events-none" aria-hidden="true" />
-
-      {/* Topic chips */}
-      <div class="mb-[22px]">
-        <span class="block font-mono text-ink-muted text-[10.5px] tracking-[1.2px] uppercase mb-[8px]">{strings.topicsLabel}</span>
-        <div class="flex gap-[8px] flex-wrap">
-          {strings.topics.map((topic, i) => (
-            <button
-              type="button"
-              name="topic"
-              value={topic}
-              class:list={[
-                'px-[16px] py-[9px] rounded-pill border font-sans text-[13.5px] font-medium cursor-pointer hover:border-accent',
-                i === 0
-                  ? 'bg-accent text-accent-fg border-accent'
-                  : 'bg-transparent text-ink-soft border-hair',
-              ]}
-            >
-              {topic}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Name + Email row */}
-      <div class:list={['grid gap-[16px] mb-[16px]', wide ? 'grid-cols-2' : 'grid-cols-1']}>
-        <label class="block">
-          <span class="block font-mono text-ink-muted text-[10.5px] tracking-[1.2px] uppercase mb-[8px]">{strings.nameLabel}</span>
-          <input
-            type="text"
-            name="name"
-            placeholder={strings.namePh}
-            class="w-full box-border px-[14px] py-[12px] text-[14.5px] font-sans border border-hair bg-bg text-ink rounded-md outline-none transition-[border-color,box-shadow] duration-[0.16s] ease focus:border-accent focus:shadow-[0_0_0_3px_rgba(63,107,94,0.1)]"
-          />
-        </label>
-        <label class="block">
-          <span class="block font-mono text-ink-muted text-[10.5px] tracking-[1.2px] uppercase mb-[8px]">{strings.emailLabel}</span>
-          <input
-            type="email"
-            name="email"
-            placeholder={strings.emailPh}
-            required
-            class="w-full box-border px-[14px] py-[12px] text-[14.5px] font-sans border border-hair bg-bg text-ink rounded-md outline-none transition-[border-color,box-shadow] duration-[0.16s] ease focus:border-accent focus:shadow-[0_0_0_3px_rgba(63,107,94,0.1)]"
-          />
-        </label>
-      </div>
-
-      {/* Message */}
-      <label class="block mb-[18px]">
-        <span class="block font-mono text-ink-muted text-[10.5px] tracking-[1.2px] uppercase mb-[8px]">{strings.msgLabel}</span>
-        <textarea
-          name="message"
-          placeholder={strings.msgPh}
-          rows={5}
-          class="w-full box-border px-[14px] py-[12px] text-[14.5px] font-sans border border-hair bg-bg text-ink rounded-md outline-none resize-y leading-[1.6] transition-[border-color,box-shadow] duration-[0.16s] ease focus:border-accent focus:shadow-[0_0_0_3px_rgba(63,107,94,0.1)]"
-        ></textarea>
-      </label>
-
-      {/* Submit row */}
-      <div class="flex items-center gap-[16px] flex-wrap">
-        <button
-          type="submit"
-          class="inline-flex items-center gap-[10px] px-[22px] py-[13px] text-[14.5px] font-medium font-sans bg-accent text-accent-fg rounded-pill border-none cursor-pointer disabled:cursor-default enabled:hover:bg-accent-deep enabled:hover:-translate-y-px enabled:hover:shadow-[0_5px_14px_rgba(47,82,70,0.22)] enabled:active:translate-y-0 enabled:active:shadow-[0_2px_6px_rgba(47,82,70,0.2)]"
-        >
-          {strings.submit}
-          <Icon name="arrow" size={13} />
-        </button>
-        <span class="text-ink-muted font-sans text-[12px] max-w-[260px] leading-[1.5]">{strings.fine}</span>
-      </div>
-    </form>
-  )}
+  </div>
 
   {/* ── Aside: elsewhere ── */}
   <aside class="flex flex-col gap-0">
     <div class="font-mono text-ink-muted text-[10.5px] tracking-[1.4px] uppercase mb-[6px]">{strings.elsewhereLabel}</div>
-    {elsewhere.map(([name, note]) => (
-      <a class="flex items-baseline justify-between gap-[12px] px-0 py-[13px] border-t border-hair-soft text-ink no-underline" href="#">
-        <span class="font-serif text-[16px]">{name}</span>
-        <span class="text-ink-muted font-sans text-[12px] text-right">{note}</span>
-      </a>
-    ))}
+    {elsewhere.map(([name, note, href]) => {
+      const external = !!href && href.startsWith('http');
+      const inner = (
+        <>
+          <span class="font-serif text-[16px] transition-colors group-hover:text-accent">{name}</span>
+          <span class="text-ink-muted font-sans text-[12px] text-right">{note}</span>
+        </>
+      );
+      const cls = 'group flex items-baseline justify-between gap-[12px] px-0 py-[13px] border-t border-hair-soft text-ink no-underline';
+      return href
+        ? <a class={cls} href={href} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{inner}</a>
+        : <span class={cls}>{inner}</span>;
+    })}
   </aside>
-
 </div>
+
+<style>
+  .cf-chip {
+    background: transparent;
+    color: var(--color-ink-soft);
+    border-color: var(--color-hair);
+    transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+  }
+  .cf-chip:hover { border-color: var(--color-accent); }
+  .cf-chip[aria-pressed='true'] {
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+    border-color: var(--color-accent);
+  }
+</style>
+
+<script>
+  // Progressive enhancement for the contact form: chip selection, animated
+  // success swap, and "write again" reverse. Real-backend seam preserved.
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('[data-cf-root]').forEach((root) => {
+    // Topic chips → aria-pressed + hidden input
+    const chips = root.querySelectorAll<HTMLButtonElement>('[data-cf-chip]');
+    const topicInput = root.querySelector<HTMLInputElement>('[data-cf-topic-input]');
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        chips.forEach((c) => c.setAttribute('aria-pressed', 'false'));
+        chip.setAttribute('aria-pressed', 'true');
+        if (topicInput) topicInput.value = chip.dataset.value ?? '';
+      });
+    });
+
+    const form = root.querySelector<HTMLFormElement>('[data-cf-form]');
+    const wrap = root.querySelector<HTMLElement>('[data-cf-form-wrap]');
+    const sent = root.querySelector<HTMLElement>('[data-cf-sent]');
+    const title = sent?.querySelector<HTMLElement>('[data-cf-sent-title]');
+    const again = root.querySelector<HTMLButtonElement>('[data-cf-again]');
+    if (!form || !wrap || !sent) return;
+
+    form.addEventListener('submit', (e) => {
+      const action = form.getAttribute('action') ?? '';
+      if (action !== '' && !action.endsWith('#')) return; // real endpoint handles it
+      e.preventDefault();
+      const hp = form.querySelector<HTMLInputElement>('input[name="_gotcha"]');
+      if (hp && hp.value) return;
+
+      const finish = () => {
+        wrap.hidden = true;
+        sent.hidden = false;
+        if (!reduce) sent.style.animation = 'formSentIn 0.32s cubic-bezier(0.2,0.7,0.3,1) both';
+        title?.focus();
+      };
+      if (reduce) { finish(); return; }
+      wrap.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+      wrap.style.opacity = '0';
+      wrap.style.transform = 'translateY(4px)';
+      window.setTimeout(finish, 220);
+    });
+
+    again?.addEventListener('click', () => {
+      sent.hidden = true;
+      wrap.hidden = false;
+      wrap.style.opacity = '';
+      wrap.style.transform = '';
+      form.reset();
+      // restore default chip selection
+      chips.forEach((c, i) => c.setAttribute('aria-pressed', i === 0 ? 'true' : 'false'));
+      if (topicInput) topicInput.value = chips[0]?.dataset.value ?? '';
+    });
+  });
+</script>

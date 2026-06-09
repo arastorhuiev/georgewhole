@@ -10,10 +10,9 @@ interface LocaleOption {
 interface FooterStrings {
   deskTitle: string;
   deskBlurb: string;
-  /** Up to 3 columns: each entry is [heading, string[]] */
-  cols: Array<[string, string[]]>;
+  /** Up to 3 columns: each entry is [heading, Array<[label, locale-less path]>] */
+  cols: Array<[string, Array<[string, string]>]>;
   copy: string;
-  legal: string[];
 }
 
 interface Props {
@@ -25,6 +24,9 @@ interface Props {
 
 const { layout = 'desktop', strings: c, locale, locales } = Astro.props;
 const wide = layout === 'desktop';
+
+// Footer links carry locale-less paths; build the real, trailing-slashed href.
+const linkHref = (path: string) => `/${locale}/${path}/`.replace(/\/{2,}/g, '/');
 ---
 
 {wide ? (
@@ -38,19 +40,16 @@ const wide = layout === 'desktop';
       {c.cols.slice(0, 3).map(([head, links]) => (
         <div>
           <div class="font-mono text-[11px] tracking-[1.4px] uppercase text-ink-muted mb-3">{head}</div>
-          {links.map((l) => (
-            <a class="block mb-2 text-ink text-[13.5px] no-underline hover:text-accent">{l}</a>
+          {links.map(([label, path]) => (
+            <a href={linkHref(path)} class="block mb-2 text-ink text-[13.5px] no-underline hover:text-accent transition-colors">{label}</a>
           ))}
         </div>
       ))}
     </div>
 
-    {/* Bottom bar: copy / legal / LocaleSwitcher */}
+    {/* Bottom bar: copy / LocaleSwitcher */}
     <div class="flex justify-between items-center mt-10 pt-5 border-t border-hair-soft font-mono text-[11px] text-ink-muted tracking-[0.5px] flex-wrap gap-4">
       <div>{c.copy}</div>
-      <div class="flex gap-[18px]">
-        {c.legal.map((l) => <span>{l}</span>)}
-      </div>
       <LocaleSwitcher current={locale} locales={locales} />
     </div>
   </footer>
@@ -64,19 +63,16 @@ const wide = layout === 'desktop';
       {c.cols.slice(0, 2).map(([head, links]) => (
         <div>
           <div class="font-mono text-[11px] tracking-[1.4px] uppercase text-ink-muted mb-3">{head}</div>
-          {links.map((l) => (
-            <a class="block mb-[10px] text-ink text-[14px] no-underline hover:text-accent">{l}</a>
+          {links.map(([label, path]) => (
+            <a href={linkHref(path)} class="block mb-[10px] text-ink text-[14px] no-underline hover:text-accent transition-colors">{label}</a>
           ))}
         </div>
       ))}
     </div>
 
-    {/* Vertical bottom bar: LocaleSwitcher → legal → copy */}
+    {/* Vertical bottom bar: LocaleSwitcher → copy */}
     <div class="pt-[22px] border-t border-hair-soft flex flex-col gap-4">
       <LocaleSwitcher current={locale} locales={locales} />
-      <div class="flex gap-4 font-mono text-[10.5px] text-ink-muted tracking-[0.5px]">
-        {c.legal.map((l) => <span>{l}</span>)}
-      </div>
       <div class="font-mono text-[10.5px] text-ink-muted tracking-[0.5px]">{c.copy}</div>
     </div>
   </footer>

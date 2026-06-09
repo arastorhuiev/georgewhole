@@ -6,6 +6,7 @@ interface Props {
   variant?: 'newsletter' | 'quiz';
   compact?: boolean;
   bare?: boolean;
+  /** Server-rendered success state (no-JS fallback). With JS the swap is animated. */
   sent?: boolean;
   action?: string;
   strings: {
@@ -32,23 +33,10 @@ const {
 const isQuiz = variant === 'quiz';
 ---
 
-{sent ? (
-  <div class="font-sans">
-    <div class="inline-flex items-center justify-center w-[38px] h-[38px] rounded-[19px] bg-[rgba(63,107,94,0.1)] text-accent mb-[16px]">
-      <Icon name="check" size={18} />
-    </div>
-    <h3
-      class:list={['font-serif text-ink font-normal leading-[1.2] tracking-[-0.3px] mt-0 mb-[8px]', compact ? 'text-[22px]' : 'text-[26px]']}
-    >
-      {strings.sentTitle}
-    </h3>
-    <p class="text-ink-soft text-[14.5px] leading-[1.6] m-0">{strings.sentBody}</p>
-  </div>
-) : (
-  <div class="font-sans">
-    {isQuiz && strings.kicker && (
-      <Kicker>{strings.kicker}</Kicker>
-    )}
+<div class="font-sans" data-ec-root>
+  {/* ── Form ── */}
+  <div data-ec-form-wrap class:list={[sent && 'hidden']}>
+    {isQuiz && strings.kicker && <Kicker>{strings.kicker}</Kicker>}
     {!bare && (
       <h3
         class:list={[
@@ -64,18 +52,18 @@ const isQuiz = variant === 'quiz';
     {!bare && strings.sub && (
       <p class="text-ink-soft text-[14.5px] leading-[1.6] mt-0 mb-[18px] max-w-[480px]">{strings.sub}</p>
     )}
-    <form method="post" action={action ?? '#'} class="flex gap-[8px] flex-wrap max-w-[460px]">
+    <form method="post" action={action ?? '#'} data-ec-form class="flex gap-[8px] flex-wrap max-w-[460px]">
       <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="absolute left-[-9999px] w-px h-px overflow-hidden opacity-0 pointer-events-none" aria-hidden="true" />
       <input
         type="email"
         name="email"
         placeholder={strings.placeholder}
         required
-        class="flex-[1_1_220px] px-[14px] py-[12px] text-[14px] font-sans border border-hair bg-bg text-ink rounded-md outline-none"
+        class="flex-[1_1_220px] px-[14px] py-[12px] text-[14px] font-sans border border-hair bg-bg text-ink rounded-md outline-none transition-[border-color,box-shadow] duration-[0.16s] ease focus:border-accent focus:shadow-[0_0_0_3px_rgba(63,107,94,0.1)]"
       />
       <button
         type="submit"
-        class="px-[18px] py-[12px] text-[14px] font-medium font-sans bg-accent text-accent-fg rounded-md border-none cursor-pointer disabled:cursor-default enabled:hover:bg-accent-deep enabled:hover:-translate-y-px enabled:hover:shadow-[0_5px_14px_rgba(47,82,70,0.22)] enabled:active:translate-y-0 enabled:active:shadow-[0_2px_6px_rgba(47,82,70,0.2)]"
+        class="px-[18px] py-[12px] text-[14px] font-medium font-sans bg-accent text-accent-fg rounded-md border-none cursor-pointer disabled:cursor-default disabled:pointer-events-none hover:bg-accent-deep hover:-translate-y-px hover:shadow-[0_5px_14px_rgba(47,82,70,0.22)] active:translate-y-0 active:shadow-[0_2px_6px_rgba(47,82,70,0.2)]"
       >
         {strings.submit}
       </button>
@@ -84,4 +72,56 @@ const isQuiz = variant === 'quiz';
       <p class="text-ink-muted text-[11.5px] mt-[12px] mb-0">{strings.note}</p>
     )}
   </div>
-)}
+
+  {/* ── Success ── */}
+  <div data-ec-sent hidden={!sent}>
+    <div class="inline-flex items-center justify-center w-[38px] h-[38px] rounded-[19px] bg-[rgba(63,107,94,0.1)] text-accent mb-[16px]">
+      <Icon name="check" size={18} />
+    </div>
+    <h3
+      tabindex="-1"
+      data-ec-sent-title
+      class:list={['font-serif text-ink font-normal leading-[1.2] tracking-[-0.3px] mt-0 mb-[8px] outline-none', compact ? 'text-[22px]' : 'text-[26px]']}
+    >
+      {strings.sentTitle}
+    </h3>
+    <p class="text-ink-soft text-[14.5px] leading-[1.6] m-0">{strings.sentBody}</p>
+  </div>
+</div>
+
+<script>
+  // Progressive enhancement: animate the form → success swap (no full reload).
+  // Real-backend seam preserved: a non-"#" action still does a normal submit.
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLFormElement>('form[data-ec-form]').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      const action = form.getAttribute('action') ?? '';
+      const isReal = action !== '' && !action.endsWith('#');
+      if (isReal) return; // let the real endpoint handle it (server renders success)
+
+      e.preventDefault();
+      const hp = form.querySelector<HTMLInputElement>('input[name="_gotcha"]');
+      if (hp && hp.value) return; // honeypot tripped — ignore silently
+
+      const root = form.closest('[data-ec-root]');
+      const wrap = root?.querySelector<HTMLElement>('[data-ec-form-wrap]');
+      const sent = root?.querySelector<HTMLElement>('[data-ec-sent]');
+      const title = sent?.querySelector<HTMLElement>('[data-ec-sent-title]');
+      if (!wrap || !sent) return;
+
+      const finish = () => {
+        wrap.hidden = true;
+        sent.hidden = false;
+        if (!reduce) sent.style.animation = 'formSentIn 0.32s cubic-bezier(0.2,0.7,0.3,1) both';
+        title?.focus();
+      };
+
+      if (reduce) { finish(); return; }
+      wrap.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+      wrap.style.opacity = '0';
+      wrap.style.transform = 'translateY(4px)';
+      window.setTimeout(finish, 220);
+    });
+  });
+</script>

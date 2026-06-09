@@ -1,0 +1,41 @@
+---
+// Contact strip — a quiet invitation to write, with a primary CTA into /contact.
+import Kicker from '@components/common/Kicker.astro';
+import Button from '@components/common/Button.astro';
+
+interface Props {
+  lang: string;
+  contact: { kicker: string; title: string; sub: string; submit: string };
+}
+
+const { lang, contact } = Astro.props;
+---
+
+<section class="contact-strip border-t border-hair bg-surface-soft">
+  <div class="contact-inner">
+    <div class="max-w-[540px]">
+      <Kicker>{contact.kicker}</Kicker>
+      <h2 class="font-serif text-ink font-normal text-[clamp(24px,2.5vw,30px)] leading-[1.2] tracking-[-0.4px] mt-3 mb-2">
+        {contact.title}
+      </h2>
+      <p class="font-sans text-ink-soft text-[15px] leading-[1.6] m-0">{contact.sub}</p>
+    </div>
+    <Button variant="primary" href={`/${lang}/contact/`}>{contact.submit}</Button>
+  </div>
+</section>
+
+<style>
+  .contact-strip { padding: 40px 20px; }
+  .contact-inner { display: flex; flex-direction: column; gap: 18px; }
+
+  @media (min-width: 768px) {
+    .contact-strip { padding: 64px 64px; }
+    .contact-inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+  }
+</style>

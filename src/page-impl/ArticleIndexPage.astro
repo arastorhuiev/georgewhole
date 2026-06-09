@@ -34,7 +34,7 @@ const rest = allArticles.slice(1);
 // When series metadata is added to frontmatter this can be refined.
 const series = [
   {
-    label: t.articlesIndex.seriesLabel ?? 'Все статьи',
+    label: t.articlesIndex.seriesLabel,
     note: t.articlesIndex.count,
     items: rest,
   },
@@ -66,11 +66,12 @@ const series = [
     />
   </div>
 
+  <main id="main">
   <!-- Page header -->
   <header class="page-header">
     <!-- Breadcrumb -->
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href={`/${lang}/`} class="crumb-link">Главная</a>
+      <a href={`/${lang}/`} class="crumb-link">{t.common.breadcrumbHome}</a>
       <span class="crumb-sep" aria-hidden="true">/</span>
       <span class="crumb-current">{t.nav.articles}</span>
     </nav>
@@ -107,18 +108,9 @@ const series = [
     </section>
   )}
 
-  <!-- Filter tags -->
-  <section class="tags-section" aria-label="Фильтр по темам">
-    <div class="tags-row">
-      {t.reading.tags.map((tag, i) => (
-        <span
-          class:list={['tagchip', i === 0 && 'tagchip--active']}
-        >
-          {tag}
-        </span>
-      ))}
-    </div>
-  </section>
+  {/* Topic filtering is deferred until articles carry tag metadata — a
+      non-functional filter row was removed rather than ship a dead control.
+      See docs/QUESTIONS.md. */}
 
   <!-- Article series / list -->
   <section class="series-section">
@@ -167,6 +159,7 @@ const series = [
       strings={t.newsletter}
     />
   </section>
+  </main>
 
   <Footer
     layout="desktop"
@@ -321,6 +314,7 @@ const series = [
     letter-spacing: -0.5px;
     margin: 0;
     text-wrap: balance;
+    transition: color 0.18s ease;
   }
 
   @media (max-width: 767px) {
@@ -532,6 +526,7 @@ const series = [
     margin: 0 0 6px;
     line-height: 1.25;
     letter-spacing: -0.2px;
+    transition: color 0.18s ease;
   }
 
   @media (max-width: 767px) {

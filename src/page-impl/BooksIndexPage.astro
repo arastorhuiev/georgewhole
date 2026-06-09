@@ -79,7 +79,7 @@ const locales = buildLocaleSwitcherItems(lang, 'books');
     />
   </div>
 
-  <main>
+  <main id="main">
     <!-- Page header -->
     <header style="border-bottom:1px solid var(--color-hair);">
       <div class="page-header-inner">
@@ -87,7 +87,11 @@ const locales = buildLocaleSwitcherItems(lang, 'books');
         <div class="breadcrumb font-mono text-ink-muted">
           {t.booksIndex.crumb.map((s: string, i: number) => (
             <>
-              <span style={i === t.booksIndex.crumb.length - 1 ? 'color:var(--color-ink)' : undefined}>{s}</span>
+              {i < t.booksIndex.crumb.length - 1 ? (
+                <a href={`/${lang}/`} class="bc-link">{s}</a>
+              ) : (
+                <span style="color:var(--color-ink)" aria-current="page">{s}</span>
+              )}
               {i < t.booksIndex.crumb.length - 1 && <span style="opacity:0.4;">/</span>}
             </>
           ))}
@@ -127,6 +131,7 @@ const locales = buildLocaleSwitcherItems(lang, 'books');
             subtitle={publishedEntry.data.subtitle}
             body={publishedEntry.data.lead}
             cta={t.common.getBook}
+            ctaHref={`/${lang}/books/${slugOf(publishedEntry.id)}/`}
             retailers={publishedEntry.data.retailers}
             retailerStatus={publishedEntry.data.retailerStatus}
             retailerLabel={t.bookDetail.retailLabel}
@@ -170,6 +175,13 @@ const locales = buildLocaleSwitcherItems(lang, 'books');
     display: flex;
     gap: 10px;
   }
+
+  .bc-link {
+    color: var(--color-ink-muted);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  .bc-link:hover { color: var(--color-ink); }
 
   .page-title {
     font-size: 32px;

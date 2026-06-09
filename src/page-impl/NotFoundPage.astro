@@ -101,10 +101,10 @@ const navItems = [
 
   <!-- ── FOOTER ─────────────────────────────────────────────────── -->
   <div class="hidden md:block">
-    <Footer strings={{ ...t.footer, legal: [...t.footer.legal] }} locale={lang} locales={locales} />
+    <Footer strings={t.footer} locale={lang} locales={locales} />
   </div>
   <div class="md:hidden">
-    <Footer strings={{ ...t.footer, legal: [...t.footer.legal] }} locale={lang} locales={locales} layout="mobile" />
+    <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
   </div>
 
 </div>

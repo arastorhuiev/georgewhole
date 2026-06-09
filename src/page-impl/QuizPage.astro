@@ -44,7 +44,7 @@ const archetypes = quizArchetypes.map((a) => ({
   <MobileNav brand="georgewhole" brandHref={`/${lang}/`} navItems={navItems} locales={locales} currentLocale={lang} labels={t.mobileNav} />
 </div>
 
-<main class="mx-auto max-w-[760px] px-5 py-14 md:py-20">
+<main id="main" class="mx-auto max-w-[760px] px-5 py-14 md:py-20">
   <Quiz client:visible questions={quizQuestions} archetypes={archetypes} ui={quizUi} />
 </main>
 

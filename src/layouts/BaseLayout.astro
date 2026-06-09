@@ -13,6 +13,10 @@ interface Props {
   title: string;
   description?: string;
   noindex?: boolean;
+  /** 'website' (default) or 'article' */
+  ogType?: string;
+  /** absolute share-image URL override */
+  ogImage?: string;
   /** page-specific JSON-LD nodes (Book / Article / BreadcrumbList / …) */
   jsonLd?: object[];
 }
@@ -22,11 +26,13 @@ const {
   title,
   description,
   noindex = false,
+  ogType,
+  ogImage,
   jsonLd = [],
 } = Astro.props;
 
 const t = useTranslations(locale);
-const siteUrl = (Astro.site?.href ?? 'https://example.com/').replace(/\/$/, '');
+const siteUrl = (Astro.site?.href ?? 'https://georgewhole.com/').replace(/\/$/, '');
 const nodes = [
   ...baseGraph({ siteUrl, locale, brand: t.brand, description: t.hero.sub }),
   ...jsonLd,
@@ -39,13 +45,14 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
 <!doctype html>
 <html lang={locale} data-locale={locale}>
   <head>
-    <Head locale={locale} path={path} title={title} description={description} noindex={noindex} />
+    <Head locale={locale} path={path} title={title} description={description} noindex={noindex} ogType={ogType} ogImage={ogImage} />
     <JsonLd nodes={nodes} />
     {plausibleDomain && (
       <script defer data-domain={plausibleDomain} src="https://plausible.io/js/script.js" is:inline></script>
     )}
   </head>
   <body>
+    <a href="#main" class="skip-link">{t.common.skipToContent}</a>
     <slot />
   </body>
 </html>

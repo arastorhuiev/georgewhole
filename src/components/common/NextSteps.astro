@@ -6,7 +6,8 @@ interface Props {
   kicker: string;
   title: string;
   sub: string;
-  ctas: string[];
+  /** [label, href] pairs — first is primary, the rest are ghost links. */
+  ctas: Array<[string, string]>;
   layout?: 'desktop' | 'mobile';
 }
 
@@ -39,8 +40,8 @@ const wide = layout === 'desktop';
     'flex gap-[12px] flex-wrap',
     wide ? 'flex-row' : 'flex-col',
   ]}>
-    {ctas[0] && <Button variant="primary">{ctas[0]}</Button>}
-    {ctas[1] && <Button variant="ghost">{ctas[1]}</Button>}
-    {ctas[2] && <Button variant="ghost">{ctas[2]}</Button>}
+    {ctas[0] && <Button variant="primary" href={ctas[0][1]}>{ctas[0][0]}</Button>}
+    {ctas[1] && <Button variant="ghost" href={ctas[1][1]}>{ctas[1][0]}</Button>}
+    {ctas[2] && <Button variant="ghost" href={ctas[2][1]}>{ctas[2][0]}</Button>}
   </div>
 </div>

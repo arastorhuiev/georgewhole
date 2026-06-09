@@ -1,7 +1,7 @@
 ---
 // Internal design-system reference (noindex, excluded from sitemap).
 // Assembles every M1 component for 1:1 fidelity verification against
-// design-reference/project/screenshots/. Not a shipped page.
+// docs/design/project/screenshots/. Not a shipped page.
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Nav from '@components/nav/Nav.astro';
 import MobileNav from '@components/nav/MobileNav.astro';
@@ -95,12 +95,11 @@ const footerStrings = {
   deskTitle: 'Стол автора',
   deskBlurb: 'Статьи и книги о правилах, по которым мы живём, не выбирая их, — и о тех, что мы можем выбрать.',
   cols: [
-    ['Читать', ['Все статьи', 'По темам', 'Тест']],
-    ['Книги', ['Новый Код', 'Готовятся', 'Об авторе']],
-    ['Поддержка', ['Контакты', 'Пресса', 'Рассылка']],
-  ] as Array<[string, string[]]>,
-  copy: '© 2026 · georgewhole · СНАЧАЛА НА БУМАГЕ',
-  legal: ['УСЛОВИЯ'],
+    ['Читать', [['Все статьи', 'articles'], ['Тест', 'quiz']]],
+    ['Книги', [['Новый Код', 'books/novy-kod'], ['Скоро', 'books'], ['Об авторе', 'about']]],
+    ['Связь', [['Контакты', 'contact'], ['Пресса', 'contact'], ['Рассылка', 'newsletter']]],
+  ] as Array<[string, Array<[string, string]>]>,
+  copy: '© 2026 · georgewhole · написано медленно',
 };
 
 const sectionLabel = 'font-mono text-[11px] uppercase tracking-[0.16em] text-ink-muted';
@@ -216,8 +215,8 @@ const sectionLabel = 'font-mono text-[11px] uppercase tracking-[0.16em] text-ink
       </PullQuote>
 
       <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        <ArticleCard {...articleCard} width="100%" />
-        <ArticleCard {...articleCard} compact width="100%" />
+        <ArticleCard {...articleCard} />
+        <ArticleCard {...articleCard} compact />
       </div>
 
       <ArticleFigure caption="Кухня на севере Испании, где написана большая часть книги." credit="ИЗОБРАЖЕНИЕ · ПЛЕЙСХОЛДЕР" />
@@ -249,7 +248,7 @@ const sectionLabel = 'font-mono text-[11px] uppercase tracking-[0.16em] text-ink
         elsewhere={[['Рассылка', 'письмо по воскресеньям'], ['Goodreads', 'заметки на полях книг']]}
       />
 
-      <NextSteps kicker="Куда идти дальше" title="Не обязательно решать сегодня." sub="Возьмите тест, начните со статьи или с книги — нет правильного ответа." ctas={['Пройти тест', 'Начать со статьи', 'Купить книгу']} />
+      <NextSteps kicker="Куда идти дальше" title="Не обязательно решать сегодня." sub="Возьмите тест, начните со статьи или с книги — нет правильного ответа." ctas={[['Пройти тест', '#'], ['Начать со статьи', '#'], ['Купить книгу', '#']]} />
 
       <CrisisResources label="Если нужна поддержка" resources={[{ name: 'National Alliance for Eating Disorders', contact: '+1-866-662-1235', href: '#' }]} note="Это книги и письма, а не лечение. Если тяжело — обратитесь за профессиональной помощью." />
 

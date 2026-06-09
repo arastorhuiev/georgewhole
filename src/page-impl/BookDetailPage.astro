@@ -93,7 +93,7 @@ const crumb = [t.nav.books, entry.data.title];
     />
   </div>
 
-  <main>
+  <main id="main">
     <!-- Hero section: breadcrumb + cover + facts column -->
     <section class="hero-section" style="border-bottom:1px solid var(--color-hair);">
 
@@ -101,7 +101,11 @@ const crumb = [t.nav.books, entry.data.title];
       <div class="breadcrumb font-mono text-ink-muted">
         {crumb.map((s, i) => (
           <>
-            <span style={i === crumb.length - 1 ? 'color:var(--color-ink)' : undefined}>{s}</span>
+            {i < crumb.length - 1 ? (
+              <a href={`/${lang}/books/`} class="bc-link">{s}</a>
+            ) : (
+              <span style="color:var(--color-ink)" aria-current="page">{s}</span>
+            )}
             {i < crumb.length - 1 && <span style="opacity:0.4;">/</span>}
           </>
         ))}
@@ -134,18 +138,22 @@ const crumb = [t.nav.books, entry.data.title];
             <p class="book-lead text-ink-soft">{entry.data.lead}</p>
           )}
 
-          <!-- Primary CTA -->
-          <div style="margin-bottom:20px;">
-            <Button variant="primary" href="#">{t.common.getBook}</Button>
-          </div>
+          <!-- Primary CTA — published books scroll to the retailer block -->
+          {entry.data.status === 'out' && (
+            <div style="margin-bottom:20px;">
+              <Button variant="primary" href="#buy">{t.common.getBook}</Button>
+            </div>
+          )}
 
           <!-- Retailer links -->
           {entry.data.retailers && entry.data.retailers.length > 0 && (
-            <RetailerLinks
-              items={entry.data.retailers}
-              status={entry.data.retailerStatus}
-              label={t.bookDetail.retailLabel}
-            />
+            <div id="buy">
+              <RetailerLinks
+                items={entry.data.retailers}
+                status={entry.data.retailerStatus}
+                label={t.bookDetail.retailLabel}
+              />
+            </div>
           )}
 
           <!-- Facts grid + languages -->
@@ -309,6 +317,16 @@ const crumb = [t.nav.books, entry.data.title];
     display: flex;
     gap: 10px;
   }
+
+  .bc-link {
+    color: var(--color-ink-muted);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  .bc-link:hover { color: var(--color-ink); }
+
+  /* Offset in-page #buy jump so the sticky-ish hero doesn't clip it */
+  #buy { scroll-margin-top: 24px; }
 
   .hero-grid {
     display: flex;

@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // Absolute URLs (canonical / hreflang / sitemap) come from SITE_URL.
 // Domain is TBD — set SITE_URL in the deploy env (Cloudflare Pages).
-const SITE_URL = process.env.SITE_URL ?? 'https://example.com';
+const SITE_URL = process.env.SITE_URL ?? 'https://georgewhole.com';
 
 // https://astro.build/config
 export default defineConfig({

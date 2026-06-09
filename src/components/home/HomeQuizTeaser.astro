@@ -1,0 +1,69 @@
+---
+// Quiz teaser — email capture (quiz variant) + a static preview card linking to
+// the full quiz. The card now lifts + nudges its arrow on hover.
+import EmailCapture from '@components/forms/EmailCapture.astro';
+import Icon from '@components/common/Icon.astro';
+
+interface Props {
+  lang: string;
+  quizHome: { kicker: string; title: string; sub: string; placeholder: string; submit: string; note: string };
+  quizUi: { progressLabel: string; of: string; howLabel: string };
+  newsletter: { sentTitle: string; sentBody: string };
+}
+
+const { lang, quizHome, quizUi, newsletter } = Astro.props;
+---
+
+<section class="quiz-section border-b border-hair">
+  <div class="quiz-inner">
+    <EmailCapture
+      variant="quiz"
+      strings={{
+        kicker: quizHome.kicker,
+        title: quizHome.title,
+        sub: quizHome.sub,
+        placeholder: quizHome.placeholder,
+        submit: quizHome.submit,
+        note: quizHome.note,
+        sentTitle: newsletter.sentTitle,
+        sentBody: newsletter.sentBody,
+      }}
+    />
+
+    <a
+      href={`/${lang}/quiz/`}
+      class="group block no-underline bg-bg border border-hair p-8 transition hover:border-accent hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(42,39,35,0.08)]"
+      aria-label={quizHome.title}
+    >
+      <div class="font-mono text-ink-muted text-[10.5px] uppercase tracking-[0.8px] mb-[18px] flex justify-between items-center">
+        <span>{quizUi.progressLabel} 1 {quizUi.of} 12</span>
+        <span aria-hidden="true">· · · · ● · · · · · · ·</span>
+      </div>
+      <h4 class="font-serif text-ink font-normal text-[22px] leading-[1.35] tracking-[-0.2px] mt-0 mb-[22px]">
+        {quizUi.howLabel}
+      </h4>
+      <div class="font-sans text-accent text-[14px] font-medium inline-flex items-center gap-1.5">
+        {quizHome.submit}
+        <Icon name="arrow" size={12} class="transition-transform duration-200 ease-[cubic-bezier(0.2,0.7,0.3,1)] group-hover:translate-x-[3px]" />
+      </div>
+    </a>
+  </div>
+</section>
+
+<style>
+  .quiz-section { padding: 40px 20px; }
+  .quiz-inner { display: flex; flex-direction: column; gap: 28px; }
+
+  @media (min-width: 768px) {
+    .quiz-section { padding: 88px 64px; }
+    .quiz-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      background: var(--color-surface-soft);
+      padding: 64px 56px;
+      border: 1px solid var(--color-hair);
+    }
+  }
+</style>

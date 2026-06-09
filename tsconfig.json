@@ -16,5 +16,5 @@
     }
   },
   "include": [".astro/types.d.ts", "src/**/*", "*.mjs", "*.ts"],
-  "exclude": ["dist", "design-reference", "marketingskills", "devmarketing-skills", "research", ".omc"]
+  "exclude": ["dist", "docs", ".omc"]
 }

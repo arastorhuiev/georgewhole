@@ -19,7 +19,7 @@ const t = useTranslations(lang);
 const { entry } = Astro.props;
 const slug = slugOf(entry.id);
 const url = absUrl(lang, `books/${slug}`);
-const siteUrl = (Astro.site?.href ?? 'https://example.com/').replace(/\/$/, '');
+const siteUrl = (Astro.site?.href ?? 'https://georgewhole.com/').replace(/\/$/, '');
 
 const jsonLd = [
   bookNode(siteUrl, url, lang, {

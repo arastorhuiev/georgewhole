@@ -1,6 +1,6 @@
 import type { QuizQuestion, Archetype } from '@quiz/scoring';
 
-// 12 questions, transcribed from design-reference/project/ru-strings-pages.jsx
+// 12 questions, transcribed from docs/design/project/ru-strings-pages.jsx
 // (quiz12.questions). Option order encodes tendency (see scoring.ts caveat).
 export const quizQuestions: QuizQuestion[] = [
   { text: 'Когда вы съели то, что не планировали, самый громкий голос в голове — это…', options: ['«Потом отработаю».', '«Что со мной не так».', '«Я устал, и мне это было нужно».', '«У меня вообще-то нет такого правила».'] },
@@ -20,8 +20,9 @@ export const quizQuestions: QuizQuestion[] = [
 export const quizUi = {
   kicker: 'Тест · без регистрации',
   title: 'Какой у вас Старый Код?',
-  sub: 'Двенадцать мягких вопросов, чтобы услышать унаследованные правила, которые работают в фоне. Email не нужен — результат вы увидите сразу.',
+  sub: 'Двенадцать спокойных вопросов, чтобы расслышать правила, которые мы усвоили и больше не замечаем. Email не нужен — результат вы увидите сразу.',
   startCta: 'Начать тест',
+  optionLetters: 'АБВГ',
   meta: ['12 вопросов', '≈ 4 минуты', 'Без регистрации'],
   howLabel: 'Как это работает',
   how: [
@@ -44,6 +45,8 @@ export const quizUi = {
   resultMailCta: 'Подписаться',
   resultMailPh: 'ваш@email',
   resultMailSkip: 'Достаточно результата, спасибо',
+  resultMailSentTitle: 'Спасибо, что подписались.',
+  resultMailSentSub: 'Первое письмо придёт в ближайшее воскресенье утром.',
 };
 
 // 4 archetypes. [0] «Заслуживающий» uses the design's real result copy; [1..3]

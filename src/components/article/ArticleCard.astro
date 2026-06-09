@@ -10,7 +10,6 @@ interface Props {
   image?: string;
   imageTone?: 'paper' | 'dusk' | 'morning' | 'deep';
   compact?: boolean;
-  width?: string;
 }
 
 const {
@@ -21,11 +20,10 @@ const {
   image,
   imageTone = 'paper',
   compact = false,
-  width,
 } = Astro.props;
 ---
 
-<article style={width ? `width:${width};` : undefined}>
+<article class="w-full">
   {image && (
     <AtmosImage
       height={compact ? 140 : 200}
@@ -34,7 +32,10 @@ const {
     />
   )}
   {kicker && <Kicker>{kicker}</Kicker>}
-  <h3 class="title" class:list={[compact ? 'title--compact' : 'title--default']}>
+  <h3
+    class="title transition-colors group-hover:text-accent"
+    class:list={[compact ? 'title--compact' : 'title--default']}
+  >
     {title}
   </h3>
   {summary && <p class="summary">{summary}</p>}

@@ -14,3 +14,7 @@ pnpm-debug.log*
 !.env.example
 # os
 .DS_Store
+# oh-my-claudecode session/state cache (machine-local, not source)
+.omc/
+# obsidian vault config inside docs/research
+.obsidian/

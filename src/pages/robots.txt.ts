@@ -14,7 +14,7 @@ const AI_BOTS = [
 ];
 
 export const GET: APIRoute = ({ site }) => {
-  const base = (site?.href ?? 'https://example.com/').replace(/\/$/, '');
+  const base = (site?.href ?? 'https://georgewhole.com/').replace(/\/$/, '');
   const lines = [
     'User-agent: *',
     'Allow: /',

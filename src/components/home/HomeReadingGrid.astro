@@ -1,0 +1,73 @@
+---
+// "A few articles to start with" — heading + 3-up article grid. Each card is a
+// real link (group → ArticleCard title turns accent on hover). "All articles"
+// uses the text-button (animated arrow on hover).
+import ArticleCard from '@components/article/ArticleCard.astro';
+import Button from '@components/common/Button.astro';
+
+interface ReadingArticle {
+  href: string;
+  title: string;
+  kicker?: string;
+  summary?: string;
+  meta?: string;
+  image?: string;
+  imageTone?: 'paper' | 'dusk' | 'morning' | 'deep';
+}
+
+interface Props {
+  lang: string;
+  reading: { title: string; all: string };
+  articles: ReadingArticle[];
+}
+
+const { lang, reading, articles } = Astro.props;
+const allHref = `/${lang}/articles/`;
+---
+
+<section class="reading-section border-b border-hair">
+  <div class="reading-header">
+    <h2 class="font-serif text-ink font-normal text-[clamp(28px,3vw,36px)] leading-[1.15] tracking-[-0.4px] m-0">
+      {reading.title}
+    </h2>
+    <div class="hidden md:block">
+      <Button variant="text" href={allHref}>{reading.all}</Button>
+    </div>
+  </div>
+
+  <div class="reading-grid">
+    {articles.map((a) => (
+      <a href={a.href} class="group no-underline flex flex-col">
+        <ArticleCard
+          title={a.title}
+          kicker={a.kicker}
+          summary={a.summary}
+          meta={a.meta}
+          image={a.image}
+          imageTone={a.imageTone}
+        />
+      </a>
+    ))}
+  </div>
+
+  <div class="mt-7 md:hidden">
+    <Button variant="text" href={allHref}>{reading.all}</Button>
+  </div>
+</section>
+
+<style>
+  .reading-section { padding: 48px 20px; }
+  .reading-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .reading-grid { display: flex; flex-direction: column; gap: 36px; }
+
+  @media (min-width: 768px) {
+    .reading-section { padding: 88px 64px; }
+    .reading-header { margin-bottom: 48px; }
+    .reading-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  }
+</style>
