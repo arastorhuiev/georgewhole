@@ -48,4 +48,9 @@ const archetypes = rawArchetypes.map((a) => ({
   <Quiz client:visible questions={questions} archetypes={archetypes} ui={ui} />
 </main>
 
-<Footer strings={t.footer} locale={lang} locales={locales} />
+<div class="hidden md:block">
+  <Footer strings={t.footer} locale={lang} locales={locales} layout="desktop" />
+</div>
+<div class="md:hidden">
+  <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
+</div>

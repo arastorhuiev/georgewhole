@@ -225,12 +225,12 @@ const sourceItems = lang === 'ru'
   )}
   </main>
 
-  <Footer
-    layout="desktop"
-    strings={t.footer}
-    locale={lang}
-    locales={locales}
-  />
+  <div class="hidden md:block">
+    <Footer layout="desktop" strings={t.footer} locale={lang} locales={locales} />
+  </div>
+  <div class="md:hidden">
+    <Footer layout="mobile" strings={t.footer} locale={lang} locales={locales} />
+  </div>
 
 <style>
   /* ── Styled markdown body ── */
