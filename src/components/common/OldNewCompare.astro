@@ -21,39 +21,34 @@ const { pairs, layout = 'desktop', labels } = Astro.props;
 ---
 
 {layout === 'mobile' ? (
-  <div style="display:flex;flex-direction:column;gap:14px;">
+  <div class="flex flex-col gap-[14px]">
     {pairs.map(([oldR, newR], i) => (
       <div
-        class="bg-surface-soft"
-        style="border:1px solid var(--color-hair);padding:18px 18px 16px;position:relative;"
+        class="bg-surface-soft border border-hair relative px-[18px] pt-[18px] pb-[16px]"
       >
         <div
-          class="font-mono text-ink-muted"
-          style="position:absolute;top:14px;right:14px;font-size:11px;letter-spacing:0.6px;"
+          class="font-mono text-ink-muted absolute top-[14px] right-[14px] text-[11px] tracking-[0.6px]"
         >
           0{i + 1}
         </div>
         <div
-          class="font-mono text-ink-muted"
-          style="font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:6px;"
+          class="font-mono text-ink-muted text-[9.5px] tracking-[1.4px] uppercase mb-[6px]"
         >
           {labels.oldLabel ?? labels.oldHead}
         </div>
         <div
-          class="font-serif text-ink-muted"
-          style="font-size:17px;line-height:1.4;text-decoration:line-through;text-decoration-color:rgba(140,132,120,0.5);text-decoration-thickness:1px;"
+          class="font-serif text-ink-muted text-[17px] leading-[1.4] line-through decoration-[rgba(140,132,120,0.5)] decoration-[1px]"
         >
           {oldR}
         </div>
-        <div style="height:1px;background:var(--color-hair);margin:14px 0 12px;" />
+        <div class="h-[1px] bg-hair my-[14px] mb-[12px]" />
         <div
-          class="font-mono text-accent"
-          style="font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px;"
+          class="font-mono text-accent text-[9.5px] tracking-[1.4px] uppercase mb-[6px] flex items-center gap-[6px]"
         >
           <Icon name="check" size={12} />
           {labels.newLabel ?? labels.newHead}
         </div>
-        <div class="font-serif text-ink" style="font-size:18px;line-height:1.4;">
+        <div class="font-serif text-ink text-[18px] leading-[1.4]">
           {newR}
         </div>
       </div>
@@ -62,40 +57,36 @@ const { pairs, layout = 'desktop', labels } = Astro.props;
 ) : (
   <div class="oldnew font-serif">
     {/* column headers */}
-    <div style="display:grid;grid-template-columns:1fr 64px 1fr;align-items:end;margin-bottom:4px;">
+    <div class="grid grid-cols-[1fr_64px_1fr] items-end mb-[4px]">
       <div
-        class="font-mono text-ink-muted"
-        style="text-align:right;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;padding-bottom:14px;"
+        class="font-mono text-ink-muted text-right text-[11px] tracking-[1.4px] uppercase pb-[14px]"
       >
         {labels.oldHead}
       </div>
       <div />
       <div
-        class="font-mono text-accent"
-        style="text-align:left;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;padding-bottom:14px;"
+        class="font-mono text-accent text-left text-[11px] tracking-[1.4px] uppercase pb-[14px]"
       >
         {labels.newHead}
       </div>
     </div>
 
     {pairs.map(([oldR, newR], i) => (
-      <div style="display:grid;grid-template-columns:1fr 64px 1fr;align-items:stretch;">
+      <div class="grid grid-cols-[1fr_64px_1fr] items-stretch">
         {/* old — right-aligned, muted, struck */}
         <div
-          class="text-ink-muted"
-          style="text-align:right;padding:22px 0;border-top:1px solid var(--color-hair);font-size:19px;line-height:1.4;text-decoration:line-through;text-decoration-color:rgba(140,132,120,0.45);text-decoration-thickness:1px;display:flex;align-items:center;justify-content:flex-end;"
+          class="text-ink-muted text-right py-[22px] border-t border-hair text-[19px] leading-[1.4] line-through decoration-[rgba(140,132,120,0.45)] decoration-[1px] flex items-center justify-end"
         >
           {oldR}
         </div>
 
         {/* spine node */}
-        <div style="position:relative;border-top:1px solid var(--color-hair);">
+        <div class="relative border-t border-hair">
           <div
-            style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--color-hair);transform:translateX(-0.5px);"
+            class="absolute left-1/2 top-0 bottom-0 w-[1px] bg-hair -translate-x-[0.5px]"
           />
           <div
-            class="font-mono text-accent bg-bg"
-            style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:32px;height:32px;border-radius:16px;border:1px solid var(--color-accent-hair);display:flex;align-items:center;justify-content:center;font-size:12px;letter-spacing:0.4px;"
+            class="font-mono text-accent bg-bg absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[32px] h-[32px] rounded-[16px] border border-[var(--color-accent-hair)] flex items-center justify-center text-[12px] tracking-[0.4px]"
           >
             0{i + 1}
           </div>
@@ -103,8 +94,7 @@ const { pairs, layout = 'desktop', labels } = Astro.props;
 
         {/* new — left-aligned, ink */}
         <div
-          class="text-ink"
-          style="text-align:left;padding:22px 0;border-top:1px solid var(--color-hair);font-size:19px;line-height:1.4;display:flex;align-items:center;"
+          class="text-ink text-left py-[22px] border-t border-hair text-[19px] leading-[1.4] flex items-center"
         >
           {newR}
         </div>

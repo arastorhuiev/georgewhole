@@ -6,36 +6,9 @@ interface Props {
 const { label } = Astro.props;
 ---
 
-<aside>
-  {label && <div class="label">{label}</div>}
-  <div class="body">
+<aside class="my-[32px] bg-callout px-[28px] py-[24px] border-t-2 border-accent font-serif text-ink">
+  {label && <div class="font-mono text-[11px] tracking-[1.6px] uppercase text-accent mb-[10px] font-medium">{label}</div>}
+  <div class="text-[19px] leading-[1.55] italic">
     <slot />
   </div>
 </aside>
-
-<style>
-  aside {
-    margin: 32px 0;
-    background: var(--color-callout);
-    padding: 24px 28px;
-    border-top: 2px solid var(--color-accent);
-    font-family: var(--font-serif);
-    color: var(--color-ink);
-  }
-
-  .label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin-bottom: 10px;
-    font-weight: 500;
-  }
-
-  .body {
-    font-size: 19px;
-    line-height: 1.55;
-    font-style: italic;
-  }
-</style>

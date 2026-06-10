@@ -1,0 +1,182 @@
+{
+  "en": {
+    "crumb": ["Home", "About"],
+    "kicker": "About the author",
+    "title": "I'm sixty-four. I stopped counting at fifty-four. Here's what I learned in those years.",
+    "sub": "Not a doctor or a trainer. Just a man who kept quiet about a disorder for years — and has lived more calmly for the last ten.",
+    "timelineLabel": "A short timeline",
+    "timeline": [
+      ["1962", "Born in Kharkiv"],
+      ["1978", "The first rule about food"],
+      ["1991", "The diet years begin"],
+      ["1995", "My daughter is born"],
+      ["2016", "I stop counting"],
+      ["2024", "I start writing publicly"],
+      ["2026", "First book"]
+    ],
+    "h2_1": "Why this book, and not another.",
+    "p1": "The books about food that I needed at thirty-five did not exist. The ones I came across at fifty were not written for me — they were for women, for the very young, or for people for whom shame was a fashionable problem rather than the air I had been breathing since childhood.",
+    "p2": "I'm not the only one. There are many of us — men near sixty, carrying rules about food we never said out loud. I wrote this book first for them, and then for everyone tired of the loud version of this story.",
+    "pull": "I don't want to make this a neat, tidy story. It wasn't. But it's quieter now — and that, it turns out, is enough.",
+    "pullBy": "From the introduction",
+    "h2_2": "What my daughter taught me without trying.",
+    "p3": "Irina is thirty-one. She eats without argument. She didn't learn that from me — but because by the time she was old enough to notice, I'd stopped performing the fight in front of her. That's the whole of it.",
+    "p4": "I can say the rule changed in my generation — and that a quieter one can pass to the next. I can't prove it. I can only say I watched it happen, in my own kitchen, in my own family.",
+    "h2_3": "What I will not write about.",
+    "p5": "To save us both time: this book has no weight numbers, no before-and-after, no calorie counts, no plan. It does not promise a transformation. It does not promise much. Mostly, it offers company.",
+    "nots": [
+      "No promises to lose weight, and no counting it.",
+      "No before / after photos. Ever.",
+      "No calories or macros.",
+      "No \"today only,\" \"almost gone,\" or countdowns.",
+      "No tough love — there is none here. A lot of the slow kind, though."
+    ],
+    "nextKicker": "Where to go next",
+    "nextTitle": "No need to decide today.",
+    "nextSub": "Take the quiz, start with an article or a book — there's no right answer. The right one is whichever leaves you a little less alone.",
+    "nextCtas": ["Take the quiz", "Start with an article", "Get the book"],
+    "credKicker": "Credibility",
+    "credTitle": "Why you can trust this.",
+    "credBody": "Not because I'm an expert. Because I've been through it, I cite my sources, and I'm honest about what this book doesn't do.",
+    "credCards": [
+      ["Lived experience", "Ten years now", "Written from the far side of recovery — no distance, no ready answers."],
+      ["Sources", "Backed by research", "Links to the work and the data itself — not \"expert tips,\" but what I lean on."],
+      ["What it isn't", "Not therapy, not a plan", "These are books and texts. If things are hard right now, please reach out for professional help."]
+    ]
+  },
+  "ru": {
+    "crumb": ["Главная", "Об авторе"],
+    "kicker": "Об авторе",
+    "title": "Мне шестьдесят четыре. Считать я перестал в пятьдесят четыре. Здесь — то, что я понял за это время.",
+    "sub": "Не врач и не тренер. Просто человек, который много лет молчал о своём расстройстве — и уже десять лет живёт спокойнее.",
+    "timelineLabel": "Короткая хронология",
+    "timeline": [
+      ["1962", "Родился в Харькове"],
+      ["1978", "Первое правило о еде"],
+      ["1991", "Начинаются годы диет"],
+      ["1995", "Родилась моя дочь"],
+      ["2016", "Я перестал считать"],
+      ["2024", "Начинаю писать публично"],
+      ["2026", "Первая книга"]
+    ],
+    "h2_1": "Почему эта книга, а не другая.",
+    "p1": "Книги о еде, которые мне были нужны в тридцать пять, не существовали. Те, что попадались в пятьдесят, были написаны не для меня — они были для женщин, для очень молодых, или для тех, у кого стыд был модной проблемой, а не воздухом, которым я дышал с детства.",
+    "p2": "Я не один такой. Нас много — мужчин под шестьдесят, со своими правилами насчёт еды, которые они ни разу не произнесли вслух. Эту книгу я написал сначала для них, а потом для всех, кто устал от громкой версии этой истории.",
+    "pull": "Я не хочу делать из этого красивую, ровную историю. Она такой не была. Но сейчас стало тише — и этого, как выяснилось, достаточно.",
+    "pullBy": "Из вступления",
+    "h2_2": "Чему меня научила дочь, не пытаясь.",
+    "p3": "Ирине тридцать один. Она ест без спора. Научилась она этому не у меня — а потому, что к тому времени, когда подросла и стала замечать, я перестал разыгрывать эту борьбу при ней. Вот и всё воспитание.",
+    "p4": "Я могу сказать, что в моём поколении правило изменилось — и что другое, более спокойное, может перейти к следующему. Доказать это я не могу. Могу только сказать, что видел это сам — у себя на кухне, в своей семье.",
+    "h2_3": "О чём я не буду писать.",
+    "p5": "Сразу, чтобы не тратить ваше время: в этой книге нет веса в цифрах, фото «до и после», калорий и плана. Она не обещает преображения. Она вообще мало что обещает. Скорее — просто составляет компанию.",
+    "nots": [
+      "Никаких обещаний сбросить вес и его подсчётов.",
+      "Никаких фото «до / после». Никогда.",
+      "Без калорий и БЖУ.",
+      "Без «успейте», «осталось мало» и обратного отсчёта.",
+      "Без «жёсткой любви» — её здесь нет. Зато много спокойной."
+    ],
+    "nextKicker": "Куда идти дальше",
+    "nextTitle": "Не обязательно решать сегодня.",
+    "nextSub": "Возьмите тест, начните со статьи или с книги — правильного ответа нет. Верный — тот, после которого становится чуть менее одиноко.",
+    "nextCtas": ["Пройти тест", "Начать со статьи", "Купить книгу"],
+    "credKicker": "Достоверность",
+    "credTitle": "Почему этому можно доверять.",
+    "credBody": "Не потому что я эксперт. А потому что прошёл это сам, ссылаюсь на источники и честно говорю, чего эта книга не делает.",
+    "credCards": [
+      ["Личный опыт", "Уже десять лет", "Написано с другой стороны выздоровления — без дистанции и без готовых ответов."],
+      ["Источники", "За этим стоят исследования", "Ссылки на сами работы и данные — не «советы эксперта», а то, на что я опираюсь."],
+      ["Чем это не является", "Не терапия и не план", "Это книги и тексты. Если сейчас тяжело — пожалуйста, обратитесь за профессиональной помощью."]
+    ]
+  },
+  "uk": {
+    "crumb": ["Головна", "Про автора"],
+    "kicker": "Про автора",
+    "title": "Мені шістдесят чотири. Рахувати я перестав у п'ятдесят чотири. Ось що я зрозумів за ці роки.",
+    "sub": "Не лікар і не тренер. Просто людина, яка роками мовчала про свій розлад — і вже десять років живе спокійніше.",
+    "timelineLabel": "Коротка хронологія",
+    "timeline": [
+      ["1962", "Народився у Харкові"],
+      ["1978", "Перше правило про їжу"],
+      ["1991", "Починаються роки дієт"],
+      ["1995", "Народилася моя донька"],
+      ["2016", "Я перестав рахувати"],
+      ["2024", "Починаю писати публічно"],
+      ["2026", "Перша книга"]
+    ],
+    "h2_1": "Чому ця книга, а не інша.",
+    "p1": "Книг про їжу, які мені були потрібні в тридцять п'ять, не існувало. Ті, що траплялися в п'ятдесят, були написані не для мене — вони були для жінок, для зовсім молодих або для тих, у кого сором був модною проблемою, а не повітрям, яким я дихав з дитинства.",
+    "p2": "Я не єдиний такий. Нас багато — чоловіків під шістдесят, зі своїми правилами щодо їжі, які вони жодного разу не вимовили вголос. Цю книгу я написав спочатку для них, а потім для всіх, хто втомився від гучної версії цієї історії.",
+    "pull": "Я не хочу робити з цього гарну, рівну історію. Вона такою не була. Але тепер стало тихіше — і цього, як виявилося, достатньо.",
+    "pullBy": "Зі вступу",
+    "h2_2": "Чому мене навчила донька, навіть не намагаючись.",
+    "p3": "Ірині тридцять один. Вона їсть без суперечок. Навчилася вона цього не від мене — а тому, що на той час, коли підросла і почала помічати, я перестав розігрувати цю боротьбу при ній. Ось і все виховання.",
+    "p4": "Я можу сказати, що в моєму поколінні правило змінилося — і що інше, спокійніше, може перейти до наступного. Довести це я не можу. Можу лише сказати, що бачив це сам — у власній кухні, у власній родині.",
+    "h2_3": "Про що я не писатиму.",
+    "p5": "Відразу, щоб не витрачати ваш час: у цій книзі немає ваги в цифрах, фото «до і після», калорій і плану. Вона не обіцяє перетворення. Вона взагалі мало що обіцяє. Скоріше — просто складає компанію.",
+    "nots": [
+      "Жодних обіцянок схуднути і жодних підрахунків.",
+      "Жодних фото «до / після». Ніколи.",
+      "Без калорій і БЖУ.",
+      "Без «встигніть», «залишилося мало» і зворотного відліку.",
+      "Без «жорсткої любові» — її тут немає. Зате багато спокійної."
+    ],
+    "nextKicker": "Куди йти далі",
+    "nextTitle": "Не треба вирішувати сьогодні.",
+    "nextSub": "Пройдіть тест, почніть зі статті або з книги — правильної відповіді немає. Правильна — та, після якої стає трохи менш самотньо.",
+    "nextCtas": ["Пройти тест", "Почати зі статті", "Отримати книгу"],
+    "credKicker": "Достовірність",
+    "credTitle": "Чому цьому можна довіряти.",
+    "credBody": "Не тому що я експерт. А тому що пройшов це сам, посилаюся на джерела і чесно кажу, чого ця книга не робить.",
+    "credCards": [
+      ["Особистий досвід", "Вже десять років", "Написано з іншого боку одужання — без дистанції і без готових відповідей."],
+      ["Джерела", "Підкріплено дослідженнями", "Посилання на самі роботи і дані — не «поради експерта», а те, на що я спираюся."],
+      ["Чим це не є", "Не терапія і не план", "Це книги і тексти. Якщо зараз важко — будь ласка, зверніться за професійною допомогою."]
+    ]
+  },
+  "es": {
+    "crumb": ["Inicio", "Sobre el autor"],
+    "kicker": "Sobre el autor",
+    "title": "Tengo sesenta y cuatro años. Dejé de contar a los cincuenta y cuatro. Esto es lo que aprendí en esos años.",
+    "sub": "No soy médico ni entrenador. Solo un hombre que calló sobre su trastorno durante años — y que lleva diez viviendo con más calma.",
+    "timelineLabel": "Una breve cronología",
+    "timeline": [
+      ["1962", "Nacido en Járkov"],
+      ["1978", "La primera regla sobre la comida"],
+      ["1991", "Comienzan los años de dietas"],
+      ["1995", "Nace mi hija"],
+      ["2016", "Dejo de contar"],
+      ["2024", "Empiezo a escribir públicamente"],
+      ["2026", "Primer libro"]
+    ],
+    "h2_1": "Por qué este libro, y no otro.",
+    "p1": "Los libros sobre comida que necesitaba a los treinta y cinco no existían. Los que encontré a los cincuenta no estaban escritos para mí — eran para mujeres, para los muy jóvenes, o para personas para quienes la vergüenza era un problema de moda y no el aire que yo había respirado desde la infancia.",
+    "p2": "No soy el único. Somos muchos — hombres cerca de los sesenta, cargando reglas sobre la comida que nunca dijimos en voz alta. Escribí este libro primero para ellos, y luego para todos los que están cansados de la versión ruidosa de esta historia.",
+    "pull": "No quiero convertir esto en una historia ordenada y prolija. No lo fue. Pero ahora es más silenciosa — y eso, resulta, es suficiente.",
+    "pullBy": "De la introducción",
+    "h2_2": "Lo que mi hija me enseñó sin intentarlo.",
+    "p3": "Irina tiene treinta y uno. Come sin discutir. No lo aprendió de mí — sino porque para cuando fue lo suficientemente mayor para notar, yo había dejado de representar la lucha delante de ella. Eso es todo.",
+    "p4": "Puedo decir que la regla cambió en mi generación — y que una más tranquila puede pasar a la siguiente. No puedo probarlo. Solo puedo decir que lo vi suceder, en mi propia cocina, en mi propia familia.",
+    "h2_3": "Lo que no voy a escribir.",
+    "p5": "Para ahorrarle tiempo a los dos: este libro no tiene cifras de peso, no tiene antes y después, no tiene recuentos de calorías ni un plan. No promete una transformación. No promete mucho. En su mayoría, ofrece compañía.",
+    "nots": [
+      "Sin promesas de adelgazar, y sin contarlo.",
+      "Sin fotos de antes / después. Nunca.",
+      "Sin calorías ni macros.",
+      "Sin «solo hoy», «casi agotado» ni cuentas atrás.",
+      "Sin amor duro — no hay nada de eso aquí. Mucho del lento, eso sí."
+    ],
+    "nextKicker": "A dónde ir ahora",
+    "nextTitle": "No hace falta decidir hoy.",
+    "nextSub": "Haz el test, empieza con un artículo o un libro — no hay una respuesta correcta. La correcta es la que te deja un poco menos solo.",
+    "nextCtas": ["Hacer el test", "Empezar con un artículo", "Conseguir el libro"],
+    "credKicker": "Credibilidad",
+    "credTitle": "Por qué puedes confiar en esto.",
+    "credBody": "No porque sea un experto. Sino porque lo he vivido, cito mis fuentes y soy honesto sobre lo que este libro no hace.",
+    "credCards": [
+      ["Experiencia vivida", "Diez años ya", "Escrito desde el otro lado de la recuperación — sin distancia, sin respuestas preparadas."],
+      ["Fuentes", "Respaldado por investigación", "Enlaces al trabajo y a los datos en sí — no «consejos de experto», sino en lo que me apoyo."],
+      ["Lo que no es", "No es terapia, no es un plan", "Son libros y textos. Si las cosas están difíciles ahora mismo, por favor busca ayuda profesional."]
+    ]
+  }
+}

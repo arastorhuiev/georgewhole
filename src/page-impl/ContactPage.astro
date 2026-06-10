@@ -32,7 +32,7 @@ const elsewhere = t.contact.elsewhere.map(
 ---
 
   {/* Desktop nav */}
-  <div class="nav-desktop">
+  <div class="hidden md:block">
     <Nav
       brand="georgewhole"
       brandHref={`/${lang}/`}
@@ -45,7 +45,7 @@ const elsewhere = t.contact.elsewhere.map(
     />
   </div>
   {/* Mobile nav */}
-  <div class="nav-mobile">
+  <div class="block md:hidden">
     <MobileNav
       brand="georgewhole"
       brandHref={`/${lang}/`}
@@ -58,21 +58,24 @@ const elsewhere = t.contact.elsewhere.map(
 
   <main id="main">
     {/* ── Breadcrumb ── */}
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href={`/${lang}/`} class="bc-link">{c.crumb[0]}</a>
-      <span class="bc-sep" aria-hidden="true">/</span>
-      <span class="bc-current" aria-current="page">{c.crumb[1]}</span>
+    <nav
+      class="flex items-center gap-[8px] px-[20px] py-[12px] md:px-[64px] md:py-[14px] font-mono text-[11px] tracking-[1px] uppercase text-[var(--color-ink-muted)] border-b border-hair"
+      aria-label="Breadcrumb"
+    >
+      <a href={`/${lang}/`} class="text-[var(--color-ink-muted)] no-underline transition-colors hover:text-ink">{c.crumb[0]}</a>
+      <span class="text-hair" aria-hidden="true">/</span>
+      <span class="text-ink-soft" aria-current="page">{c.crumb[1]}</span>
     </nav>
 
     {/* ── Page header ── */}
-    <header class="page-head section-border">
+    <header class="px-[20px] pt-[36px] pb-[32px] md:px-[64px] md:pt-[64px] md:pb-[56px] border-b border-hair">
       <Kicker>{c.kicker}</Kicker>
-      <h1 class="page-head-title font-serif text-ink">{c.title}</h1>
-      <p class="page-head-sub font-serif text-ink-soft">{c.sub}</p>
+      <h1 class="font-serif text-ink text-[32px] leading-[1.1] font-normal tracking-[-0.5px] mt-[14px] mb-[16px] text-balance md:text-[48px] md:leading-[1.08] md:mt-[16px] md:mb-[20px] md:tracking-[-0.8px]">{c.title}</h1>
+      <p class="font-serif text-ink-soft text-[17px] leading-[1.55] m-0 italic md:text-[20px] md:max-w-[560px]">{c.sub}</p>
     </header>
 
     {/* ── Contact form — desktop layout ── */}
-    <section class="form-section form-section--desktop">
+    <section class="hidden md:block px-[20px] py-[36px] pb-[48px] md:px-[64px] md:pt-[64px] md:pb-[80px]">
       <ContactForm
         layout="desktop"
         strings={t.contact}
@@ -81,7 +84,7 @@ const elsewhere = t.contact.elsewhere.map(
     </section>
 
     {/* ── Contact form — mobile layout ── */}
-    <section class="form-section form-section--mobile">
+    <section class="block md:hidden px-[20px] pt-[36px] pb-[48px] md:px-[64px] md:pt-[64px] md:pb-[80px]">
       <ContactForm
         layout="mobile"
         strings={t.contact}
@@ -90,117 +93,9 @@ const elsewhere = t.contact.elsewhere.map(
     </section>
   </main>
 
-  <div class="footer-desktop-wrap">
+  <div class="hidden md:block">
     <Footer strings={t.footer} locale={lang} locales={locales} layout="desktop" />
   </div>
-  <div class="footer-mobile-wrap">
+  <div class="block md:hidden">
     <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
   </div>
-
-<style>
-  /* ── Nav visibility ── */
-  .nav-mobile  { display: block; }
-  .nav-desktop { display: none; }
-
-  @media (min-width: 768px) {
-    .nav-mobile  { display: none; }
-    .nav-desktop { display: block; }
-  }
-
-  /* ── Footer visibility ── */
-  .footer-mobile-wrap  { display: block; }
-  .footer-desktop-wrap { display: none; }
-
-  @media (min-width: 768px) {
-    .footer-mobile-wrap  { display: none; }
-    .footer-desktop-wrap { display: block; }
-  }
-
-  /* ── Breadcrumb ── */
-  .breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-    border-bottom: 1px solid var(--color-hair);
-  }
-
-  @media (min-width: 768px) {
-    .breadcrumb { padding: 14px 64px; }
-  }
-
-  .bc-link {
-    color: var(--color-ink-muted);
-    text-decoration: none;
-  }
-  .bc-link:hover { color: var(--color-ink); }
-  .bc-sep     { color: var(--color-hair); }
-  .bc-current { color: var(--color-ink-soft); }
-
-  /* ── Shared ── */
-  .section-border { border-bottom: 1px solid var(--color-hair); }
-
-  /* ── Page header ── */
-  .page-head {
-    padding: 36px 20px 32px;
-  }
-
-  @media (min-width: 768px) {
-    .page-head { padding: 64px 64px 56px; }
-  }
-
-  .page-head-title {
-    font-size: 32px;
-    line-height: 1.1;
-    font-weight: 400;
-    letter-spacing: -0.5px;
-    margin: 14px 0 16px;
-    text-wrap: balance;
-  }
-
-  @media (min-width: 768px) {
-    .page-head-title {
-      font-size: 48px;
-      line-height: 1.08;
-      margin: 16px 0 20px;
-      letter-spacing: -0.8px;
-    }
-  }
-
-  .page-head-sub {
-    font-size: 17px;
-    line-height: 1.55;
-    margin: 0;
-    font-style: italic;
-  }
-
-  @media (min-width: 768px) {
-    .page-head-sub {
-      font-size: 20px;
-      max-width: 560px;
-    }
-  }
-
-  /* ── Form sections — layout switching ── */
-  .form-section {
-    padding: 36px 20px 48px;
-  }
-
-  @media (min-width: 768px) {
-    .form-section { padding: 64px 64px 80px; }
-  }
-
-  /* Mobile form: show on small screens, hide on ≥768px */
-  .form-section--mobile  { display: block; }
-  .form-section--desktop { display: none; }
-
-  @media (min-width: 768px) {
-    .form-section--mobile  { display: none; }
-    .form-section--desktop { display: block; }
-  }
-</style>

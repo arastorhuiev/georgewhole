@@ -18,42 +18,11 @@ const {
 } = Astro.props;
 ---
 
-<figure class:list={[bleed && 'figure--bleed']}>
+<figure class:list={['my-[40px] font-sans', bleed && '-mx-[64px]']}>
   <AtmosImage height={height} label={credit} tone={tone} accentTint />
   {caption && (
-    <figcaption class:list={[bleed && 'figcaption--bleed']}>
-      <span class="caption">{caption}</span>
+    <figcaption class:list={['mt-[12px] text-[13px] text-ink-muted leading-[1.5]', bleed && 'px-[64px]']}>
+      <span class="italic font-serif text-[14.5px] text-ink-soft">{caption}</span>
     </figcaption>
   )}
 </figure>
-
-<style>
-  figure {
-    margin: 40px 0;
-    font-family: var(--font-sans);
-  }
-
-  .figure--bleed {
-    margin-left: -64px;
-    margin-right: -64px;
-  }
-
-  figcaption {
-    margin-top: 12px;
-    font-size: 13px;
-    color: var(--color-ink-muted);
-    line-height: 1.5;
-  }
-
-  .figcaption--bleed {
-    padding-left: 64px;
-    padding-right: 64px;
-  }
-
-  .caption {
-    font-style: italic;
-    font-family: var(--font-serif);
-    font-size: 14.5px;
-    color: var(--color-ink-soft);
-  }
-</style>

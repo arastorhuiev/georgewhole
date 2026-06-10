@@ -14,8 +14,8 @@ interface Props {
 const { lang, quizHome, quizUi, newsletter } = Astro.props;
 ---
 
-<section class="quiz-section border-b border-hair">
-  <div class="quiz-inner">
+<section class="border-b border-hair px-5 py-10 md:px-16 md:py-[88px]">
+  <div class="flex flex-col gap-[28px] md:grid md:grid-cols-2 md:gap-16 md:items-center md:bg-surface-soft md:py-16 md:px-14 md:border md:border-hair">
     <EmailCapture
       variant="quiz"
       strings={{
@@ -49,21 +49,3 @@ const { lang, quizHome, quizUi, newsletter } = Astro.props;
     </a>
   </div>
 </section>
-
-<style>
-  .quiz-section { padding: 40px 20px; }
-  .quiz-inner { display: flex; flex-direction: column; gap: 28px; }
-
-  @media (min-width: 768px) {
-    .quiz-section { padding: 88px 64px; }
-    .quiz-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: center;
-      background: var(--color-surface-soft);
-      padding: 64px 56px;
-      border: 1px solid var(--color-hair);
-    }
-  }
-</style>

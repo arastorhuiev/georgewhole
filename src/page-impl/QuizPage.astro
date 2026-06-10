@@ -13,7 +13,7 @@ interface Props {
 }
 const { lang } = Astro.props;
 const t = useTranslations(lang as any);
-const { quizQuestions, quizUi, quizArchetypes } = quizData(lang);
+const { questions, ui, archetypes: rawArchetypes } = await quizData(lang);
 const locales = buildLocaleSwitcherItems(lang as any, 'quiz');
 const navItems = [
   { key: 'articles', label: t.nav.articles, href: `/${lang}/articles` },
@@ -25,7 +25,7 @@ const navItems = [
 // Resolve each archetype's recommended article transKeys → { title, href }.
 const articles = await articlesFor(lang as any);
 const byKey = new Map(articles.map((a) => [a.data.transKey, a]));
-const archetypes = quizArchetypes.map((a) => ({
+const archetypes = rawArchetypes.map((a) => ({
   title: a.title,
   body: a.body,
   recommended: a.recommended.flatMap((k) => {
@@ -45,7 +45,7 @@ const archetypes = quizArchetypes.map((a) => ({
 </div>
 
 <main id="main" class="mx-auto max-w-[760px] px-5 py-14 md:py-20">
-  <Quiz client:visible questions={quizQuestions} archetypes={archetypes} ui={quizUi} />
+  <Quiz client:visible questions={questions} archetypes={archetypes} ui={ui} />
 </main>
 
 <Footer strings={t.footer} locale={lang} locales={locales} />

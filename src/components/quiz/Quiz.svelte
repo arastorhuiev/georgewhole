@@ -53,228 +53,124 @@
   const retake = () => { stage = 'intro'; idx = 0; answers = Array(total).fill(null); secs = 0; mailSent = false; };
 </script>
 
-<div class="shell">
+<div class="bg-bg border border-hair font-sans p-[40px_44px] shadow-paper max-[640px]:p-[24px_20px]">
   {#if stage === 'intro'}
-    <div class="kicker">{ui.kicker}</div>
-    <h1 class="h-title">{ui.title}</h1>
-    <p class="lead">{ui.sub}</p>
-    <div class="meta-row">
-      {#each ui.meta as m}<span class="meta-chip">{m}</span>{/each}
+    <div class="font-mono text-[11px] tracking-[1.6px] uppercase text-accent font-medium">{ui.kicker}</div>
+    <h1 class="font-serif font-normal text-[34px] leading-[1.15] text-ink my-[12px] tracking-[-0.4px]">{ui.title}</h1>
+    <p class="text-[15px] leading-[1.6] text-ink-soft mb-[22px] mt-0 max-w-[520px]">{ui.sub}</p>
+    <div class="flex gap-[8px] flex-wrap mb-[26px]">
+      {#each ui.meta as m}<span class="font-mono text-[11px] tracking-[0.6px] text-ink-soft border border-hair rounded-pill py-[6px] px-[12px]">{m}</span>{/each}
     </div>
-    <button class="btn-primary cta" onclick={start}>{ui.startCta} →</button>
-    <div class="how">
-      <div class="how-label">{ui.howLabel}</div>
-      <div class="how-grid">
+    <button
+      class="inline-flex items-center gap-[10px] py-[13px] px-[22px] bg-accent text-accent-fg border-none rounded-pill font-sans text-[15px] font-medium cursor-pointer transition duration-[180ms] not-disabled:hover:bg-accent-deep not-disabled:hover:-translate-y-px not-disabled:hover:shadow-[0_5px_14px_rgba(47,82,70,0.22)] not-disabled:active:translate-y-0 not-disabled:active:shadow-[0_2px_6px_rgba(47,82,70,0.2)]"
+      onclick={start}
+    >{ui.startCta} →</button>
+    <div class="mt-[30px] pt-[24px] border-t border-[var(--color-hair-soft)]">
+      <div class="font-mono text-[10.5px] tracking-[1.4px] uppercase text-ink-muted mb-[16px]">{ui.howLabel}</div>
+      <div class="grid grid-cols-3 gap-[24px] max-[640px]:grid-cols-1 max-[640px]:gap-[14px]">
         {#each ui.how as [n, h, b]}
           <div>
-            <div class="how-n">{n}</div>
-            <div class="how-h">{h}</div>
-            <p class="how-b">{b}</p>
+            <div class="font-serif text-[24px] text-accent leading-[1] mb-[8px]">{n}</div>
+            <div class="text-[14px] font-semibold text-ink mb-[4px]">{h}</div>
+            <p class="text-[13px] leading-[1.55] text-ink-soft m-0">{b}</p>
           </div>
         {/each}
       </div>
     </div>
   {:else if stage === 'q'}
-    <div class="topbar">
-      <span>{ui.progressLabel} <span class="ink">{idx + 1}</span> {ui.of} {total}</span>
-      <span class="timer"><span class="dot"></span>{fmt(secs)}</span>
+    <div class="flex justify-between items-center mb-[14px] font-mono text-[11px] text-ink-muted tracking-[0.8px] uppercase">
+      <span>{ui.progressLabel} <span class="text-ink">{idx + 1}</span> {ui.of} {total}</span>
+      <span class="inline-flex items-center gap-[7px]"><span class="w-[6px] h-[6px] rounded-[1px] bg-accent"></span>{fmt(secs)}</span>
     </div>
-    <div class="progress" role="progressbar" aria-valuenow={idx + 1} aria-valuemin="1" aria-valuemax={total}>
+    <div class="flex gap-[4px]" role="progressbar" aria-valuenow={idx + 1} aria-valuemin="1" aria-valuemax={total}>
       {#each Array(total) as _, i}
-        <span class="tick" class:cur={i === idx} class:done={answers[i] != null}></span>
+        <span
+          class={`flex-1 h-[5px] transition-colors duration-[250ms] ${i === idx ? 'bg-accent' : answers[i] != null ? 'bg-accent-hair' : 'bg-hair-soft'}`}
+        ></span>
       {/each}
     </div>
-    <h2 class="q-text">{questions[idx].text}</h2>
-    <div class="options" role="radiogroup" aria-label={questions[idx].text}>
+    <h2 class="font-serif font-normal text-[26px] leading-[1.3] text-ink my-[24px] mb-[20px] tracking-[-0.2px] max-[640px]:text-[22px]">{questions[idx].text}</h2>
+    <div class="flex flex-col gap-[10px]" role="radiogroup" aria-label={questions[idx].text}>
       {#each questions[idx].options as opt, i}
         <button
-          class="opt"
-          class:sel={answers[idx] === i}
+          class={`flex gap-[14px] py-[14px] px-[16px] cursor-pointer text-left border rounded-sm items-center font-sans text-[15px] text-ink leading-[1.4] transition-colors duration-150 hover:border-accent ${answers[idx] === i ? 'border-accent bg-accent-soft' : 'border-hair bg-bg'}`}
           role="radio"
           aria-checked={answers[idx] === i}
           onclick={() => select(i)}
         >
-          <span class="letter">{letters[i] ?? i + 1}</span>
+          <span
+            class={`w-[27px] h-[27px] shrink-0 rounded-sm border flex items-center justify-center font-mono text-[12px] transition-all duration-150 ${answers[idx] === i ? 'border-accent bg-accent text-accent-fg' : 'border-hair bg-transparent text-ink-muted'}`}
+          >{letters[i] ?? i + 1}</span>
           <span>{opt}</span>
         </button>
       {/each}
     </div>
-    <div class="nav">
-      <button class="btn-ghost navbtn" onclick={back} disabled={idx === 0}>
-        <span class="rev">→</span>{ui.back}
+    <div class="flex justify-between items-center mt-[26px] pt-[20px] border-t border-[var(--color-hair-soft)] gap-[12px] flex-wrap">
+      <button
+        class="inline-flex items-center gap-[8px] py-[10px] px-[18px] rounded-pill font-sans text-[13.5px] font-medium cursor-pointer bg-transparent text-ink border border-hair transition duration-[180ms] not-disabled:hover:border-accent not-disabled:hover:bg-[rgba(63,107,94,0.07)] not-disabled:hover:text-accent-deep disabled:opacity-50 disabled:cursor-default"
+        onclick={back}
+        disabled={idx === 0}
+      >
+        <span class="inline-block rotate-180">→</span>{ui.back}
       </button>
-      <span class="timer-note">{ui.timerNote}</span>
-      <button class="btn-primary navbtn primary" onclick={next} disabled={!canNext}>
+      <span class="font-sans text-[11.5px] text-ink-muted">{ui.timerNote}</span>
+      <button
+        class="inline-flex items-center gap-[8px] py-[11px] px-[20px] rounded-pill font-sans text-[14px] font-medium cursor-pointer bg-accent text-accent-fg border-none transition duration-[180ms] not-disabled:hover:bg-accent-deep not-disabled:hover:-translate-y-px not-disabled:hover:shadow-[0_5px_14px_rgba(47,82,70,0.22)] disabled:opacity-50 disabled:cursor-default disabled:bg-[var(--color-hair-soft)] disabled:text-ink-muted"
+        onclick={next}
+        disabled={!canNext}
+      >
         {last ? ui.finish : ui.next} →
       </button>
     </div>
   {:else}
-    <div class="kicker">{ui.resultKicker}</div>
-    <h2 class="r-title">{result.title}</h2>
-    <p class="r-body">{result.body}</p>
-    <div class="r-start">{ui.resultStart}</div>
-    <ol class="r-links">
+    <div class="font-mono text-[11px] tracking-[1.6px] uppercase text-accent font-medium">{ui.resultKicker}</div>
+    <h2 class="font-serif font-normal text-[32px] leading-[1.2] text-ink mt-[12px] mb-[14px] tracking-[-0.4px] max-[640px]:text-[26px]">{result.title}</h2>
+    <p class="text-[15.5px] leading-[1.65] text-ink-soft mb-[24px] mt-0 max-w-[540px]">{result.body}</p>
+    <div class="font-mono text-[10.5px] tracking-[1.2px] uppercase text-ink-muted mb-[10px]">{ui.resultStart}</div>
+    <ol class="mb-[26px] mt-0 p-0 list-none">
       {#each result.recommended as link, i}
         <li>
-          <a class="reslink" href={link.href}>
-            <span class="r-num">0{i + 1}</span>
+          <a
+            class="grid grid-cols-[34px_1fr_auto] gap-[10px] items-center py-[14px] px-0 border-t border-[var(--color-hair-soft)] no-underline font-serif text-[16.5px] text-ink leading-[1.35] transition-colors duration-[180ms] hover:text-accent"
+            href={link.href}
+          >
+            <span class="font-mono text-[11px] text-accent">0{i + 1}</span>
             <span>{link.title}</span>
-            <span class="r-arrow">→</span>
+            <span class="text-accent">→</span>
           </a>
         </li>
       {/each}
     </ol>
-    <button class="btn-ghost navbtn" onclick={retake}>{ui.resultRetake}</button>
+    <button
+      class="inline-flex items-center gap-[8px] py-[10px] px-[18px] rounded-pill font-sans text-[13.5px] font-medium cursor-pointer bg-transparent text-ink border border-hair transition duration-[180ms] not-disabled:hover:border-accent not-disabled:hover:bg-[rgba(63,107,94,0.07)] not-disabled:hover:text-accent-deep disabled:opacity-50 disabled:cursor-default"
+      onclick={retake}
+    >{ui.resultRetake}</button>
 
-    <div class="mail">
+    <div class="bg-[var(--color-surface-soft)] border border-hair p-[24px_26px] mt-[28px] max-[640px]:p-[20px]">
       {#if mailSent}
-        <div class="mail-kicker">{ui.resultMailKicker}</div>
-        <h3 class="mail-title">{ui.resultMailSentTitle}</h3>
-        <p class="mail-sub">{ui.resultMailSentSub}</p>
+        <div class="font-mono text-[11px] tracking-[1.6px] uppercase text-ink-muted font-medium">{ui.resultMailKicker}</div>
+        <h3 class="font-serif text-[22px] font-normal text-ink my-[8px] tracking-[-0.2px] leading-[1.3]">{ui.resultMailSentTitle}</h3>
+        <p class="text-[13.5px] leading-[1.6] text-ink-soft mb-[16px] mt-0 max-w-[460px]">{ui.resultMailSentSub}</p>
       {:else}
-        <div class="mail-kicker">{ui.resultMailKicker}</div>
-        <h3 class="mail-title">{ui.resultMailTitle}</h3>
-        <p class="mail-sub">{ui.resultMailSub}</p>
-        <form class="mail-form" onsubmit={(e) => { e.preventDefault(); mailSent = true; }}>
-          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp" />
-          <input type="email" required placeholder={ui.resultMailPh} aria-label={ui.resultMailPh} />
-          <button type="submit" class="btn-primary">{ui.resultMailCta}</button>
+        <div class="font-mono text-[11px] tracking-[1.6px] uppercase text-ink-muted font-medium">{ui.resultMailKicker}</div>
+        <h3 class="font-serif text-[22px] font-normal text-ink my-[8px] tracking-[-0.2px] leading-[1.3]">{ui.resultMailTitle}</h3>
+        <p class="text-[13.5px] leading-[1.6] text-ink-soft mb-[16px] mt-0 max-w-[460px]">{ui.resultMailSub}</p>
+        <form class="flex gap-[8px] flex-wrap max-w-[460px]" onsubmit={(e) => { e.preventDefault(); mailSent = true; }}>
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="absolute left-[-9999px] w-px h-px opacity-0" />
+          <input
+            type="email"
+            required
+            placeholder={ui.resultMailPh}
+            aria-label={ui.resultMailPh}
+            class="flex-[1_1_200px] py-[12px] px-[14px] text-[14px] font-sans border border-hair bg-bg rounded-md text-ink outline-none"
+          />
+          <button
+            type="submit"
+            class="inline-flex items-center gap-[10px] py-[12px] px-[18px] bg-accent text-accent-fg border-none rounded-md font-sans text-[14px] font-medium cursor-pointer transition duration-[180ms] not-disabled:hover:bg-accent-deep not-disabled:hover:-translate-y-px not-disabled:hover:shadow-[0_5px_14px_rgba(47,82,70,0.22)] not-disabled:active:translate-y-0 not-disabled:active:shadow-[0_2px_6px_rgba(47,82,70,0.2)]"
+          >{ui.resultMailCta}</button>
         </form>
-        <div class="mail-skip">{ui.resultMailSkip}</div>
+        <div class="text-[12px] text-ink-muted mt-[12px]">{ui.resultMailSkip}</div>
       {/if}
     </div>
   {/if}
 </div>
-
-<style>
-  .shell {
-    background: var(--color-bg);
-    border: 1px solid var(--color-hair);
-    font-family: var(--font-sans);
-    padding: 40px 44px;
-    box-shadow: var(--shadow-paper);
-  }
-  @media (max-width: 640px) { .shell { padding: 24px 20px; } }
-
-  .kicker {
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.6px;
-    text-transform: uppercase; color: var(--color-accent); font-weight: 500;
-  }
-  .h-title {
-    font-family: var(--font-serif); font-weight: 400; font-size: 34px;
-    line-height: 1.15; color: var(--color-ink); margin: 12px 0; letter-spacing: -0.4px;
-  }
-  .lead { font-size: 15px; line-height: 1.6; color: var(--color-ink-soft); margin: 0 0 22px; max-width: 520px; }
-  .meta-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 26px; }
-  .meta-chip {
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.6px;
-    color: var(--color-ink-soft); border: 1px solid var(--color-hair);
-    border-radius: var(--radius-pill); padding: 6px 12px;
-  }
-  .cta, .btn-primary {
-    display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px;
-    background: var(--color-accent); color: var(--color-accent-fg); border: none;
-    border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: 15px;
-    font-weight: 500; cursor: pointer;
-    transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
-  }
-  .cta:not(:disabled):hover, .btn-primary:not(:disabled):hover {
-    background: var(--color-accent-deep); transform: translateY(-1px);
-    box-shadow: 0 5px 14px rgba(47, 82, 70, 0.22);
-  }
-  .cta:not(:disabled):active, .btn-primary:not(:disabled):active {
-    transform: translateY(0); box-shadow: 0 2px 6px rgba(47, 82, 70, 0.2);
-  }
-  .how { margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--color-hair-soft); }
-  .how-label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--color-ink-muted); margin-bottom: 16px; }
-  .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  @media (max-width: 640px) { .how-grid { grid-template-columns: 1fr; gap: 14px; } }
-  .how-n { font-family: var(--font-serif); font-size: 24px; color: var(--color-accent); line-height: 1; margin-bottom: 8px; }
-  .how-h { font-size: 14px; font-weight: 600; color: var(--color-ink); margin-bottom: 4px; }
-  .how-b { font-size: 13px; line-height: 1.55; color: var(--color-ink-soft); margin: 0; }
-
-  .topbar {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;
-    font-family: var(--font-mono); font-size: 11px; color: var(--color-ink-muted);
-    letter-spacing: 0.8px; text-transform: uppercase;
-  }
-  .topbar .ink { color: var(--color-ink); }
-  .timer { display: inline-flex; align-items: center; gap: 7px; }
-  .timer .dot { width: 6px; height: 6px; border-radius: 1px; background: var(--color-accent); }
-  .progress { display: flex; gap: 4px; }
-  .tick { flex: 1; height: 5px; background: var(--color-hair-soft); transition: background 0.25s ease; }
-  .tick.done { background: var(--color-accent-hair); }
-  .tick.cur { background: var(--color-accent); }
-  .q-text { font-family: var(--font-serif); font-weight: 400; font-size: 26px; line-height: 1.3; color: var(--color-ink); margin: 24px 0 20px; letter-spacing: -0.2px; }
-  @media (max-width: 640px) { .q-text { font-size: 22px; } }
-  .options { display: flex; flex-direction: column; gap: 10px; }
-  .opt {
-    display: flex; gap: 14px; padding: 14px 16px; cursor: pointer; text-align: left;
-    border: 1px solid var(--color-hair); border-radius: var(--radius-sm);
-    background: var(--color-bg); align-items: center; font-family: var(--font-sans);
-    font-size: 15px; color: var(--color-ink); line-height: 1.4;
-    transition: border-color 0.15s ease, background 0.15s ease;
-  }
-  .opt:hover { border-color: var(--color-accent); }
-  .opt.sel { border-color: var(--color-accent); background: var(--color-accent-soft); }
-  .letter {
-    width: 27px; height: 27px; flex-shrink: 0; border-radius: var(--radius-sm);
-    border: 1px solid var(--color-hair); background: transparent;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-mono); font-size: 12px; color: var(--color-ink-muted);
-    transition: all 0.15s ease;
-  }
-  .opt.sel .letter { border-color: var(--color-accent); background: var(--color-accent); color: var(--color-accent-fg); }
-  .nav {
-    display: flex; justify-content: space-between; align-items: center; margin-top: 26px;
-    padding-top: 20px; border-top: 1px solid var(--color-hair-soft); gap: 12px; flex-wrap: wrap;
-  }
-  .navbtn {
-    display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px;
-    border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: 13.5px;
-    font-weight: 500; cursor: pointer; background: transparent; color: var(--color-ink);
-    border: 1px solid var(--color-hair);
-    transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
-  }
-  .navbtn:not(.primary):not(:disabled):hover {
-    border-color: var(--color-accent); background: rgba(63, 107, 94, 0.07); color: var(--color-accent-deep);
-  }
-  .navbtn.primary { background: var(--color-accent); color: var(--color-accent-fg); border: none; font-size: 14px; padding: 11px 20px; }
-  .navbtn.primary:not(:disabled):hover {
-    background: var(--color-accent-deep); transform: translateY(-1px); box-shadow: 0 5px 14px rgba(47, 82, 70, 0.22);
-  }
-  .navbtn:disabled { opacity: 0.5; cursor: default; }
-  .navbtn.primary:disabled { background: var(--color-hair-soft); color: var(--color-ink-muted); }
-  .rev { display: inline-block; transform: rotate(180deg); }
-  .timer-note { font-family: var(--font-sans); font-size: 11.5px; color: var(--color-ink-muted); }
-
-  .r-title { font-family: var(--font-serif); font-weight: 400; font-size: 32px; line-height: 1.2; color: var(--color-ink); margin: 12px 0 14px; letter-spacing: -0.4px; }
-  @media (max-width: 640px) { .r-title { font-size: 26px; } }
-  .r-body { font-size: 15.5px; line-height: 1.65; color: var(--color-ink-soft); margin: 0 0 24px; max-width: 540px; }
-  .r-start { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--color-ink-muted); margin-bottom: 10px; }
-  .r-links { margin: 0 0 26px; padding: 0; list-style: none; }
-  .reslink {
-    display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center;
-    padding: 14px 0; border-top: 1px solid var(--color-hair-soft); text-decoration: none;
-    font-family: var(--font-serif); font-size: 16.5px; color: var(--color-ink); line-height: 1.35;
-    transition: color 0.18s ease;
-  }
-  .reslink:hover { color: var(--color-accent); }
-  .r-num { font-family: var(--font-mono); font-size: 11px; color: var(--color-accent); }
-  .r-arrow { color: var(--color-accent); }
-
-  .mail { background: var(--color-surface-soft); border: 1px solid var(--color-hair); padding: 24px 26px; margin-top: 28px; }
-  @media (max-width: 640px) { .mail { padding: 20px; } }
-  .mail-kicker { font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--color-ink-muted); font-weight: 500; }
-  .mail-title { font-family: var(--font-serif); font-size: 22px; font-weight: 400; color: var(--color-ink); margin: 8px 0; letter-spacing: -0.2px; line-height: 1.3; }
-  .mail-sub { font-size: 13.5px; line-height: 1.6; color: var(--color-ink-soft); margin: 0 0 16px; max-width: 460px; }
-  .mail-form { display: flex; gap: 8px; flex-wrap: wrap; max-width: 460px; }
-  .mail-form input[type='email'] {
-    flex: 1 1 200px; padding: 12px 14px; font-size: 14px; font-family: var(--font-sans);
-    border: 1px solid var(--color-hair); background: var(--color-bg);
-    border-radius: var(--radius-md); color: var(--color-ink); outline: none;
-  }
-  .mail-form .btn-primary { padding: 12px 18px; border-radius: var(--radius-md); font-size: 14px; }
-  .mail-skip { font-size: 12px; color: var(--color-ink-muted); margin-top: 12px; }
-  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-</style>

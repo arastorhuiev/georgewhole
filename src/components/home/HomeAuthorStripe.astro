@@ -19,7 +19,7 @@ interface Props {
 const { lang, authorStripe: a } = Astro.props;
 ---
 
-<section class="author-stripe border-b border-hair bg-surface-soft">
+<section class="flex items-center gap-4 px-5 py-7 border-b border-hair bg-surface-soft md:gap-7 md:px-16 md:py-10">
   <div class="hidden md:block"><AuthorPortrait size={68} /></div>
   <div class="md:hidden"><AuthorPortrait size={52} /></div>
 
@@ -38,20 +38,8 @@ const { lang, authorStripe: a } = Astro.props;
 
   <a
     href={`/${lang}/about/`}
-    class="font-sans text-accent text-[14px] font-medium no-underline border-b border-accent-hair pb-px whitespace-nowrap hover:text-accent-deep hover:border-accent"
+    class="font-sans text-accent text-[14px] font-medium no-underline border-b border-accent-hair pb-px whitespace-nowrap transition-colors hover:text-accent-deep hover:border-accent"
   >
     {a.link}
   </a>
 </section>
-
-<style>
-  .author-stripe {
-    padding: 28px 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  @media (min-width: 768px) {
-    .author-stripe { padding: 40px 64px; gap: 28px; }
-  }
-</style>

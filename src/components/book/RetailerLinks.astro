@@ -29,7 +29,7 @@ const { items, status, label } = Astro.props;
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          class="retailer font-sans text-ink bg-bg inline-flex items-center gap-2 px-[14px] py-[9px] border border-accent rounded-md no-underline hover:bg-[rgba(63,107,94,0.06)] hover:-translate-y-px hover:shadow-[0_2px_7px_rgba(42,39,35,0.08)]"
+          class="retailer font-sans text-ink bg-bg inline-flex items-center gap-2 px-[14px] py-[9px] border border-accent rounded-md no-underline transition duration-150 hover:bg-[rgba(63,107,94,0.06)] hover:-translate-y-px hover:shadow-[0_2px_7px_rgba(42,39,35,0.08)]"
         >
           <span class="text-[13.5px] font-semibold">{name}</span>
           {note && <span class="font-mono text-ink-muted text-[11.5px] tracking-[0.3px]">{note}</span>}

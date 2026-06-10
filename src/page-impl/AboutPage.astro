@@ -4,9 +4,9 @@ import MobileNav from '@components/nav/MobileNav.astro';
 import Kicker from '@components/common/Kicker.astro';
 import AtmosImage from '@components/common/AtmosImage.astro';
 import PullQuote from '@components/article/PullQuote.astro';
-import CrisisResources from '@components/common/CrisisResources.astro';
 import NextSteps from '@components/common/NextSteps.astro';
 import Footer from '@components/footer/Footer.astro';
+import { getEntry } from 'astro:content';
 import { useTranslations } from '@i18n';
 import { buildLocaleSwitcherItems } from '@lib/locales';
 
@@ -25,18 +25,19 @@ const navItems = [
   { key: 'newsletter', label: t.nav.newsletter,  href: `/${lang}/newsletter` },
 ];
 
-const a = t.about;
+const aboutEntry = await getEntry('about', lang as any);
+const a = aboutEntry!.data;
 
 // "Next steps" CTAs carry real destinations (label + locale-prefixed href).
 const nextCtas: Array<[string, string]> = [
   [a.nextCtas[0], `/${lang}/quiz/`],
   [a.nextCtas[1], `/${lang}/articles/`],
-  [a.nextCtas[2], `/${lang}/books/novy-kod/`],
+  [a.nextCtas[2], `/${lang}/books/slozhnye/`],
 ];
 ---
 
   {/* Desktop nav — hidden on mobile */}
-  <div class="nav-desktop">
+  <div class="hidden md:block">
     <Nav
       brand="georgewhole"
       brandHref={`/${lang}/`}
@@ -49,7 +50,7 @@ const nextCtas: Array<[string, string]> = [
     />
   </div>
   {/* Mobile nav — hidden on desktop */}
-  <div class="nav-mobile">
+  <div class="block md:hidden">
     <MobileNav
       brand="georgewhole"
       brandHref={`/${lang}/`}
@@ -62,18 +63,21 @@ const nextCtas: Array<[string, string]> = [
 
   <main id="main">
     {/* ── Breadcrumb ── */}
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href={`/${lang}/`} class="bc-link">{a.crumb[0]}</a>
-      <span class="bc-sep" aria-hidden="true">/</span>
-      <span class="bc-current" aria-current="page">{a.crumb[1]}</span>
+    <nav
+      class="flex items-center gap-[8px] px-[20px] py-[12px] md:px-[64px] md:py-[14px] font-mono text-[11px] tracking-[1px] uppercase text-ink-muted border-b border-[var(--color-hair)]"
+      aria-label="Breadcrumb"
+    >
+      <a href={`/${lang}/`} class="text-ink-muted no-underline transition-colors hover:text-ink">{a.crumb[0]}</a>
+      <span class="text-[var(--color-hair)]" aria-hidden="true">/</span>
+      <span class="text-ink-soft" aria-current="page">{a.crumb[1]}</span>
     </nav>
 
     {/* ── Hero ── */}
-    <section class="hero section-border">
+    <section class="border-b border-[var(--color-hair)] px-[20px] pt-[36px] pb-[32px] grid grid-cols-1 gap-[22px] md:px-[64px] md:pt-[80px] md:pb-[64px] md:grid-cols-[1fr_1.2fr] md:gap-[72px] md:items-center">
       <div class="hero-text">
         <Kicker>{a.kicker}</Kicker>
-        <h1 class="hero-h1 font-serif text-ink">{a.title}</h1>
-        <p class="hero-sub font-serif text-ink-soft">{a.sub}</p>
+        <h1 class="font-serif text-ink text-[32px] leading-[1.1] mt-[14px] mb-[16px] font-[400] tracking-[-0.5px] text-balance md:text-[54px] md:leading-[1.07] md:mt-[20px] md:mb-[24px] md:tracking-[-0.9px]">{a.title}</h1>
+        <p class="font-serif text-ink-soft text-[17px] leading-[1.55] m-0 italic md:text-[20px] md:max-w-[540px]">{a.sub}</p>
       </div>
       <div class="hero-img">
         <AtmosImage height={460} label={t.atmos.aboutDusk} tone="dusk" accentTint />
@@ -81,34 +85,34 @@ const nextCtas: Array<[string, string]> = [
     </section>
 
     {/* ── Timeline + Narrative ── */}
-    <section class="narrative section-border">
-      <aside class="timeline-aside">
-        <div class="timeline-label font-mono text-ink-muted">{a.timelineLabel}</div>
+    <section class="border-b border-[var(--color-hair)] px-[20px] py-[40px] grid grid-cols-1 gap-[32px] md:px-[64px] md:py-[88px] md:grid-cols-[220px_1fr] md:gap-[56px] md:items-start">
+      <aside class="static md:sticky md:top-[32px]">
+        <div class="font-mono text-ink-muted text-[10.5px] tracking-[1.4px] uppercase mb-[14px]">{a.timelineLabel}</div>
         {a.timeline.map(([year, text]) => (
-          <div class="timeline-row">
-            <span class="timeline-year font-mono text-accent">{year}</span>
-            <span class="timeline-text font-sans text-ink-soft">{text}</span>
+          <div class="grid grid-cols-[52px_1fr] gap-[8px] py-[10px] border-t border-[var(--color-hair-soft)] text-[13px]">
+            <span class="font-mono text-accent text-[13px] tracking-[0.4px]">{year}</span>
+            <span class="font-sans text-ink-soft text-[13px] leading-[1.4]">{text}</span>
           </div>
         ))}
       </aside>
 
-      <article class="narrative-body font-serif text-ink">
-        <h2 class="narrative-h2 font-serif text-ink">{a.h2_1}</h2>
-        <p class="narrative-p">{a.p1}</p>
-        <p class="narrative-p">{a.p2}</p>
+      <article class="font-serif text-ink text-[18px] leading-[1.7] md:max-w-[70ch] md:text-[20px] md:justify-self-center">
+        <h2 class="font-serif text-ink text-[24px] leading-[1.25] font-[400] tracking-[-0.3px] mt-[32px] mb-[16px] first:mt-0 md:text-[32px] md:leading-[1.2] md:tracking-[-0.4px] md:mt-[40px] md:mb-[24px]">{a.h2_1}</h2>
+        <p class="mb-[20px] md:mb-[24px]">{a.p1}</p>
+        <p class="mb-[20px] md:mb-[24px]">{a.p2}</p>
 
         <PullQuote attribution={a.pullBy}>{a.pull}</PullQuote>
 
-        <h2 class="narrative-h2 font-serif text-ink">{a.h2_2}</h2>
-        <p class="narrative-p">{a.p3}</p>
-        <p class="narrative-p">{a.p4}</p>
+        <h2 class="font-serif text-ink text-[24px] leading-[1.25] font-[400] tracking-[-0.3px] mt-[32px] mb-[16px] first:mt-0 md:text-[32px] md:leading-[1.2] md:tracking-[-0.4px] md:mt-[40px] md:mb-[24px]">{a.h2_2}</h2>
+        <p class="mb-[20px] md:mb-[24px]">{a.p3}</p>
+        <p class="mb-[20px] md:mb-[24px]">{a.p4}</p>
 
-        <h2 class="narrative-h2 font-serif text-ink">{a.h2_3}</h2>
-        <p class="narrative-p-tight">{a.p5}</p>
-        <ul class="nots-list font-sans text-ink-soft" role="list">
+        <h2 class="font-serif text-ink text-[24px] leading-[1.25] font-[400] tracking-[-0.3px] mt-[32px] mb-[16px] first:mt-0 md:text-[32px] md:leading-[1.2] md:tracking-[-0.4px] md:mt-[40px] md:mb-[24px]">{a.h2_3}</h2>
+        <p class="mb-[12px]">{a.p5}</p>
+        <ul class="font-sans text-ink-soft mt-[20px] mb-[24px] p-0 list-none text-[15.5px] leading-[1.6] md:text-[17.5px] md:leading-[1.65]" role="list">
           {a.nots.map((item) => (
-            <li class="nots-item">
-              <span class="nots-dash font-mono text-accent" aria-hidden="true">—</span>
+            <li class="py-[7px] border-t border-[var(--color-hair-soft)] flex gap-[10px] md:py-[8px] md:gap-[12px]">
+              <span class="font-mono text-accent shrink-0" aria-hidden="true">—</span>
               <span>{item}</span>
             </li>
           ))}
@@ -117,37 +121,28 @@ const nextCtas: Array<[string, string]> = [
     </section>
 
     {/* ── Credibility trio ── */}
-    <section class="cred section-border">
-      <div class="cred-inner">
+    <section class="border-b border-[var(--color-hair)] px-[20px] py-[36px] bg-[var(--color-surface-soft)] md:px-[64px] md:py-[80px]">
+      <div class="grid grid-cols-1 gap-[24px] md:grid-cols-[1fr_1.4fr] md:gap-[56px] md:items-start">
         <div class="cred-intro">
           <Kicker>{a.credKicker}</Kicker>
-          <h2 class="cred-title font-serif text-ink">{a.credTitle}</h2>
-          <p class="cred-body font-sans text-ink-soft">{a.credBody}</p>
+          <h2 class="font-serif text-ink text-[22px] leading-[1.3] font-[400] tracking-[-0.2px] mt-[12px] mb-[18px] md:text-[32px] md:leading-[1.2] md:tracking-[-0.4px] md:mt-[14px] md:mb-[20px]">{a.credTitle}</h2>
+          <p class="font-sans text-ink-soft text-[14px] leading-[1.7] m-0 md:text-[15.5px]">{a.credBody}</p>
         </div>
-        <div class="cred-cards">
+        <div class="flex flex-col gap-[12px] md:grid md:grid-cols-[repeat(2,1fr)] md:gap-[20px]">
           {a.credCards.map(([kicker, title, body]) => (
-            <div class="cred-card">
+            <div class="bg-bg p-[18px] border border-[var(--color-hair)] font-sans md:p-[22px]">
               <Kicker>{kicker}</Kicker>
-              <h3 class="cred-card-title font-serif text-ink">{title}</h3>
-              <p class="cred-card-body font-sans text-ink-soft">{body}</p>
+              <h3 class="font-serif text-ink text-[17px] mt-[8px] mb-[6px] leading-[1.3] font-[400] tracking-[-0.2px] md:text-[19px] md:mt-[10px] md:mb-[8px]">{title}</h3>
+              <p class="font-sans text-ink-soft text-[13px] leading-[1.55] m-0 md:text-[13.5px] md:leading-[1.6]">{body}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    {/* ── Crisis resources ── */}
-    <section class="crisis-section section-border">
-      <CrisisResources
-        label={t.crisis.label}
-        resources={t.crisis.resources as any}
-        note={t.crisis.note}
-      />
-    </section>
-
     {/* ── Next steps ── */}
-    <section class="next-section">
-      <div class="next-desktop">
+    <section class="px-[20px] py-[40px] md:px-[64px] md:py-[88px]">
+      <div class="hidden md:block">
         <NextSteps
           kicker={a.nextKicker}
           title={a.nextTitle}
@@ -156,7 +151,7 @@ const nextCtas: Array<[string, string]> = [
           layout="desktop"
         />
       </div>
-      <div class="next-mobile">
+      <div class="block md:hidden">
         <NextSteps
           kicker={a.nextKicker}
           title={a.nextTitle}
@@ -168,351 +163,9 @@ const nextCtas: Array<[string, string]> = [
     </section>
   </main>
 
-  <div class="footer-desktop-wrap">
+  <div class="hidden md:block">
     <Footer strings={t.footer} locale={lang} locales={locales} layout="desktop" />
   </div>
-  <div class="footer-mobile-wrap">
+  <div class="block md:hidden">
     <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
   </div>
-
-<style>
-  /* ── Nav visibility ── */
-  .nav-mobile { display: block; }
-  .nav-desktop { display: none; }
-
-  @media (min-width: 768px) {
-    .nav-mobile { display: none; }
-    .nav-desktop { display: block; }
-  }
-
-  /* ── Footer visibility ── */
-  .footer-mobile-wrap { display: block; }
-  .footer-desktop-wrap { display: none; }
-
-  @media (min-width: 768px) {
-    .footer-mobile-wrap { display: none; }
-    .footer-desktop-wrap { display: block; }
-  }
-
-  /* ── Breadcrumb ── */
-  .breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-    border-bottom: 1px solid var(--color-hair);
-  }
-
-  @media (min-width: 768px) {
-    .breadcrumb {
-      padding: 14px 64px;
-    }
-  }
-
-  .bc-link {
-    color: var(--color-ink-muted);
-    text-decoration: none;
-  }
-  .bc-link:hover { color: var(--color-ink); }
-  .bc-sep { color: var(--color-hair); }
-  .bc-current { color: var(--color-ink-soft); }
-
-  /* ── Shared ── */
-  .section-border { border-bottom: 1px solid var(--color-hair); }
-
-  /* ── Hero ── */
-  .hero {
-    padding: 36px 20px 32px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 22px;
-  }
-
-  @media (min-width: 768px) {
-    .hero {
-      padding: 80px 64px 64px;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 72px;
-      align-items: center;
-    }
-  }
-
-  .hero-h1 {
-    font-size: 32px;
-    line-height: 1.1;
-    margin: 14px 0 16px;
-    font-weight: 400;
-    letter-spacing: -0.5px;
-    text-wrap: balance;
-  }
-
-  @media (min-width: 768px) {
-    .hero-h1 {
-      font-size: 54px;
-      line-height: 1.07;
-      margin: 20px 0 24px;
-      letter-spacing: -0.9px;
-    }
-  }
-
-  .hero-sub {
-    font-size: 17px;
-    line-height: 1.55;
-    margin: 0;
-    font-style: italic;
-  }
-
-  @media (min-width: 768px) {
-    .hero-sub {
-      font-size: 20px;
-      max-width: 540px;
-    }
-  }
-
-  /* ── Timeline + Narrative ── */
-  .narrative {
-    padding: 40px 20px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  @media (min-width: 768px) {
-    .narrative {
-      padding: 88px 64px;
-      grid-template-columns: 220px 1fr;
-      gap: 56px;
-      align-items: flex-start;
-    }
-  }
-
-  .timeline-aside {
-    position: static;
-  }
-
-  @media (min-width: 768px) {
-    .timeline-aside {
-      position: sticky;
-      top: 32px;
-    }
-  }
-
-  .timeline-label {
-    font-size: 10.5px;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-
-  .timeline-row {
-    display: grid;
-    grid-template-columns: 52px 1fr;
-    gap: 8px;
-    padding: 10px 0;
-    border-top: 1px solid var(--color-hair-soft);
-    font-size: 13px;
-  }
-
-  .timeline-year {
-    font-size: 13px;
-    letter-spacing: 0.4px;
-  }
-
-  .timeline-text {
-    font-size: 13px;
-    line-height: 1.4;
-  }
-
-  .narrative-body {
-    font-size: 18px;
-    line-height: 1.7;
-  }
-
-  @media (min-width: 768px) {
-    .narrative-body {
-      max-width: 70ch;
-      font-size: 20px;
-      justify-self: center;
-    }
-  }
-
-  .narrative-h2 {
-    font-size: 24px;
-    line-height: 1.25;
-    font-weight: 400;
-    letter-spacing: -0.3px;
-    margin: 32px 0 16px;
-  }
-
-  .narrative-h2:first-child { margin-top: 0; }
-
-  @media (min-width: 768px) {
-    .narrative-h2 {
-      font-size: 32px;
-      line-height: 1.2;
-      letter-spacing: -0.4px;
-      margin: 40px 0 24px;
-    }
-  }
-
-  .narrative-p { margin: 0 0 20px; }
-  .narrative-p-tight { margin: 0 0 12px; }
-
-  @media (min-width: 768px) {
-    .narrative-p { margin: 0 0 24px; }
-  }
-
-  .nots-list {
-    margin: 20px 0 24px;
-    padding: 0;
-    list-style: none;
-    font-size: 15.5px;
-    line-height: 1.6;
-  }
-
-  @media (min-width: 768px) {
-    .nots-list { font-size: 17.5px; line-height: 1.65; }
-  }
-
-  .nots-item {
-    padding: 7px 0;
-    border-top: 1px solid var(--color-hair-soft);
-    display: flex;
-    gap: 10px;
-  }
-
-  @media (min-width: 768px) {
-    .nots-item { padding: 8px 0; gap: 12px; }
-  }
-
-  .nots-dash { flex-shrink: 0; }
-
-  /* ── Credibility ── */
-  .cred {
-    padding: 36px 20px;
-    background: var(--color-surface-soft);
-  }
-
-  @media (min-width: 768px) {
-    .cred { padding: 80px 64px; }
-  }
-
-  .cred-inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-
-  @media (min-width: 768px) {
-    .cred-inner {
-      grid-template-columns: 1fr 1.4fr;
-      gap: 56px;
-      align-items: flex-start;
-    }
-  }
-
-  .cred-title {
-    font-size: 22px;
-    line-height: 1.3;
-    font-weight: 400;
-    letter-spacing: -0.2px;
-    margin: 12px 0 18px;
-  }
-
-  @media (min-width: 768px) {
-    .cred-title {
-      font-size: 32px;
-      line-height: 1.2;
-      letter-spacing: -0.4px;
-      margin: 14px 0 20px;
-    }
-  }
-
-  .cred-body {
-    font-size: 14px;
-    line-height: 1.7;
-    margin: 0;
-  }
-
-  @media (min-width: 768px) {
-    .cred-body { font-size: 15.5px; }
-  }
-
-  .cred-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  @media (min-width: 768px) {
-    .cred-cards {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-  }
-
-  .cred-card {
-    background: var(--color-bg);
-    padding: 18px;
-    border: 1px solid var(--color-hair);
-    font-family: var(--font-sans);
-  }
-
-  @media (min-width: 768px) {
-    .cred-card { padding: 22px; }
-  }
-
-  .cred-card-title {
-    font-size: 17px;
-    margin: 8px 0 6px;
-    line-height: 1.3;
-    font-weight: 400;
-    letter-spacing: -0.2px;
-  }
-
-  @media (min-width: 768px) {
-    .cred-card-title { font-size: 19px; margin: 10px 0 8px; }
-  }
-
-  .cred-card-body {
-    font-size: 13px;
-    line-height: 1.55;
-    margin: 0;
-  }
-
-  @media (min-width: 768px) {
-    .cred-card-body { font-size: 13.5px; line-height: 1.6; }
-  }
-
-  /* ── Crisis ── */
-  .crisis-section {
-    padding: 32px 20px;
-  }
-
-  @media (min-width: 768px) {
-    .crisis-section { padding: 48px 64px; }
-  }
-
-  /* ── Next steps ── */
-  .next-section {
-    padding: 40px 20px;
-  }
-
-  @media (min-width: 768px) {
-    .next-section { padding: 88px 64px; }
-  }
-
-  .next-desktop { display: none; }
-  .next-mobile  { display: block; }
-
-  @media (min-width: 768px) {
-    .next-desktop { display: block; }
-    .next-mobile  { display: none; }
-  }
-</style>

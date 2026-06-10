@@ -25,8 +25,8 @@ const { lang, reading, articles } = Astro.props;
 const allHref = `/${lang}/articles/`;
 ---
 
-<section class="reading-section border-b border-hair">
-  <div class="reading-header">
+<section class="border-b border-hair px-[20px] py-[48px] md:px-[64px] md:py-[88px]">
+  <div class="flex items-end justify-between mb-[24px] md:mb-[48px]">
     <h2 class="font-serif text-ink font-normal text-[clamp(28px,3vw,36px)] leading-[1.15] tracking-[-0.4px] m-0">
       {reading.title}
     </h2>
@@ -35,7 +35,7 @@ const allHref = `/${lang}/articles/`;
     </div>
   </div>
 
-  <div class="reading-grid">
+  <div class="flex flex-col gap-[36px] md:grid md:grid-cols-3 md:gap-[40px]">
     {articles.map((a) => (
       <a href={a.href} class="group no-underline flex flex-col">
         <ArticleCard
@@ -54,20 +54,3 @@ const allHref = `/${lang}/articles/`;
     <Button variant="text" href={allHref}>{reading.all}</Button>
   </div>
 </section>
-
-<style>
-  .reading-section { padding: 48px 20px; }
-  .reading-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    margin-bottom: 24px;
-  }
-  .reading-grid { display: flex; flex-direction: column; gap: 36px; }
-
-  @media (min-width: 768px) {
-    .reading-section { padding: 88px 64px; }
-    .reading-header { margin-bottom: 48px; }
-    .reading-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-  }
-</style>

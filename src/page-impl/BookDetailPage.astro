@@ -95,26 +95,26 @@ const crumb = [t.nav.books, entry.data.title];
 
   <main id="main">
     <!-- Hero section: breadcrumb + cover + facts column -->
-    <section class="hero-section" style="border-bottom:1px solid var(--color-hair);">
+    <section class="px-[20px] pt-[28px] pb-[36px] md:px-[64px] md:pt-[40px] md:pb-[64px] border-b border-hair">
 
       <!-- Breadcrumb -->
-      <div class="breadcrumb font-mono text-ink-muted">
+      <div class="font-mono text-ink-muted text-[10px] md:text-[11px] tracking-[1.2px] uppercase mb-[20px] md:mb-[32px] flex gap-[10px]">
         {crumb.map((s, i) => (
           <>
             {i < crumb.length - 1 ? (
-              <a href={`/${lang}/books/`} class="bc-link">{s}</a>
+              <a href={`/${lang}/books/`} class="text-ink-muted no-underline transition-colors duration-[0.18s] ease hover:text-ink">{s}</a>
             ) : (
-              <span style="color:var(--color-ink)" aria-current="page">{s}</span>
+              <span class="text-ink" aria-current="page">{s}</span>
             )}
-            {i < crumb.length - 1 && <span style="opacity:0.4;">/</span>}
+            {i < crumb.length - 1 && <span class="opacity-40">/</span>}
           </>
         ))}
       </div>
 
       <!-- Two-column hero layout: cover sticky | facts -->
-      <div class="hero-grid">
+      <div class="flex flex-col gap-[24px] md:grid md:grid-cols-[300px_1fr] md:gap-[64px] md:items-start">
         <!-- Cover (sticky on desktop) -->
-        <div class="cover-col">
+        <div class="cover-col-wrap flex justify-center md:sticky md:top-[32px] md:justify-start">
           <BookCover
             title={entry.data.title}
             num={entry.data.num}
@@ -128,26 +128,26 @@ const crumb = [t.nav.books, entry.data.title];
         </div>
 
         <!-- Facts column -->
-        <div class="facts-col">
+        <div>
           <Kicker color="var(--color-ink-muted)">{entry.data.num}</Kicker>
-          <h1 class="book-title font-serif text-ink">{entry.data.title}</h1>
+          <h1 class="font-serif text-ink text-[36px] md:text-[54px] leading-[1.05] font-normal tracking-[-0.6px] md:tracking-[-0.9px] mt-[12px] mb-[8px] md:mt-[14px] md:mb-[10px]">{entry.data.title}</h1>
           {entry.data.subtitle && (
-            <p class="book-sub font-serif text-ink-soft">{entry.data.subtitle}</p>
+            <p class="font-serif text-ink-soft text-[19px] md:text-[24px] italic leading-[1.4] mt-0 mb-[16px] md:mb-[22px]">{entry.data.subtitle}</p>
           )}
           {entry.data.lead && (
-            <p class="book-lead text-ink-soft">{entry.data.lead}</p>
+            <p class="font-sans text-ink-soft text-[15px] md:text-[16px] leading-[1.6] mt-0 mb-[22px] md:mb-[28px] md:max-w-[560px]">{entry.data.lead}</p>
           )}
 
           <!-- Primary CTA — published books scroll to the retailer block -->
           {entry.data.status === 'out' && (
-            <div style="margin-bottom:20px;">
+            <div class="mb-[20px]">
               <Button variant="primary" href="#buy">{t.common.getBook}</Button>
             </div>
           )}
 
           <!-- Retailer links -->
           {entry.data.retailers && entry.data.retailers.length > 0 && (
-            <div id="buy">
+            <div id="buy" class="[scroll-margin-top:24px]">
               <RetailerLinks
                 items={entry.data.retailers}
                 status={entry.data.retailerStatus}
@@ -157,24 +157,24 @@ const crumb = [t.nav.books, entry.data.title];
           )}
 
           <!-- Facts grid + languages -->
-          <div class="meta-row">
+          <div class="flex flex-col gap-[20px] mt-[28px] md:flex-row md:flex-wrap md:items-start md:gap-[40px] md:mt-[36px]">
             {entry.data.facts && entry.data.facts.length > 0 && (
-              <div class="facts-grid" style="display:flex;gap:1px;background:var(--color-hair);border:1px solid var(--color-hair);">
+              <div class="flex gap-[1px] bg-hair border border-hair">
                 {entry.data.facts.map(([k, val]: [string, string]) => (
-                  <div class="fact-cell bg-bg" style="padding:16px 24px;min-width:88px;">
-                    <div class="font-mono text-ink-muted" style="font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">{k}</div>
-                    <div class="font-serif text-ink" style="font-size:17px;">{val}</div>
+                  <div class="bg-bg px-[24px] py-[16px] min-w-[88px]">
+                    <div class="font-mono text-ink-muted text-[10px] tracking-[1px] uppercase mb-[6px]">{k}</div>
+                    <div class="font-serif text-ink text-[17px]">{val}</div>
                   </div>
                 ))}
               </div>
             )}
 
             {entry.data.languages && entry.data.languages.length > 0 && (
-              <div class="langs-block">
-                <div class="font-mono text-ink-muted" style="font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">{t.bookDetail.langLabel}</div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <div class="mt-[4px]">
+                <div class="font-mono text-ink-muted text-[10px] tracking-[1px] uppercase mb-[12px]">{t.bookDetail.langLabel}</div>
+                <div class="flex gap-[8px] flex-wrap">
                   {entry.data.languages.map((l: string) => (
-                    <span class="lang-pill font-sans text-ink bg-bg" style="font-size:13px;padding:7px 14px;border:1px solid var(--color-accent-hair);border-radius:var(--radius-pill);">{l}</span>
+                    <span class="font-sans text-ink bg-bg text-[13px] px-[14px] py-[7px] border border-[var(--color-accent-hair)] rounded-pill">{l}</span>
                   ))}
                 </div>
               </div>
@@ -185,12 +185,12 @@ const crumb = [t.nav.books, entry.data.title];
     </section>
 
     <!-- About + TOC (desktop: two-col; mobile: stacked) -->
-    <section class="about-section" style="border-bottom:1px solid var(--color-hair);">
-      <div class="about-grid">
+    <section class="px-[20px] py-[40px] md:px-[64px] md:py-[72px] border-b border-hair">
+      <div class="flex flex-col gap-[40px] md:grid md:grid-cols-[1fr_360px] md:gap-[64px] md:items-start">
         <!-- Left: prose body -->
-        <div class="about-main">
+        <div>
           <Kicker>{t.bookDetail.aboutLabel}</Kicker>
-          <div class="body-prose font-serif text-ink">
+          <div class="body-prose font-serif text-ink mt-[18px] text-[18px] md:text-[20px] leading-[1.7]">
             <Content />
           </div>
 
@@ -203,14 +203,14 @@ const crumb = [t.nav.books, entry.data.title];
         </div>
 
         <!-- Right: TOC + praise (sticky on desktop) -->
-        <aside class="toc-aside">
+        <aside class="flex flex-col gap-0 md:sticky md:top-[32px]">
           {entry.data.toc && entry.data.toc.length > 0 && (
-            <div class="toc-block">
-              <div class="font-mono text-ink-muted" style="font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px;">{t.bookDetail.tocLabel}</div>
+            <div class="mb-[28px]">
+              <div class="font-mono text-ink-muted text-[10.5px] tracking-[1.4px] uppercase mb-[14px]">{t.bookDetail.tocLabel}</div>
               {entry.data.toc.map(([n, toc_title]: [string, string]) => (
-                <div style="display:grid;grid-template-columns:34px 1fr;gap:8px;padding:12px 0;border-top:1px solid var(--color-hair-soft);">
-                  <span class="font-mono text-accent" style="font-size:11px;">{n}</span>
-                  <span class="font-serif text-ink" style="font-size:16px;line-height:1.35;">{toc_title}</span>
+                <div class="grid grid-cols-[34px_1fr] gap-[8px] py-[12px] border-t border-[var(--color-hair-soft)]">
+                  <span class="font-mono text-accent text-[11px]">{n}</span>
+                  <span class="font-serif text-ink text-[16px] leading-[1.35]">{toc_title}</span>
                 </div>
               ))}
             </div>
@@ -218,12 +218,12 @@ const crumb = [t.nav.books, entry.data.title];
 
           <!-- Praise -->
           {entry.data.praise && entry.data.praise.length > 0 && (
-            <div class="praise-block">
-              <div class="font-mono text-ink-muted" style="font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px;">{t.bookDetail.praiseLabel}</div>
+            <div class="mt-[8px]">
+              <div class="font-mono text-ink-muted text-[10.5px] tracking-[1.4px] uppercase mb-[14px]">{t.bookDetail.praiseLabel}</div>
               {entry.data.praise.map(([quote, by]: [string, string]) => (
-                <div style="padding:14px 0;border-top:1px solid var(--color-hair-soft);">
-                  <p class="font-serif text-ink" style="font-size:15.5px;font-style:italic;line-height:1.5;margin:0 0 6px;">{quote}</p>
-                  <div class="font-mono text-ink-muted" style="font-size:10.5px;letter-spacing:0.6px;text-transform:uppercase;">{by}</div>
+                <div class="py-[14px] border-t border-[var(--color-hair-soft)]">
+                  <p class="font-serif text-ink text-[15.5px] italic leading-[1.5] mt-0 mb-[6px]">{quote}</p>
+                  <div class="font-mono text-ink-muted text-[10.5px] tracking-[0.6px] uppercase">{by}</div>
                 </div>
               ))}
             </div>
@@ -233,15 +233,15 @@ const crumb = [t.nav.books, entry.data.title];
     </section>
 
     <!-- Main idea / manifesto section -->
-    <section class="idea-section" style="border-bottom:1px solid var(--color-hair);">
-      <div class="idea-inner">
+    <section class="px-[20px] py-[40px] md:px-[64px] md:py-[72px] border-b border-hair">
+      <div class="max-w-full">
         <Kicker>{t.bookDetail.ideaKicker}</Kicker>
-        <h2 class="idea-title font-serif text-ink">{t.bookDetail.ideaTitle}</h2>
+        <h2 class="font-serif text-ink text-[24px] md:text-[36px] font-normal leading-[1.2] tracking-[-0.3px] md:tracking-[-0.5px] mt-[14px] mb-0 md:mt-[16px]">{t.bookDetail.ideaTitle}</h2>
 
         {entry.data.manifesto && entry.data.manifesto.length > 0 && (
           <>
             <!-- Desktop compare -->
-            <div class="hidden md:block" style="margin-top:40px;">
+            <div class="hidden md:block mt-[40px]">
               <OldNewCompare
                 pairs={entry.data.manifesto}
                 layout="desktop"
@@ -254,7 +254,7 @@ const crumb = [t.nav.books, entry.data.title];
               />
             </div>
             <!-- Mobile compare -->
-            <div class="md:hidden" style="margin-top:28px;">
+            <div class="md:hidden mt-[28px]">
               <OldNewCompare
                 pairs={entry.data.manifesto}
                 layout="mobile"
@@ -273,8 +273,8 @@ const crumb = [t.nav.books, entry.data.title];
 
     <!-- Cross-promo: other books in cycle -->
     {otherBooks.length > 0 && (
-      <section class="cross-section">
-        <div class="cross-header">
+      <section class="border-t border-hair">
+        <div class="px-[20px] pt-[40px] pb-0 md:px-[64px]">
           <Kicker>{t.bookDetail.crossLabel}</Kicker>
         </div>
         <div class="hidden md:block">
@@ -304,235 +304,26 @@ const crumb = [t.nav.books, entry.data.title];
   </div>
 
 <style>
-  /* ── Hero ── */
-  .hero-section {
-    padding: 28px 20px 36px;
-  }
-
-  .breadcrumb {
-    font-size: 10px;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    display: flex;
-    gap: 10px;
-  }
-
-  .bc-link {
-    color: var(--color-ink-muted);
-    text-decoration: none;
-    transition: color 0.18s ease;
-  }
-  .bc-link:hover { color: var(--color-ink); }
-
-  /* Offset in-page #buy jump so the sticky-ish hero doesn't clip it */
-  #buy { scroll-margin-top: 24px; }
-
-  .hero-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .cover-col {
-    display: flex;
-    justify-content: center;
-  }
-
-  /* Shrink cover on mobile */
-  .cover-col :global(.bookcover) {
+  /* Shrink cover on mobile, restore on desktop — global child selector needed
+     because .bookcover lives inside a child component (cannot use Tailwind
+     arbitrary variant across component boundaries reliably). */
+  .cover-col-wrap :global(.bookcover) {
     width: 180px !important;
     height: 260px !important;
   }
-
-  .book-title {
-    font-size: 36px;
-    line-height: 1.05;
-    font-weight: 400;
-    letter-spacing: -0.6px;
-    margin: 12px 0 8px;
-  }
-
-  .book-sub {
-    font-size: 19px;
-    font-style: italic;
-    line-height: 1.4;
-    margin: 0 0 16px;
-  }
-
-  .book-lead {
-    font-size: 15px;
-    line-height: 1.6;
-    margin: 0 0 22px;
-    font-family: var(--font-sans);
-  }
-
-  .meta-row {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 28px;
-  }
-
-  .langs-block {
-    margin-top: 4px;
-  }
-
-  /* ── About section ── */
-  .about-section {
-    padding: 40px 20px;
-  }
-
-  .about-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-  }
-
-  .body-prose {
-    margin-top: 18px;
-    font-size: 18px;
-    line-height: 1.7;
-  }
-
-  .body-prose :global(p) {
-    margin: 0 0 18px;
-  }
-
-  .body-prose :global(p:last-child) {
-    margin-bottom: 0;
-  }
-
-  .toc-aside {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .toc-block {
-    margin-bottom: 28px;
-  }
-
-  .praise-block {
-    margin-top: 8px;
-  }
-
-  /* ── Idea section ── */
-  .idea-section {
-    padding: 40px 20px;
-  }
-
-  .idea-inner {
-    max-width: 100%;
-  }
-
-  .idea-title {
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 1.2;
-    letter-spacing: -0.3px;
-    margin: 14px 0 0;
-  }
-
-  /* ── Cross-promo ── */
-  .cross-section {
-    border-top: 1px solid var(--color-hair);
-  }
-
-  .cross-header {
-    padding: 40px 20px 0;
-  }
-
-  /* ── Desktop overrides ── */
   @media (min-width: 768px) {
-    .hero-section {
-      padding: 40px 64px 64px;
-    }
-
-    .breadcrumb {
-      font-size: 11px;
-      margin-bottom: 32px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 300px 1fr;
-      gap: 64px;
-      align-items: flex-start;
-    }
-
-    .cover-col {
-      position: sticky;
-      top: 32px;
-      justify-content: flex-start;
-    }
-
-    /* Restore full cover size on desktop */
-    .cover-col :global(.bookcover) {
+    .cover-col-wrap :global(.bookcover) {
       width: 300px !important;
       height: 432px !important;
     }
+  }
 
-    .book-title {
-      font-size: 54px;
-      letter-spacing: -0.9px;
-      margin: 14px 0 10px;
-    }
-
-    .book-sub {
-      font-size: 24px;
-      margin: 0 0 22px;
-    }
-
-    .book-lead {
-      font-size: 16px;
-      margin: 0 0 28px;
-      max-width: 560px;
-    }
-
-    .meta-row {
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      gap: 40px;
-      margin-top: 36px;
-    }
-
-    /* ── About section desktop ── */
-    .about-section {
-      padding: 72px 64px;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: 64px;
-      align-items: flex-start;
-    }
-
-    .body-prose {
-      font-size: 20px;
-    }
-
-    .toc-aside {
-      position: sticky;
-      top: 32px;
-    }
-
-    /* ── Idea section desktop ── */
-    .idea-section {
-      padding: 72px 64px;
-    }
-
-    .idea-title {
-      font-size: 36px;
-      letter-spacing: -0.5px;
-      margin: 16px 0 0;
-    }
-
-    /* ── Cross-promo desktop ── */
-    .cross-header {
-      padding: 40px 64px 0;
-    }
+  /* body-prose global p margin — :global() inside scoped style is the only
+     reliable way to pierce the Content component's rendered <p> tags. */
+  .body-prose :global(p) {
+    margin: 0 0 18px;
+  }
+  .body-prose :global(p:last-child) {
+    margin-bottom: 0;
   }
 </style>

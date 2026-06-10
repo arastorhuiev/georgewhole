@@ -23,7 +23,7 @@ const {
 } = Astro.props;
 ---
 
-<article class="w-full">
+<article class="w-full font-sans flex flex-col gap-[12px]">
   {image && (
     <AtmosImage
       height={compact ? 140 : 200}
@@ -33,52 +33,13 @@ const {
   )}
   {kicker && <Kicker>{kicker}</Kicker>}
   <h3
-    class="title transition-colors group-hover:text-accent"
-    class:list={[compact ? 'title--compact' : 'title--default']}
+    class:list={[
+      'font-serif font-normal leading-[1.25] text-ink m-0 tracking-[-0.2px] transition-colors group-hover:text-accent',
+      compact ? 'text-[20px]' : 'text-[24px]',
+    ]}
   >
     {title}
   </h3>
-  {summary && <p class="summary">{summary}</p>}
-  {meta && <div class="meta">{meta}</div>}
+  {summary && <p class="text-[14.5px] leading-[1.6] text-ink-soft m-0 font-sans">{summary}</p>}
+  {meta && <div class="font-mono text-[11px] text-ink-muted tracking-[0.6px]">{meta}</div>}
 </article>
-
-<style>
-  article {
-    font-family: var(--font-sans);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .title {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    line-height: 1.25;
-    color: var(--color-ink);
-    margin: 0;
-    letter-spacing: -0.2px;
-  }
-
-  .title--default {
-    font-size: 24px;
-  }
-
-  .title--compact {
-    font-size: 20px;
-  }
-
-  .summary {
-    font-size: 14.5px;
-    line-height: 1.6;
-    color: var(--color-ink-soft);
-    margin: 0;
-    font-family: var(--font-sans);
-  }
-
-  .meta {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--color-ink-muted);
-    letter-spacing: 0.6px;
-  }
-</style>

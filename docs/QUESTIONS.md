@@ -1,91 +1,76 @@
 # Open questions & decisions for the owner
 
-This is the "let's go through it together" list. It has three parts:
+_Last updated after the locale + Tailwind + content-architecture pass._
 
-- **A. Calls I made for you** — defensible defaults I applied so the site reads well now. Override any of them; I left alternatives.
-- **B. Content you need to provide** — real copy/links/assets that only you can supply.
-- **C. Pre-launch checklist** — things to verify before the site goes public.
-
-Everything below is a *demo/near-production* state: it builds, every link works, and the copy reads like a human wrote it — but it's still placeholder content meant to be replaced with you.
+The site builds clean across **all four locales** (`en`, `ru`, `uk`, `es` — 19 pages each, 78 total), `astro check` is 0 errors, and the quiz scoring tests pass. Most of the original open questions are now **resolved** (Section A). What's left is real content only you can supply (Section B) and pre-launch wiring (Section C).
 
 ---
 
-## A. Calls I made for you (override freely)
+## A. Resolved this session (decisions made)
 
-### A1. Domain spelling — `georgewhole.com`
-Your message said the domain will be `gerogewhole.com`, but the brand is **georgewhole** everywhere (logo, book covers, copy). I treated `gerogewhole` as a typo and used **`georgewhole.com`** throughout (`astro.config.mjs`, `_redirects`, `.env.example`, OG image, fallbacks).
-→ **Confirm the exact domain.** If it really is `gerogewhole.com`, it's a one-line change to `SITE_URL`.
+### A1. Domain — `georgewhole.com` ✅
+Confirmed. Used everywhere; no change needed.
 
-### A2. "письма" → "статьи" (the thing you flagged)
-You asked *"почему письма? почему не статьи?"*. The root issue was that the site used **two words for the same thing**: nav said *Статьи*, but the brand line + newsletter said *письма*. I locked the vocabulary:
-- **"статьи / articles"** = texts on the site
-- **"письмо / рассылка / a weekly letter"** = the email newsletter only
+### A2. Vocabulary «статьи» vs «письма» ✅
+Locked: **«статьи / articles»** = site texts; **«письмо / рассылка»** = the email newsletter only.
 
-So the brand tagline no longer calls site content "письма". New tagline: **«книги и статьи о еде и теле»** / *"books and articles on food and the body"*.
-→ Alternatives if you want it less literal: «медленные книги о еде и теле» · «книги, статьи, рассылка» · or a pure-mood line. Tell me the voice you want.
+### A3. Brand voice — the «медленно / slowly» tic, removed ✅
+You flagged the author-stripe headline *«пишет медленно — пять книг об одном»* as bad (and it was also factually wrong now — there's one real book, not five). The whole "slowness as a virtue" motif (`медленно / slowly / повільно / despacio`, plus `написано не спеша`) was **purged across all 4 locales** — author stripe, footer copyright, the meta blurb, the articles-index title, the books promo, and the "new code" body.
+- New author-stripe line (RU): **«georgewhole · книги и статьи о еде, теле и правилах, которые мы не выбирали.»** (mirrored in en/uk/es). Override anytime.
 
-### A3. "Тихие книги…" hero headline (you flagged "тихие")
-"Тихие книги" was a literal calque of *quiet books*. New headline:
-- RU: **«Книги о правилах, которые мы не выбирали — но по которым живём.»**
-- EN: **"Books about the rules we never chose — but live by anyway."**
+### A4. Footer slogan ✅
+Now just **«© 2026 · georgewhole»** (the shouty/“slow” tails are gone).
 
-I also cut the word **тихий/тише** from ~11 places down to ~2 (it had become a tic). Other options for the hero are in the audit notes — happy to try a more sales-forward or more literary version.
+### A5 / C3. Terms / Privacy pages — **not added** (your call) ✅
+Footer link stays removed; no dead control. Revisit once the forms backend (C2) goes live.
 
-### A4. Footer slogan "СНАЧАЛА НА БУМАГЕ" / "PAPER FIRST" (you flagged it)
-Removed the shouty caps slogan. Now: **«© 2026 · georgewhole · написано медленно»** / *"written slowly"*.
-→ If you have a real ethos line you want there, give it to me.
+### A6. Book scope — one real book ✅
+**«Сложные отношения с едой · вес, любовь, красота»** (`slozhnye`, num 01) is the single **published** book with a full detail page. The other four (`eda-psyche`, `krasota`, `diety`, **and «Новый Код»**) are now `status: soon` placeholders. ⚠️ Note: «Новый Код» was demoted to a placeholder per your choice — its previous rich demo content was re-themed onto `slozhnye`. Easy to flip back.
 
-### A5. Footer "УСЛОВИЯ / TERMS" link — removed for now
-It pointed to a Terms page that doesn't exist (dead control). I removed the label rather than ship a link that goes nowhere.
-→ **Do you want Terms / Privacy pages?** (A real book site eventually needs them, especially once the newsletter/contact forms have a backend.) If yes, I'll add them and restore the footer link.
+### A7. Crisis-support block — **removed globally** (your call) ✅
+Deleted the component, the About section, the dict entries, the theme colors, and the design-system demo. Zero references remain.
 
-### A6. Article "filter by topic" chips — removed for now
-The topic filter on `/articles` was decorative (clicking did nothing — there's no tag metadata on articles yet).
-→ Want real topic filtering? It needs (a) tags added to each article's frontmatter and (b) tag archive pages. Small feature, just needs your topic taxonomy.
+### A8. i18n architecture — hybrid ✅
+- **UI chrome stays in typed TS** (`src/i18n/{en,ru,uk,es}.ts`), each annotated `: UI` so a missing key **fails the build** (guarantees no thin locale).
+- **About prose + quiz content moved to JSON content collections** (`src/content/about.json`, `src/content/quiz.json`) — editable without touching component code. Quiz is keyed `quizId/locale` so more quizzes can be added later.
 
-### A7. "AUTHOR STRIPE — two avatars" (you flagged it)
-That was a real bug (an inline style was forcing both the mobile and desktop avatar to render). Fixed — now exactly one shows per screen size.
+### A9. Styling — all on Tailwind ✅
+Inline `style=` and scoped `<style>` blocks across 29 components were converted to Tailwind utilities. What intentionally remains: dynamic runtime values (book-cover colors/sizes from props, kept as minimal CSS-var inline styles) and a few `<style>` rules that can't be utilities (`:global()` for markdown-rendered content + child components, `@keyframes`, `::-webkit-details-marker`).
 
-### A8. Contact-strip button label
-The homepage contact strip CTA still uses *«Отправить письмо» / "Send"*. As a link into the contact page (you haven't written anything yet) a label like **«Написать автору»** might read better.
-→ Want me to change it?
-
-### A9. About-page timeline arithmetic
-The timeline said *"1991 — начинаются сорок лет диет"*, but with recovery in 2016 that's ~25 years, not 40. I softened it to **«Начинаются годы диет»** to avoid a visible contradiction.
-→ Give me the real years and I'll make the timeline + bio consistent.
+### A10. UK + ES locales — **live** ✅
+`LIVE_LOCALES = ['en','ru','uk','es']`. All content (books, articles, About, quiz, UI) is translated. **Caveat:** uk/es are AI translations from ru/en — they should get a **native review** before promotion (es especially; uk is close to ru). The quiz/crisis-sensitive copy is flagged below.
 
 ---
 
-## B. Content you need to provide (currently placeholder)
+## B. Content you still need to provide (currently placeholder)
 
 | # | What | Where | Notes |
-|---|---|---|---|
-| B1 | **Real book titles 01–04** | `src/content/books/{ru,en}/*.md` | Only «Новый Код» (05) is "out"; the other four are placeholders. |
-| B2 | **Retailer purchase URLs** (Amazon, Gumroad, Ozon, …) | book frontmatter `retailers` | Right now retailers show as a non-clickable list (honest, no dead links). Add a URL per retailer and they become real buy buttons automatically. The book page "Купить книгу" button currently scrolls to that list. |
-| B3 | **Goodreads profile URL** | `src/i18n/*.ts → contact.elsewhere` | Currently links to goodreads.com homepage as a placeholder. |
-| B4 | **Real photos / book covers** | replaces `AtmosImage` / `BookCover` placeholders | The atmospheric SVGs and typographic covers are stand-ins. |
-| B5 | **Author bio / About prose** | `src/i18n/*.ts → about.*` | Demo bio (fictional details: Kharkiv, daughter Irina, etc.). |
-| B6 | **Quiz: option→archetype mapping + 3 archetype texts** | `src/quiz/data.{ru,en}.ts` | The scoring *engine* works and is tested, but the answer→type mapping and 3 of 4 result texts are labelled `[ЧЕРНОВИК/DRAFT]`. This is sensitive (YMYL) content — should be authored and ideally clinician-reviewed before launch. |
-| B7 | **Verified RU/UK crisis resources** | `src/i18n/*.ts → crisis.resources` | Currently a US hotline (National Alliance for Eating Disorders) in both locales. The RU diaspora needs verified local resources before the RU site is promoted. |
-| B8 | **Real article bodies + sources** | `src/content/articles/` + ArticlePage `sourceItems` | Sources are static placeholders (Intuitive Eating, HAES, DBT). |
-| B9 | **Designed OG share image** | `public/og-default.png` | I generated a plain brand card (regenerate with `node scripts/gen-og.mjs`). A real designed 1200×630 card would share better. |
+|---|------|-------|-------|
+| B1 | **Real `slozhnye` book copy** | `src/content/books/{en,ru,uk,es}/slozhnye.md` | Detail page (lead, TOC, praise, excerpt, manifesto) is **re-themed demo copy** — replace with the real book. |
+| B2 | **Retailer purchase URLs** | book frontmatter `retailers` | Still URL-less (honest — shows as a list, not dead links). Add a URL per retailer → real buy buttons. |
+| B3 | **Goodreads profile URL** | `src/i18n/*.ts → contact.elsewhere` | Currently points at goodreads.com homepage. |
+| B4 | **Real photos / book covers** | replaces `AtmosImage` / `BookCover` | Atmospheric SVGs + typographic covers are stand-ins. |
+| B5 | **Author bio / About prose** | `src/content/about.json` (per-locale) | Demo bio (fictional details: Kharkiv, daughter Irina, etc.). Now plain JSON — editable without code. |
+| B6 | **Quiz: answer→archetype mapping + 3 archetype texts** | `src/content/quiz.json` (all 4 locales) | Engine is tested; 3 of 4 result texts are `[ЧЕРНОВИК/DRAFT]`. **YMYL** — author + ideally clinician review before promoting the quiz. |
+| B7 | **Real article bodies + sources** | `src/content/articles/{en,ru,uk,es}/` | 7 articles × 4 locales — demo prose + static placeholder sources. |
+| B8 | **Designed OG share image** | `public/og-default.png` | Plain brand card; regenerate with `node scripts/gen-og.mjs` or supply a designed 1200×630. |
 
 ---
 
 ## C. Pre-launch checklist
 
-- [ ] **C1. Set env vars in Cloudflare Pages** (Production *and* Preview): `SITE_URL=https://georgewhole.com`, optional `PUBLIC_PLAUSIBLE_DOMAIN=georgewhole.com`. See `.env.example`. (The code now falls back to `georgewhole.com` so it can't leak `example.com`, but the env var should still be set explicitly.)
-- [ ] **C2. Forms backend.** All forms (newsletter, contact, quiz email) are stubs: with JS they animate to a success message and send nothing; the honeypot is in place and there's a single seam to wire a real endpoint (`action="<url>"` → the form does a normal/real submit instead of the demo success). Pick Formspree / Buttondown / a Pages Function.
-- [ ] **C3. Decide Terms/Privacy pages** (see A5) — likely required once C2 is live.
-- [ ] **C4. UK + ES locales** are built but not "live" (`LIVE_LOCALES = ['en','ru']`). Promote each only when its content is fully translated.
-- [ ] **C5. Quiz YMYL content** (B6) authored/reviewed before promoting.
-- [ ] **C6. Re-run a copy pass with you** across both locales once real book/bio copy lands — the audit notes (`docs/AUDIT_FINDINGS.md`) list every line I touched and why.
+- [ ] **C1. Env vars in Cloudflare Pages** (Production + Preview): `SITE_URL=https://georgewhole.com`, optional `PUBLIC_PLAUSIBLE_DOMAIN=georgewhole.com`. (Code falls back to `georgewhole.com`, but set it explicitly.)
+- [ ] **C2. Forms backend.** Newsletter, contact, and quiz-email forms are **stubs** (animate success, send nothing; honeypot in place). Wire a real endpoint (Formspree / Buttondown / a Pages Function) — you deferred this.
+- [ ] **C3. Terms / Privacy** — likely required once C2 is live (see A5).
+- [ ] **C4. Native review of uk/es** (see A10) before promoting those locales widely.
+- [ ] **C5. Quiz YMYL copy** (B6) authored/reviewed before the quiz is promoted.
+- [ ] **C6. Copy pass with you** across all 4 locales once real book/bio/article copy lands.
 
 ---
 
 ## D. Smaller / lower-priority notes
 
-- **D1.** `BookCover` hardcodes the tagline `georgewhole.com`. It matches the domain, but if the domain changes it's a separate edit. Left as an intentional brand mark.
-- **D2.** `llms.txt` section headers are English while content is English (the first live locale). Fine for now; revisit if you want a per-locale `llms.txt`.
-- **D3.** The design-system page (`/design-system`) is an internal, `noindex` reference and still uses `#` placeholder links by design — it's not a public page.
-- **D4.** Possible future nicety: a thin Markdown layer for the long-form About prose so a non-developer can edit it without touching `.ts`. Not done now (kept typed i18n per our decision); easy to add later if you'll be editing copy yourself.
+- **D1.** `BookCover` hardcodes the tagline `georgewhole.com` — matches the domain; separate edit if the domain changes.
+- **D2.** Article "filter by topic" chips remain decorative/removed — real filtering needs tag metadata + tag archive pages (small feature, needs your taxonomy).
+- **D3.** `/design-system` is an internal `noindex` reference; its inline demo styles are intentionally left (dynamic/demo only).
+- **D4.** Contact-strip CTA label could read «Написать автору» instead of «Отправить письмо» — minor, say the word.

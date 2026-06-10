@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import AboutPage from '@/page-impl/AboutPage.astro';
+import { getEntry } from 'astro:content';
+import { useTranslations } from '@i18n';
+import { absUrl } from '@lib/seo';
+import { breadcrumb } from '@lib/schema';
+
+const lang = 'uk';
+const t = useTranslations(lang);
+const a = (await getEntry('about', lang))!.data;
+const jsonLd = [
+  breadcrumb([
+    { name: t.brand, url: absUrl(lang, '') },
+    { name: a.kicker, url: absUrl(lang, 'about') },
+  ]),
+];
+---
+
+<BaseLayout
+  locale={lang}
+  path="about"
+  title={`${a.kicker} · ${t.brand}`}
+  description={a.sub}
+  jsonLd={jsonLd}
+>
+  <AboutPage lang={lang} />
+</BaseLayout>

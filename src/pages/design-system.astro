@@ -12,7 +12,6 @@ import LocaleSwitcher from '@components/common/LocaleSwitcher.astro';
 import AtmosImage from '@components/common/AtmosImage.astro';
 import AuthorPortrait from '@components/common/AuthorPortrait.astro';
 import NextSteps from '@components/common/NextSteps.astro';
-import CrisisResources from '@components/common/CrisisResources.astro';
 import OldNewCompare from '@components/common/OldNewCompare.astro';
 import BookCover from '@components/book/BookCover.astro';
 import BookShelf from '@components/book/BookShelf.astro';
@@ -249,8 +248,6 @@ const sectionLabel = 'font-mono text-[11px] uppercase tracking-[0.16em] text-ink
       />
 
       <NextSteps kicker="Куда идти дальше" title="Не обязательно решать сегодня." sub="Возьмите тест, начните со статьи или с книги — нет правильного ответа." ctas={[['Пройти тест', '#'], ['Начать со статьи', '#'], ['Купить книгу', '#']]} />
-
-      <CrisisResources label="Если нужна поддержка" resources={[{ name: 'National Alliance for Eating Disorders', contact: '+1-866-662-1235', href: '#' }]} note="Это книги и письма, а не лечение. Если тяжело — обратитесь за профессиональной помощью." />
 
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <AtmosImage tone="paper" label="бумажный стол" />

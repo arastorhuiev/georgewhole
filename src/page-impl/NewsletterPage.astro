@@ -26,7 +26,7 @@ const n = t.newsletterPage;
 ---
 
   {/* Desktop nav */}
-  <div class="nav-desktop">
+  <div class="hidden md:block">
     <Nav
       brand="georgewhole"
       brandHref={`/${lang}/`}
@@ -39,7 +39,7 @@ const n = t.newsletterPage;
     />
   </div>
   {/* Mobile nav */}
-  <div class="nav-mobile">
+  <div class="block md:hidden">
     <MobileNav
       brand="georgewhole"
       brandHref={`/${lang}/`}
@@ -52,23 +52,26 @@ const n = t.newsletterPage;
 
   <main id="main">
     {/* ── Breadcrumb ── */}
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href={`/${lang}/`} class="bc-link">{n.crumb[0]}</a>
-      <span class="bc-sep" aria-hidden="true">/</span>
-      <span class="bc-current" aria-current="page">{n.crumb[1]}</span>
+    <nav
+      class="flex items-center gap-[8px] px-[20px] py-[12px] md:px-[64px] md:py-[14px] font-mono text-[11px] tracking-[1px] uppercase text-[var(--color-ink-muted)] border-b border-[var(--color-hair)]"
+      aria-label="Breadcrumb"
+    >
+      <a href={`/${lang}/`} class="text-[var(--color-ink-muted)] no-underline transition-colors hover:text-ink">{n.crumb[0]}</a>
+      <span class="text-[var(--color-hair)]" aria-hidden="true">/</span>
+      <span class="text-ink-soft" aria-current="page">{n.crumb[1]}</span>
     </nav>
 
     {/* ── Page header ── */}
-    <header class="page-head section-border">
+    <header class="pt-[36px] px-[20px] pb-[32px] md:pt-[64px] md:px-[64px] md:pb-[56px] border-b border-[var(--color-hair)]">
       <Kicker>{n.kicker}</Kicker>
-      <h1 class="page-head-title font-serif text-ink">{n.title}</h1>
-      <p class="page-head-sub font-serif text-ink-soft">{n.sub}</p>
+      <h1 class="font-serif text-ink text-[32px] leading-[1.1] font-normal tracking-[-0.5px] mt-[14px] mb-[16px] text-balance md:text-[48px] md:leading-[1.08] md:mt-[16px] md:mb-[20px] md:tracking-[-0.8px]">{n.title}</h1>
+      <p class="font-serif text-ink-soft text-[17px] leading-[1.55] m-0 italic md:text-[20px] md:max-w-[560px]">{n.sub}</p>
     </header>
 
     {/* ── Two-col: EmailCapture | points — desktop; stacked on mobile ── */}
-    <section class="body-section">
+    <section class="pt-[32px] px-[20px] pb-[48px] grid grid-cols-1 gap-[32px] md:pt-[64px] md:px-[64px] md:pb-[80px] md:grid-cols-[1.1fr_1fr] md:gap-[72px] md:items-start">
       {/* Email capture — left on desktop, top on mobile */}
-      <div class="capture-wrap">
+      <div class="bg-[var(--color-surface-soft)] border border-[var(--color-hair)] p-[28px_22px] md:p-[40px_44px]">
         <EmailCapture
           variant="newsletter"
           bare
@@ -77,170 +80,20 @@ const n = t.newsletterPage;
       </div>
 
       {/* 3 points — right on desktop, below on mobile */}
-      <div class="points-wrap">
+      <div class="flex flex-col gap-[18px] md:gap-[24px]">
         {n.points.map(([head, body]) => (
-          <div class="point">
-            <div class="point-head font-serif text-ink">{head}</div>
-            <p class="point-body font-sans text-ink-soft">{body}</p>
+          <div class="pt-[16px] border-t-2 border-accent">
+            <div class="font-serif text-ink text-[17px] tracking-[-0.2px] mb-[5px] md:text-[19px]">{head}</div>
+            <p class="font-sans text-ink-soft text-[14px] leading-[1.55] m-0">{body}</p>
           </div>
         ))}
       </div>
     </section>
   </main>
 
-  <div class="footer-desktop-wrap">
+  <div class="hidden md:block">
     <Footer strings={t.footer} locale={lang} locales={locales} layout="desktop" />
   </div>
-  <div class="footer-mobile-wrap">
+  <div class="block md:hidden">
     <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
   </div>
-
-<style>
-  /* ── Nav visibility ── */
-  .nav-mobile  { display: block; }
-  .nav-desktop { display: none; }
-
-  @media (min-width: 768px) {
-    .nav-mobile  { display: none; }
-    .nav-desktop { display: block; }
-  }
-
-  /* ── Footer visibility ── */
-  .footer-mobile-wrap  { display: block; }
-  .footer-desktop-wrap { display: none; }
-
-  @media (min-width: 768px) {
-    .footer-mobile-wrap  { display: none; }
-    .footer-desktop-wrap { display: block; }
-  }
-
-  /* ── Breadcrumb ── */
-  .breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-    border-bottom: 1px solid var(--color-hair);
-  }
-
-  @media (min-width: 768px) {
-    .breadcrumb { padding: 14px 64px; }
-  }
-
-  .bc-link {
-    color: var(--color-ink-muted);
-    text-decoration: none;
-  }
-  .bc-link:hover { color: var(--color-ink); }
-  .bc-sep     { color: var(--color-hair); }
-  .bc-current { color: var(--color-ink-soft); }
-
-  /* ── Shared ── */
-  .section-border { border-bottom: 1px solid var(--color-hair); }
-
-  /* ── Page header ── */
-  .page-head {
-    padding: 36px 20px 32px;
-  }
-
-  @media (min-width: 768px) {
-    .page-head { padding: 64px 64px 56px; }
-  }
-
-  .page-head-title {
-    font-size: 32px;
-    line-height: 1.1;
-    font-weight: 400;
-    letter-spacing: -0.5px;
-    margin: 14px 0 16px;
-    text-wrap: balance;
-  }
-
-  @media (min-width: 768px) {
-    .page-head-title {
-      font-size: 48px;
-      line-height: 1.08;
-      margin: 16px 0 20px;
-      letter-spacing: -0.8px;
-    }
-  }
-
-  .page-head-sub {
-    font-size: 17px;
-    line-height: 1.55;
-    margin: 0;
-    font-style: italic;
-  }
-
-  @media (min-width: 768px) {
-    .page-head-sub {
-      font-size: 20px;
-      max-width: 560px;
-    }
-  }
-
-  /* ── Body section ── */
-  .body-section {
-    padding: 32px 20px 48px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  @media (min-width: 768px) {
-    .body-section {
-      padding: 64px 64px 80px;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 72px;
-      align-items: start;
-    }
-  }
-
-  /* ── Email capture wrapper ── */
-  .capture-wrap {
-    background: var(--color-surface-soft);
-    border: 1px solid var(--color-hair);
-    padding: 28px 22px;
-  }
-
-  @media (min-width: 768px) {
-    .capture-wrap { padding: 40px 44px; }
-  }
-
-  /* ── Points ── */
-  .points-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-
-  @media (min-width: 768px) {
-    .points-wrap { gap: 24px; }
-  }
-
-  .point {
-    padding-top: 16px;
-    border-top: 2px solid var(--color-accent);
-  }
-
-  .point-head {
-    font-size: 17px;
-    letter-spacing: -0.2px;
-    margin-bottom: 5px;
-  }
-
-  @media (min-width: 768px) {
-    .point-head { font-size: 19px; }
-  }
-
-  .point-body {
-    font-size: 14px;
-    line-height: 1.55;
-    margin: 0;
-  }
-</style>

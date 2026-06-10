@@ -11,8 +11,8 @@ interface Props {
 const { newsletter, atmosLabel } = Astro.props;
 ---
 
-<section class="newsletter-section">
-  <div class="newsletter-inner">
+<section class="py-[40px] px-[20px] md:py-[88px] md:px-[64px]">
+  <div class="flex flex-col gap-[32px] md:grid md:grid-cols-2 md:gap-[80px] md:items-center">
     <EmailCapture
       variant="newsletter"
       strings={{
@@ -30,18 +30,3 @@ const { newsletter, atmosLabel } = Astro.props;
     </div>
   </div>
 </section>
-
-<style>
-  .newsletter-section { padding: 40px 20px; }
-  .newsletter-inner { display: flex; flex-direction: column; gap: 32px; }
-
-  @media (min-width: 768px) {
-    .newsletter-section { padding: 88px 64px; }
-    .newsletter-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-  }
-</style>

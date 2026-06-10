@@ -1,5 +1,5 @@
 import { defineCollection } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { glob, file } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 // Per-locale content lives under <type>/<locale>/<slug>.md — locale is derived
@@ -59,4 +59,84 @@ const books = defineCollection({
   }),
 });
 
-export const collections = { articles, books };
+// About-page copy: structured prose + timeline/credibility data, one JSON
+// entry per locale (id = locale). Editable without touching component code.
+const about = defineCollection({
+  loader: file('./src/content/about.json'),
+  schema: z.object({
+    crumb: z.tuple([z.string(), z.string()]),
+    kicker: z.string(),
+    title: z.string(),
+    sub: z.string(),
+    timelineLabel: z.string(),
+    timeline: z.array(z.tuple([z.string(), z.string()])),
+    h2_1: z.string(),
+    p1: z.string(),
+    p2: z.string(),
+    pull: z.string(),
+    pullBy: z.string(),
+    h2_2: z.string(),
+    p3: z.string(),
+    p4: z.string(),
+    h2_3: z.string(),
+    p5: z.string(),
+    nots: z.array(z.string()),
+    nextKicker: z.string(),
+    nextTitle: z.string(),
+    nextSub: z.string(),
+    nextCtas: z.array(z.string()),
+    credKicker: z.string(),
+    credTitle: z.string(),
+    credBody: z.string(),
+    credCards: z.array(z.tuple([z.string(), z.string(), z.string()])),
+  }),
+});
+
+// Quiz content: questions, UI labels, archetype results — one entry per quiz
+// per locale (id = "<quizId>/<locale>"). Supports multiple quizzes later.
+const quiz = defineCollection({
+  loader: file('./src/content/quiz.json'),
+  schema: z.object({
+    questions: z.array(
+      z.object({ text: z.string(), options: z.array(z.string()) }),
+    ),
+    ui: z.object({
+      kicker: z.string(),
+      title: z.string(),
+      sub: z.string(),
+      startCta: z.string(),
+      optionLetters: z.string(),
+      meta: z.array(z.string()),
+      howLabel: z.string(),
+      how: z.array(z.tuple([z.string(), z.string(), z.string()])),
+      progressLabel: z.string(),
+      of: z.string(),
+      back: z.string(),
+      next: z.string(),
+      finish: z.string(),
+      timerNote: z.string(),
+      resultKicker: z.string(),
+      resultStart: z.string(),
+      resultRetake: z.string(),
+      resultMailKicker: z.string(),
+      resultMailTitle: z.string(),
+      resultMailSub: z.string(),
+      resultMailCta: z.string(),
+      resultMailPh: z.string(),
+      resultMailSkip: z.string(),
+      resultMailSentTitle: z.string(),
+      resultMailSentSub: z.string(),
+    }),
+    archetypes: z.array(
+      z.object({
+        key: z.string(),
+        title: z.string(),
+        body: z.string(),
+        recommended: z.array(z.string()),
+        placeholder: z.boolean().optional(),
+      }),
+    ),
+  }),
+});
+
+export const collections = { articles, books, about, quiz };

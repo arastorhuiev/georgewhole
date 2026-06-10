@@ -43,7 +43,7 @@ const currentLocale = Astro.props.currentLocale.toUpperCase();
     <!-- Language dropdown -->
     <details class="nav-details">
       <summary
-        class="iconbtn font-mono text-[12px] tracking-[0.4px] border border-hair bg-transparent text-ink px-[10px] py-[6px] rounded-md flex items-center gap-[5px] list-none cursor-pointer transition-colors"
+        class="iconbtn font-mono text-[12px] tracking-[0.4px] border border-hair bg-transparent text-ink px-[10px] py-[6px] rounded-md flex items-center gap-[5px] list-none cursor-pointer transition-colors hover:border-accent hover:text-accent"
         aria-label={labels.lang}
       >
         {currentLocale}
@@ -115,7 +115,7 @@ const currentLocale = Astro.props.currentLocale.toUpperCase();
     <!-- Nav dropdown -->
     <details class="nav-details">
       <summary
-        class="iconbtn border border-hair bg-transparent text-ink w-[34px] h-[30px] rounded-md flex items-center justify-center list-none cursor-pointer transition-colors"
+        class="iconbtn border border-hair bg-transparent text-ink w-[34px] h-[30px] rounded-md flex items-center justify-center list-none cursor-pointer transition-colors hover:border-accent hover:text-accent"
         aria-label={labels.menu}
       >
         <Icon name="hamburger" size={16} />
@@ -144,33 +144,24 @@ const currentLocale = Astro.props.currentLocale.toUpperCase();
 </header>
 
 <style>
-  /* Strip default <details> marker */
-  summary {
-    list-style: none;
-  }
+  /* Strip default <details> marker — ::-webkit-details-marker cannot be expressed as a Tailwind utility */
   summary::-webkit-details-marker {
     display: none;
   }
 
-  /* Open-state: accent border + tint on the summary button */
+  /* Open-state: accent border + tint on the summary button — compound attribute+class selector, not expressible in Tailwind */
   details[open] > summary.iconbtn {
     border-color: var(--color-accent) !important;
     color: var(--color-accent) !important;
     background: rgba(63, 107, 94, 0.07) !important;
   }
 
-  /* Chevron rotation when open */
+  /* Chevron rotation when open — compound descendant selector, not expressible in Tailwind */
   details[open] .chev-i {
     transform: rotate(180deg);
   }
 
-  /* Closed-state hover affordance on the summary buttons */
-  .iconbtn:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-  }
-
-  /* Smooth panel reveal on open (close still cuts — acceptable for a menu) */
+  /* Smooth panel reveal on open — references @keyframes, must stay here */
   @media (prefers-reduced-motion: no-preference) {
     details[open] > .panel {
       animation: navPanelIn 0.18s cubic-bezier(0.2, 0.7, 0.3, 1);

@@ -18,79 +18,17 @@ const {
 } = Astro.props;
 ---
 
-<div class:list={['byline', layout === 'stack' ? 'byline--stack' : 'byline--inline']}>
+<div class:list={['flex items-center font-sans', layout === 'stack' ? 'gap-[14px]' : 'gap-[12px]']}>
   <AuthorPortrait size={layout === 'stack' ? 48 : 36} />
-  <div class="body">
-    <div class="name">{name}</div>
-    {blurb && <div class="blurb">{blurb}</div>}
+  <div class:list={[layout === 'stack' ? 'flex flex-col gap-[2px]' : 'text-[13px] text-ink-soft leading-[1.45]']}>
+    <div class:list={[layout === 'inline' ? 'text-[13px] font-semibold text-ink inline' : 'text-[14px] font-semibold text-ink']}>{name}</div>
+    {blurb && <div class="text-[13px] text-ink-soft leading-[1.4]">{blurb}</div>}
     {(date || readtime) && (
-      <div class="meta">
+      <div class="font-mono text-[11px] text-ink-muted tracking-[0.5px] mt-[4px] flex items-center gap-[6px]">
         {date && <span>{date}</span>}
-        {date && readtime && <span class="sep">·</span>}
+        {date && readtime && <span class="opacity-50">·</span>}
         {readtime && <span>{readtime}</span>}
       </div>
     )}
   </div>
 </div>
-
-<style>
-  .byline {
-    display: flex;
-    align-items: center;
-    font-family: var(--font-sans);
-  }
-
-  .byline--inline {
-    gap: 12px;
-  }
-
-  .byline--stack {
-    gap: 14px;
-  }
-
-  .byline--inline .name {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--color-ink);
-    display: inline;
-  }
-
-  .byline--stack .name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--color-ink);
-  }
-
-  .byline--inline .body {
-    font-size: 13px;
-    color: var(--color-ink-soft);
-    line-height: 1.45;
-  }
-
-  .byline--stack .body {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .blurb {
-    font-size: 13px;
-    color: var(--color-ink-soft);
-    line-height: 1.4;
-  }
-
-  .meta {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--color-ink-muted);
-    letter-spacing: 0.5px;
-    margin-top: 4px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .sep {
-    opacity: 0.5;
-  }
-</style>

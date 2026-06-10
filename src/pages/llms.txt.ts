@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { booksFor, articlesFor, slugOf } from '@lib/content';
+import { getEntry } from 'astro:content';
 import { useTranslations } from '@i18n';
 import { LIVE_LOCALES } from '@lib/locales';
 
@@ -12,6 +13,7 @@ export const GET: APIRoute = async ({ site }) => {
   const t = useTranslations(locale);
   const books = await booksFor(locale);
   const articles = await articlesFor(locale);
+  const about = await getEntry('about', locale);
 
   const lines = [
     `# ${t.brand}`,
@@ -29,7 +31,7 @@ export const GET: APIRoute = async ({ site }) => {
     ),
     '',
     '## Об авторе',
-    `- [${t.about.kicker}](${base}/${locale}/about/): ${t.about.sub}`,
+    `- [${about!.data.kicker}](${base}/${locale}/about/): ${about!.data.sub}`,
     '',
   ];
   return new Response(lines.join('\n'), {

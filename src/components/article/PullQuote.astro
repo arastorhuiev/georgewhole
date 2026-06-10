@@ -12,39 +12,11 @@ const {
 const [open, close] = marks;
 ---
 
-<figure>
-  <blockquote>
+<figure class="my-[36px] pt-[24px] pb-[24px] pl-[28px] border-l-[2px] border-accent font-serif">
+  <blockquote class="m-0 text-[26px] leading-[1.45] text-ink italic tracking-[-0.2px] font-[400]">
     {open}<slot />{close}
   </blockquote>
   {attribution && (
-    <figcaption>{attribution}</figcaption>
+    <figcaption class="mt-[14px] font-mono text-[11px] tracking-[0.8px] uppercase text-ink-muted">{attribution}</figcaption>
   )}
 </figure>
-
-<style>
-  figure {
-    margin: 36px 0;
-    padding: 24px 0 24px 28px;
-    border-left: 2px solid var(--color-accent);
-    font-family: var(--font-serif);
-  }
-
-  blockquote {
-    margin: 0;
-    font-size: 26px;
-    line-height: 1.45;
-    color: var(--color-ink);
-    font-style: italic;
-    letter-spacing: -0.2px;
-    font-weight: 400;
-  }
-
-  figcaption {
-    margin-top: 14px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-  }
-</style>

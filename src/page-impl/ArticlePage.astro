@@ -67,7 +67,7 @@ const sourceItems = lang === 'ru'
 ---
 
   <!-- Desktop nav -->
-  <div class="hidden-mobile">
+  <div class="max-md:hidden">
     <Nav
       brand="georgewhole"
       brandHref={`/${lang}/`}
@@ -80,7 +80,7 @@ const sourceItems = lang === 'ru'
     />
   </div>
   <!-- Mobile nav -->
-  <div class="hidden-desktop">
+  <div class="md:hidden">
     <MobileNav
       brand="georgewhole"
       brandHref={`/${lang}/`}
@@ -92,28 +92,28 @@ const sourceItems = lang === 'ru'
   </div>
 
   <!-- Reading progress bar (mobile) -->
-  <div class="progress-bar hidden-desktop" aria-hidden="true">
-    <div class="progress-fill"></div>
+  <div class="md:hidden h-[3px] bg-[var(--color-hair-soft)] relative" aria-hidden="true">
+    <div class="absolute left-0 top-0 bottom-0 w-[34%] bg-accent"></div>
   </div>
 
   <main id="main">
   <!-- Article header -->
-  <header class="article-header">
+  <header class="pt-[32px] px-[64px] pb-[56px] border-b border-hair max-md:pt-[28px] max-md:px-[20px] max-md:pb-[28px]">
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href={`/${lang}/`} class="crumb-link">{t.common.breadcrumbHome}</a>
-      <span class="crumb-sep" aria-hidden="true">/</span>
-      <a href={`/${lang}/articles/`} class="crumb-link">{t.nav.articles}</a>
-      <span class="crumb-sep" aria-hidden="true">/</span>
-      <span class="crumb-current">{entry.data.title}</span>
+    <nav class="font-mono text-[11px] tracking-[1.2px] uppercase text-ink-muted mb-[32px] flex items-center gap-[10px] flex-wrap max-md:text-[10px] max-md:mb-[14px] max-md:gap-[6px]" aria-label="Breadcrumb">
+      <a href={`/${lang}/`} class="text-ink-muted no-underline transition-colors hover:text-ink">{t.common.breadcrumbHome}</a>
+      <span class="opacity-40" aria-hidden="true">/</span>
+      <a href={`/${lang}/articles/`} class="text-ink-muted no-underline transition-colors hover:text-ink">{t.nav.articles}</a>
+      <span class="opacity-40" aria-hidden="true">/</span>
+      <span class="text-ink">{entry.data.title}</span>
     </nav>
 
-    <div class="header-inner">
+    <div class="max-w-[880px]">
       {entry.data.kicker && <Kicker>{entry.data.kicker}</Kicker>}
-      <h1 class="article-title">{entry.data.title}</h1>
-      <p class="article-summary">{entry.data.summary}</p>
+      <h1 class="font-serif text-[58px] leading-[1.06] mt-[20px] mb-[28px] font-normal text-ink tracking-[-0.9px] text-balance max-md:text-[32px] max-md:leading-[1.1] max-md:mt-[14px] max-md:mb-[18px] max-md:tracking-[-0.5px]">{entry.data.title}</h1>
+      <p class="font-serif text-[22px] leading-[1.5] text-ink-soft mt-0 mb-[36px] italic max-w-[720px] max-md:text-[17px] max-md:leading-[1.55] max-md:mb-[22px]">{entry.data.summary}</p>
 
-      <div class="byline-row">
+      <div class="pt-[24px] border-t border-[var(--color-hair-soft)] max-md:pt-[16px]">
         <AuthorByline
           name="georgewhole"
           blurb={t.authorStripe.mobileSummary}
@@ -126,7 +126,7 @@ const sourceItems = lang === 'ru'
   </header>
 
   <!-- Hero image -->
-  <section class="hero-image">
+  <section class="pt-[48px] px-[64px] pb-0 max-md:pt-0 max-md:px-[20px] max-md:pb-[8px]">
     <AtmosImage
       height={440}
       label={entry.data.image ?? t.atmos.articleFallback}
@@ -136,23 +136,23 @@ const sourceItems = lang === 'ru'
   </section>
 
   <!-- Three-column body grid (desktop) / single column (mobile) -->
-  <div class="body-grid">
+  <div class="grid grid-cols-[220px_1fr_220px] gap-[56px] px-[64px] pt-[64px] pb-[80px] max-w-[1280px] mx-auto items-start max-md:block max-md:px-[20px] max-md:pt-[8px] max-md:pb-[32px]">
     <!-- Left sidebar: TOC placeholder — desktop only -->
-    <aside class="toc-sidebar hidden-mobile" aria-label={t.articleDetail.tocLabel}>
-      <div class="sidebar-label">{t.articleDetail.tocLabel}</div>
+    <aside class="max-md:hidden sticky top-[32px] font-sans" aria-label={t.articleDetail.tocLabel}>
+      <div class="font-mono text-[10.5px] tracking-[1.4px] uppercase text-ink-muted mb-[14px]">{t.articleDetail.tocLabel}</div>
       <nav>
-        <div class="toc-note">{t.articleDetail.tocNote}</div>
+        <div class="font-mono text-[10.5px] text-ink-muted tracking-[0.8px] opacity-60">{t.articleDetail.tocNote}</div>
       </nav>
     </aside>
 
     <!-- Main prose -->
-    <article class="prose-column">
-      <div class="article-body">
+    <article class="max-w-[70ch] justify-self-center w-full">
+      <div class="article-body font-serif text-ink text-[20px] leading-[1.7] max-md:text-[19px]">
         <Content />
       </div>
 
       <!-- Inline email capture -->
-      <div class="inline-capture">
+      <div class="mt-[48px] mb-[48px] pt-[36px] pb-[36px] px-[32px] bg-[var(--color-surface-soft)] border border-hair">
         <EmailCapture
           variant="newsletter"
           compact
@@ -161,7 +161,7 @@ const sourceItems = lang === 'ru'
       </div>
 
       <!-- End-of-article author blurb -->
-      <div class="author-end">
+      <div class="mt-[48px] pt-[32px] border-t border-[var(--color-hair-soft)]">
         <AuthorByline
           name="georgewhole"
           blurb="пишет медленно — несколько книг об одном."
@@ -174,16 +174,16 @@ const sourceItems = lang === 'ru'
     </article>
 
     <!-- Right sidebar: book promo — desktop only -->
-    <aside class="book-sidebar hidden-mobile" aria-label={t.booksPromo.kicker}>
-      <div class="book-promo-card">
+    <aside class="max-md:hidden sticky top-[32px] font-sans" aria-label={t.booksPromo.kicker}>
+      <div class="p-[20px] border border-hair bg-[var(--color-surface-soft)]">
         <Kicker>{t.booksPromo.kicker}</Kicker>
-        <p class="book-promo-quote">{t.booksPromo.sub}</p>
-        <div class="book-promo-inner">
+        <p class="font-serif text-[15px] text-ink mt-[10px] mb-[16px] leading-[1.45] italic">{t.booksPromo.sub}</p>
+        <div class="flex gap-[12px] items-start mt-[16px]">
           <BookCover title={promoTitle} w={64} h={92} />
-          <div class="book-promo-text">
-            <div class="book-promo-title">{promoTitle}</div>
-            {promoSub && <div class="book-promo-sub">{promoSub}</div>}
-            <a href={promoHref} class="book-promo-cta">
+          <div class="flex-1">
+            <div class="text-[13px] text-ink font-semibold">{promoTitle}</div>
+            {promoSub && <div class="text-[12px] text-ink-soft leading-[1.4] mb-[8px]">{promoSub}</div>}
+            <a href={promoHref} class="text-accent text-[12px] font-medium no-underline border-b border-[var(--color-accent-hair,rgba(63,107,94,0.3))]">
               {t.common.getBook} →
             </a>
           </div>
@@ -191,11 +191,11 @@ const sourceItems = lang === 'ru'
       </div>
 
       <!-- Related links label -->
-      <div class="sidebar-theme-label">{t.articleDetail.relatedLabel}</div>
+      <div class="mt-[24px] pt-[18px] border-t border-[var(--color-hair-soft)] font-mono text-[10.5px] tracking-[1.4px] uppercase text-ink-muted mb-[12px]">{t.articleDetail.relatedLabel}</div>
       {relatedEntries.slice(0, 3).map((rel) => (
         <a
           href={`/${lang}/articles/${slugOf(rel.id)}/`}
-          class="sidebar-related-link"
+          class="block font-serif text-[15px] text-ink leading-[1.4] py-[12px] border-t border-[var(--color-hair-soft)] no-underline transition-colors hover:text-accent"
         >
           {rel.data.title}
         </a>
@@ -205,11 +205,11 @@ const sourceItems = lang === 'ru'
 
   <!-- Related articles grid -->
   {relatedEntries.length > 0 && (
-    <section class="related-section">
+    <section class="pt-[56px] px-[64px] pb-[72px] border-t border-hair max-md:pt-[36px] max-md:px-[20px] max-md:pb-[48px]">
       <Kicker>{t.articleDetail.readNext}</Kicker>
-      <div class="related-grid">
+      <div class="grid grid-cols-3 gap-[32px] mt-[28px] max-md:grid-cols-1 max-md:gap-[24px]">
         {relatedEntries.map((rel) => (
-          <a href={`/${lang}/articles/${slugOf(rel.id)}/`} class="related-card-link">
+          <a href={`/${lang}/articles/${slugOf(rel.id)}/`} class="related-card-link no-underline text-inherit block">
             <ArticleCard
               title={rel.data.title}
               kicker={rel.data.kicker}
@@ -233,196 +233,7 @@ const sourceItems = lang === 'ru'
   />
 
 <style>
-  /* ── Visibility toggles ── */
-  .hidden-mobile { display: block; }
-  .hidden-desktop { display: none; }
-
-  @media (max-width: 767px) {
-    .hidden-mobile { display: none; }
-    .hidden-desktop { display: block; }
-  }
-
-  /* ── Progress bar (mobile) ── */
-  .progress-bar {
-    height: 3px;
-    background: var(--color-hair-soft);
-    position: relative;
-  }
-  .progress-fill {
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 34%;
-    background: var(--color-accent);
-  }
-
-  /* ── Article header ── */
-  .article-header {
-    padding: 32px 64px 56px;
-    border-bottom: 1px solid var(--color-hair);
-  }
-
-  @media (max-width: 767px) {
-    .article-header {
-      padding: 28px 20px 28px;
-    }
-  }
-
-  .breadcrumb {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-    margin-bottom: 32px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  @media (max-width: 767px) {
-    .breadcrumb {
-      font-size: 10px;
-      margin-bottom: 14px;
-      gap: 6px;
-    }
-  }
-
-  .crumb-link {
-    color: var(--color-ink-muted);
-    text-decoration: none;
-  }
-  .crumb-link:hover { color: var(--color-ink); }
-  .crumb-sep { opacity: 0.4; }
-  .crumb-current { color: var(--color-ink); }
-
-  .header-inner {
-    max-width: 880px;
-  }
-
-  .article-title {
-    font-family: var(--font-serif);
-    font-size: 58px;
-    line-height: 1.06;
-    margin: 20px 0 28px;
-    font-weight: 400;
-    color: var(--color-ink);
-    letter-spacing: -0.9px;
-    text-wrap: balance;
-  }
-
-  @media (max-width: 767px) {
-    .article-title {
-      font-size: 32px;
-      line-height: 1.1;
-      margin: 14px 0 18px;
-      letter-spacing: -0.5px;
-    }
-  }
-
-  .article-summary {
-    font-family: var(--font-serif);
-    font-size: 22px;
-    line-height: 1.5;
-    color: var(--color-ink-soft);
-    margin: 0 0 36px;
-    font-style: italic;
-    max-width: 720px;
-  }
-
-  @media (max-width: 767px) {
-    .article-summary {
-      font-size: 17px;
-      line-height: 1.55;
-      margin: 0 0 22px;
-    }
-  }
-
-  .byline-row {
-    padding-top: 24px;
-    border-top: 1px solid var(--color-hair-soft);
-  }
-
-  @media (max-width: 767px) {
-    .byline-row {
-      padding-top: 16px;
-    }
-  }
-
-  /* ── Hero image ── */
-  .hero-image {
-    padding: 48px 64px 0;
-  }
-
-  @media (max-width: 767px) {
-    .hero-image {
-      padding: 0 20px 8px;
-    }
-  }
-
-  /* ── Three-column body grid ── */
-  .body-grid {
-    display: grid;
-    grid-template-columns: 220px 1fr 220px;
-    gap: 56px;
-    padding: 64px 64px 80px;
-    max-width: 1280px;
-    margin: 0 auto;
-    align-items: flex-start;
-  }
-
-  @media (max-width: 767px) {
-    .body-grid {
-      display: block;
-      padding: 8px 20px 32px;
-    }
-  }
-
-  /* ── TOC sidebar ── */
-  .toc-sidebar {
-    position: sticky;
-    top: 32px;
-    font-family: var(--font-sans);
-  }
-
-  .sidebar-label {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-    margin-bottom: 14px;
-  }
-
-  .toc-note {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    color: var(--color-ink-muted);
-    letter-spacing: 0.8px;
-    opacity: 0.6;
-  }
-
-  /* ── Prose column ── */
-  .prose-column {
-    max-width: 70ch;
-    justify-self: center;
-    width: 100%;
-  }
-
   /* ── Styled markdown body ── */
-  .article-body {
-    font-family: var(--font-serif);
-    color: var(--color-ink);
-    font-size: 20px;
-    line-height: 1.7;
-  }
-
-  @media (max-width: 767px) {
-    .article-body {
-      font-size: 19px;
-    }
-  }
-
   .article-body :global(p) {
     margin: 0 0 24px;
   }
@@ -509,134 +320,7 @@ const sourceItems = lang === 'ru'
     margin: 0 0 32px;
   }
 
-  /* ── Inline email capture ── */
-  .inline-capture {
-    margin: 48px 0;
-    padding: 36px 32px;
-    background: var(--color-surface-soft);
-    border: 1px solid var(--color-hair);
-  }
-
-  /* ── Author end card ── */
-  .author-end {
-    margin-top: 48px;
-    padding-top: 32px;
-    border-top: 1px solid var(--color-hair-soft);
-  }
-
-  /* ── Book sidebar ── */
-  .book-sidebar {
-    position: sticky;
-    top: 32px;
-    font-family: var(--font-sans);
-  }
-
-  .book-promo-card {
-    padding: 20px;
-    border: 1px solid var(--color-hair);
-    background: var(--color-surface-soft);
-  }
-
-  .book-promo-quote {
-    font-family: var(--font-serif);
-    font-size: 15px;
-    color: var(--color-ink);
-    margin: 10px 0 16px;
-    line-height: 1.45;
-    font-style: italic;
-  }
-
-  .book-promo-inner {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    margin-top: 16px;
-  }
-
-  .book-promo-text {
-    flex: 1;
-  }
-
-  .book-promo-title {
-    font-size: 13px;
-    color: var(--color-ink);
-    font-weight: 600;
-  }
-
-  .book-promo-sub {
-    font-size: 12px;
-    color: var(--color-ink-soft);
-    line-height: 1.4;
-    margin-bottom: 8px;
-  }
-
-  .book-promo-cta {
-    color: var(--color-accent);
-    font-size: 12px;
-    font-weight: 500;
-    text-decoration: none;
-    border-bottom: 1px solid var(--color-accent-hair, rgba(63,107,94,0.3));
-  }
-
-  .sidebar-theme-label {
-    margin-top: 24px;
-    padding-top: 18px;
-    border-top: 1px solid var(--color-hair-soft);
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-    margin-bottom: 12px;
-  }
-
-  .sidebar-related-link {
-    display: block;
-    font-family: var(--font-serif);
-    font-size: 15px;
-    color: var(--color-ink);
-    line-height: 1.4;
-    padding: 12px 0;
-    border-top: 1px solid var(--color-hair-soft);
-    text-decoration: none;
-  }
-
-  .sidebar-related-link:hover {
-    color: var(--color-accent);
-  }
-
-  /* ── Related articles ── */
-  .related-section {
-    padding: 56px 64px 72px;
-    border-top: 1px solid var(--color-hair);
-  }
-
-  @media (max-width: 767px) {
-    .related-section {
-      padding: 36px 20px 48px;
-    }
-  }
-
-  .related-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    margin-top: 28px;
-  }
-
-  @media (max-width: 767px) {
-    .related-grid {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-  }
-
-  .related-card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-
+  /* Hover on related card title */
   .related-card-link:hover :global(.title) {
     color: var(--color-accent);
   }

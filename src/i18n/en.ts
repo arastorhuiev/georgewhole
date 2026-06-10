@@ -5,7 +5,9 @@
 // NOTE: copy is the design's placeholder/demo text — real book copy is swapped
 // in later by the author.
 
-export const en = {
+import type { UI } from '@i18n';
+
+export const en: UI = {
   brand: 'georgewhole',
   brandTagline: 'books and articles on food and the body',
   nav: { articles: 'Articles', books: 'Books', about: 'About', newsletter: 'Newsletter' },
@@ -21,9 +23,9 @@ export const en = {
 
   authorStripe: {
     kicker: 'Author',
-    line: 'georgewhole · writes slowly — five books about one thing.',
+    line: 'georgewhole · books and articles on food, the body, and the rules we never chose.',
     name: 'georgewhole',
-    mobileSummary: 'writes slowly — five books about one thing.',
+    mobileSummary: 'books and articles on food, the body, and the rules we never chose.',
     link: 'Read the story',
   },
 
@@ -83,14 +85,14 @@ export const en = {
 
   footer: {
     deskTitle: "The author's desk",
-    deskBlurb: 'Articles and books about the rules we live by without choosing them — and the ones we can choose. Written slowly, deliberately.',
+    deskBlurb: 'Articles and books about the rules we live by without choosing them — and the ones we can choose.',
     // Each link is [label, locale-less path]; the Footer prefixes /<locale>/.
     cols: [
       ['Read', [['All articles', 'articles'], ['Quiz', 'quiz']]],
-      ['Books', [['The New Code', 'books/novy-kod'], ['Coming soon', 'books'], ['About the author', 'about']]],
+      ['Books', [['A Difficult Relationship with Food', 'books/slozhnye'], ['Coming soon', 'books'], ['About the author', 'about']]],
       ['Contact', [['Contact', 'contact'], ['Press', 'contact'], ['Newsletter', 'newsletter']]],
     ] as Array<[string, Array<[string, string]>]>,
-    copy: '© 2026 · georgewhole · written slowly',
+    copy: '© 2026 · georgewhole',
   },
 
   idea: {
@@ -98,7 +100,7 @@ export const en = {
     oldK: 'Old Code',
     oldBody: 'An inherited rule: the body is a problem to be solved. Hunger is weakness, fullness is failure. You did not write this or sign up for it.',
     newK: 'New Code',
-    newBody: 'A quiet set of rules you write slowly, in your own words. Not a plan, not "love yourself." Permission to put the old book down — and start another.',
+    newBody: 'A quiet set of rules you write in your own words. Not a plan, not "love yourself." Permission to put the old book down — and start another.',
     oldHead: 'The old code says',
     newHead: 'The new code says',
     pairs: [
@@ -112,7 +114,7 @@ export const en = {
   articlesIndex: {
     crumb: ['Home', 'Articles'],
     kicker: 'Articles',
-    title: 'Everything written, and written slowly.',
+    title: 'Everything written, in one place.',
     sub: 'No endless feed here. A few series and standalone pieces — read one at a time.',
     count: '23 pieces · updated on Sundays',
     featuredLabel: 'Featured',
@@ -187,56 +189,11 @@ export const en = {
     ] as Array<[string, string, string]>,
   },
 
-  about: {
-    crumb: ['Home', 'About'],
-    kicker: 'About the author',
-    title: "I'm sixty-four. I stopped counting at fifty-four. Here's what I learned in those years.",
-    sub: 'Not a doctor or a trainer. Just a man who kept quiet about a disorder for years — and has lived more calmly for the last ten.',
-    timelineLabel: 'A short timeline',
-    timeline: [
-      ['1962', 'Born in Kharkiv'],
-      ['1978', 'The first rule about food'],
-      ['1991', 'The diet years begin'],
-      ['1995', 'My daughter is born'],
-      ['2016', 'I stop counting'],
-      ['2024', 'I start writing publicly'],
-      ['2026', 'First book'],
-    ] as Array<[string, string]>,
-    h2_1: 'Why this book, and not another.',
-    p1: 'The books about food that I needed at thirty-five did not exist. The ones I came across at fifty were not written for me — they were for women, for the very young, or for people for whom shame was a fashionable problem rather than the air I had been breathing since childhood.',
-    p2: "I'm not the only one. There are many of us — men near sixty, carrying rules about food we never said out loud. I wrote this book first for them, and then for everyone tired of the loud version of this story.",
-    pull: "I don't want to make this a neat, tidy story. It wasn't. But it's quieter now — and that, it turns out, is enough.",
-    pullBy: 'From the introduction',
-    h2_2: 'What my daughter taught me without trying.',
-    p3: "Irina is thirty-one. She eats without argument. She didn't learn that from me — but because by the time she was old enough to notice, I'd stopped performing the fight in front of her. That's the whole of it.",
-    p4: "I can say the rule changed in my generation — and that a quieter one can pass to the next. I can't prove it. I can only say I watched it happen, in my own kitchen, in my own family.",
-    h2_3: 'What I will not write about.',
-    p5: 'To save us both time: this book has no weight numbers, no before-and-after, no calorie counts, no plan. It does not promise a transformation. It does not promise much. Mostly, it offers company.',
-    nots: [
-      'No promises to lose weight, and no counting it.',
-      'No before / after photos. Ever.',
-      'No calories or macros.',
-      'No "today only," "almost gone," or countdowns.',
-      'No tough love — there is none here. A lot of the slow kind, though.',
-    ],
-    nextKicker: 'Where to go next',
-    nextTitle: 'No need to decide today.',
-    nextSub: "Take the quiz, start with an article or a book — there's no right answer. The right one is whichever leaves you a little less alone.",
-    nextCtas: ['Take the quiz', 'Start with an article', 'Get the book'],
-    credKicker: 'Credibility',
-    credTitle: 'Why you can trust this.',
-    credBody: "Not because I'm an expert. Because I've been through it, I cite my sources, and I'm honest about what this book doesn't do.",
-    credCards: [
-      ['Lived experience', 'Ten years now', 'Written from the far side of recovery — no distance, no ready answers.'],
-      ['Sources', 'Backed by research', 'Links to the work and the data itself — not "expert tips," but what I lean on.'],
-      ["What it isn't", 'Not therapy, not a plan', 'These are books and texts. If things are hard right now, please reach out for professional help.'],
-    ] as Array<[string, string, string]>,
-  },
 
   booksPromo: {
     kicker: "The author's books",
     title: 'If the articles resonate — there is a book too.',
-    sub: 'The same ideas, but slower and in order. One is out; the next ones are being written.',
+    sub: 'The same ideas, but in order and in full. One is out; the next ones are being written.',
     cta: 'All books',
   },
 
@@ -246,15 +203,6 @@ export const en = {
   },
 
   sourcesLabel: 'Sources and further reading',
-
-  crisis: {
-    label: 'If you need support',
-    note: 'These are books and texts, not treatment. If things are hard right now — please reach out for professional help.',
-    // RU diaspora: find verified local resources before launch.
-    resources: [
-      { name: 'National Alliance for Eating Disorders', contact: '+1-866-662-1235', href: 'https://www.allianceforeatingdisorders.com/' },
-    ],
-  },
 
   notFound: {
     code: '404',

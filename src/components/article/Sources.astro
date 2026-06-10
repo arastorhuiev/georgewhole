@@ -12,28 +12,11 @@ const {
 } = Astro.props;
 ---
 
-<section>
+<section class="mt-[40px] py-[24px] border-t border-[var(--color-hair)] font-sans text-ink-soft">
   <Kicker color="var(--color-ink-muted)">{label}</Kicker>
-  <ol>
+  <ol class="mt-[14px] pl-[18px] text-[13.5px] leading-[1.7]">
     {items.map((item) => (
       <li set:html={item} />
     ))}
   </ol>
 </section>
-
-<style>
-  section {
-    margin: 40px 0 0;
-    padding: 24px 0;
-    border-top: 1px solid var(--color-hair);
-    font-family: var(--font-sans);
-    color: var(--color-ink-soft);
-  }
-
-  ol {
-    margin: 14px 0 0;
-    padding-left: 18px;
-    font-size: 13.5px;
-    line-height: 1.7;
-  }
-</style>

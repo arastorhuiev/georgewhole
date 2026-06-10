@@ -49,8 +49,9 @@ const titleWords = title.split(' ');
     'bookcover',
     'font-serif',
     'relative overflow-hidden box-border flex flex-col justify-between',
+    'p-[18px]',
     'shadow-[4px_6px_0_rgba(42,39,35,0.08),0_1px_3px_rgba(0,0,0,0.18)]',
-    'transition-[transform,box-shadow] duration-200 ease-[cubic-bezier(0.2,0.7,0.3,1)] [will-change:transform]',
+    'transition-[transform,box-shadow] duration-150 ease-[cubic-bezier(0.2,0.7,0.3,1)] [will-change:transform]',
     className,
   ]}
   style={{
@@ -58,18 +59,11 @@ const titleWords = title.split(' ');
     height: `${h}px`,
     background: coverBg,
     color: coverFg,
-    padding: '18px',
   }}
 >
   {/* Top byline */}
   <div
-    class="font-mono"
-    style={{
-      fontSize: '9.5px',
-      letterSpacing: '1.6px',
-      textTransform: 'uppercase',
-      opacity: 0.65,
-    }}
+    class="font-mono text-[9.5px] tracking-[1.6px] uppercase opacity-65"
   >
     {byline}
   </div>
@@ -78,15 +72,8 @@ const titleWords = title.split(' ');
   <div>
     {num != null && (
       <div
-        class="font-serif"
-        style={{
-          fontSize: `${numFontSize}px`,
-          lineHeight: 0.86,
-          fontWeight: 400,
-          letterSpacing: '-1.5px',
-          marginBottom: '12px',
-          opacity: 0.9,
-        }}
+        class="font-serif font-normal leading-[0.86] tracking-[-1.5px] mb-[12px] opacity-90"
+        style={{ fontSize: `${numFontSize}px` }}
       >
         {num}
       </div>
@@ -95,23 +82,14 @@ const titleWords = title.split(' ');
     {/* Title: single string when num present, one word per div when no num */}
     {num != null ? (
       <div
-        style={{
-          fontSize: `${titleFontSizeWithNum}px`,
-          lineHeight: 1.14,
-          fontWeight: 400,
-          letterSpacing: '-0.3px',
-        }}
+        class="font-normal leading-[1.14] tracking-[-0.3px]"
+        style={{ fontSize: `${titleFontSizeWithNum}px` }}
       >
         {title}
       </div>
     ) : (
       <div
-        style={{
-          fontSize: '24px',
-          lineHeight: 1.1,
-          fontWeight: 400,
-          letterSpacing: '-0.3px',
-        }}
+        class="text-[24px] font-normal leading-[1.1] tracking-[-0.3px]"
       >
         {titleWords.map((word) => (
           <div>{word}</div>
@@ -121,24 +99,14 @@ const titleWords = title.split(' ');
 
     {/* Rule */}
     <div
-      style={{
-        width: '36px',
-        height: '2px',
-        background: ruleColor,
-        marginTop: '10px',
-      }}
+      class="w-[36px] h-[2px] mt-[10px]"
+      style={{ background: ruleColor }}
     />
   </div>
 
   {/* Bottom tagline */}
   <div
-    class="font-mono"
-    style={{
-      fontSize: '9px',
-      letterSpacing: '1.2px',
-      opacity: 0.55,
-      textTransform: 'uppercase',
-    }}
+    class="font-mono text-[9px] tracking-[1.2px] opacity-55 uppercase"
   >
     {tagline}
   </div>

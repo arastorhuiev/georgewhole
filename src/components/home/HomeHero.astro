@@ -15,8 +15,8 @@ interface Props {
 const { lang, hero, atmosLabel } = Astro.props;
 ---
 
-<section class="hero-section border-b border-hair">
-  <div class="hero-text">
+<section class="border-b border-hair pt-[40px] px-[20px] pb-[36px] flex flex-col gap-[28px] md:pt-[88px] md:px-[64px] md:pb-[72px] md:grid md:grid-cols-[1.5fr_1fr] md:gap-[80px] md:items-center">
+  <div class="order-1">
     <Kicker>{hero.kicker}</Kicker>
     <h1 class="font-serif text-ink font-normal text-[clamp(38px,6vw,70px)] leading-[1.04] tracking-[-1.2px] text-balance my-6">
       {hero.title}
@@ -24,36 +24,12 @@ const { lang, hero, atmosLabel } = Astro.props;
     <p class="font-serif text-ink-soft text-[clamp(17px,2vw,22px)] leading-[1.5] max-w-[560px] mt-0 mb-9">
       {hero.sub}
     </p>
-    <div class="hero-ctas">
+    <div class="flex flex-col gap-[10px] md:flex-row md:gap-[14px] md:items-center">
       <Button variant="primary" size="lg" href={`/${lang}/books/`}>{hero.primary}</Button>
       <Button variant="ghost" size="lg" href={`/${lang}/about/`}>{hero.ghost}</Button>
     </div>
   </div>
-  <div class="hero-image">
+  <div class="order-2 mt-[28px] md:mt-0">
     <AtmosImage height={520} label={atmosLabel} tone="morning" />
   </div>
 </section>
-
-<style>
-  .hero-section {
-    padding: 40px 20px 36px;
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-  }
-  .hero-text { order: 1; }
-  .hero-image { order: 2; margin-top: 28px; }
-  .hero-ctas { display: flex; flex-direction: column; gap: 10px; }
-
-  @media (min-width: 768px) {
-    .hero-section {
-      padding: 88px 64px 72px;
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-    .hero-image { margin-top: 0; }
-    .hero-ctas { flex-direction: row; gap: 14px; align-items: center; }
-  }
-</style>

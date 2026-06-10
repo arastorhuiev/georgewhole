@@ -14,7 +14,7 @@ export const DEFAULT_LOCALE: Locale = 'en';
  * (its content is the most ready); add others as each is FULLY localized.
  * Never ship a thin/untranslated locale (Helpful-Content is site-wide).
  */
-export const LIVE_LOCALES = ['en', 'ru'] as const satisfies readonly Locale[]; // EN (default) + RU live; uk/es follow when localized
+export const LIVE_LOCALES = ['en', 'ru', 'uk', 'es'] as const satisfies readonly Locale[]; // all four locales live
 
 /**
  * The "home" locale for the root redirect and hreflang x-default:

@@ -1,16 +1,18 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import AboutPage from '@/page-impl/AboutPage.astro';
+import { getEntry } from 'astro:content';
 import { useTranslations } from '@i18n';
 import { absUrl } from '@lib/seo';
 import { breadcrumb } from '@lib/schema';
 
 const lang = 'en';
 const t = useTranslations(lang);
+const a = (await getEntry('about', lang))!.data;
 const jsonLd = [
   breadcrumb([
     { name: t.brand, url: absUrl(lang, '') },
-    { name: t.about.kicker, url: absUrl(lang, 'about') },
+    { name: a.kicker, url: absUrl(lang, 'about') },
   ]),
 ];
 ---
@@ -18,8 +20,8 @@ const jsonLd = [
 <BaseLayout
   locale={lang}
   path="about"
-  title={`${t.about.kicker} · ${t.brand}`}
-  description={t.about.sub}
+  title={`${a.kicker} · ${t.brand}`}
+  description={a.sub}
   jsonLd={jsonLd}
 >
   <AboutPage lang={lang} />

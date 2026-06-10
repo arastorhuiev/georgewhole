@@ -11,8 +11,8 @@ interface Props {
 const { lang, contact } = Astro.props;
 ---
 
-<section class="contact-strip border-t border-hair bg-surface-soft">
-  <div class="contact-inner">
+<section class="border-t border-hair bg-surface-soft px-[20px] py-[40px] md:px-[64px] md:py-[64px]">
+  <div class="flex flex-col gap-[18px] md:flex-row md:items-center md:justify-between md:gap-[40px] md:flex-wrap">
     <div class="max-w-[540px]">
       <Kicker>{contact.kicker}</Kicker>
       <h2 class="font-serif text-ink font-normal text-[clamp(24px,2.5vw,30px)] leading-[1.2] tracking-[-0.4px] mt-3 mb-2">
@@ -23,19 +23,3 @@ const { lang, contact } = Astro.props;
     <Button variant="primary" href={`/${lang}/contact/`}>{contact.submit}</Button>
   </div>
 </section>
-
-<style>
-  .contact-strip { padding: 40px 20px; }
-  .contact-inner { display: flex; flex-direction: column; gap: 18px; }
-
-  @media (min-width: 768px) {
-    .contact-strip { padding: 64px 64px; }
-    .contact-inner {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-  }
-</style>
