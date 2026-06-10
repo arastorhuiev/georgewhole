@@ -1,0 +1,25 @@
+---
+interface Props {
+  size?: number;
+  initials?: string;
+  class?: string;
+}
+
+const {
+  size = 56,
+  initials = 'gw',
+  class: className,
+} = Astro.props;
+
+const fontSize = size * 0.42;
+// Only the dynamic dimensions stay inline; everything visual is in scoped CSS.
+// (Visibility/layout utilities must be applied to a WRAPPER, never here — an
+// inline `display` would override a Tailwind `hidden`. See HomeAuthorStripe.)
+---
+
+<div
+  class:list={['shrink-0 rounded-full bg-[linear-gradient(135deg,#d9cfb6_0%,#a89a7e_100%)] flex items-center justify-center text-[rgba(42,39,35,0.55)] font-serif tracking-[0.5px] italic border border-[var(--color-hair)]', className]}
+  style={`width:${size}px;height:${size}px;font-size:${fontSize}px;`}
+>
+  {initials}
+</div>

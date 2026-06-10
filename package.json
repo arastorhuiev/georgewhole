@@ -1,0 +1,37 @@
+{
+  "name": "georgewhole",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "vitest run",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "6.0.2",
+    "@astrojs/sitemap": "3.7.3",
+    "@astrojs/svelte": "8.1.2",
+    "@fontsource-variable/literata": "5.2.8",
+    "@fontsource-variable/source-sans-3": "5.2.9",
+    "@fontsource-variable/source-serif-4": "5.2.9",
+    "@fontsource/source-code-pro": "5.2.7",
+    "@tailwindcss/vite": "4.3.0",
+    "astro": "6.4.4",
+    "sharp": "0.34.5",
+    "svelte": "5.56.2",
+    "tailwindcss": "4.3.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.9",
+    "playwright-core": "^1.60.0",
+    "typescript": "6.0.3",
+    "vitest": "4.1.8"
+  }
+}

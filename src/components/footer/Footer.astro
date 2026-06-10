@@ -1,0 +1,79 @@
+---
+import LocaleSwitcher from '@components/common/LocaleSwitcher.astro';
+
+interface LocaleOption {
+  code: string;
+  name: string;
+  href?: string;
+}
+
+interface FooterStrings {
+  deskTitle: string;
+  deskBlurb: string;
+  /** Up to 3 columns: each entry is [heading, Array<[label, locale-less path]>] */
+  cols: Array<[string, Array<[string, string]>]>;
+  copy: string;
+}
+
+interface Props {
+  layout?: 'desktop' | 'mobile';
+  strings: FooterStrings;
+  locale: string;
+  locales?: LocaleOption[];
+}
+
+const { layout = 'desktop', strings: c, locale, locales } = Astro.props;
+const wide = layout === 'desktop';
+
+// Footer links carry locale-less paths; build the real, trailing-slashed href.
+const linkHref = (path: string) => `/${locale}/${path}/`.replace(/\/{2,}/g, '/');
+---
+
+{wide ? (
+  <footer class="border-t border-hair pt-12 px-[64px] pb-8 font-sans text-[13.5px] text-ink-soft bg-bg">
+    {/* Main grid: 2fr brand col + up to 3 link cols */}
+    <div class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-12">
+      <div>
+        <div class="font-serif text-[18px] text-ink mb-2">{c.deskTitle}</div>
+        <p class="m-0 leading-[1.65] max-w-[340px] text-ink-soft">{c.deskBlurb}</p>
+      </div>
+      {c.cols.slice(0, 3).map(([head, links]) => (
+        <div>
+          <div class="font-mono text-[11px] tracking-[1.4px] uppercase text-ink-muted mb-3">{head}</div>
+          {links.map(([label, path]) => (
+            <a href={linkHref(path)} class="block mb-2 text-ink text-[13.5px] no-underline hover:text-accent transition-colors">{label}</a>
+          ))}
+        </div>
+      ))}
+    </div>
+
+    {/* Bottom bar: copy / LocaleSwitcher */}
+    <div class="flex justify-between items-center mt-10 pt-5 border-t border-hair-soft font-mono text-[11px] text-ink-muted tracking-[0.5px] flex-wrap gap-4">
+      <div>{c.copy}</div>
+      <LocaleSwitcher current={locale} locales={locales} />
+    </div>
+  </footer>
+) : (
+  <footer class="border-t border-hair pt-9 px-5 pb-7 font-sans text-[13.5px] text-ink-soft bg-bg">
+    <div class="font-serif text-[19px] text-ink mb-2">{c.deskTitle}</div>
+    <p class="m-0 mb-[28px] leading-[1.6] text-ink-soft text-[14px]">{c.deskBlurb}</p>
+
+    {/* 2-col link groups */}
+    <div class="grid grid-cols-2 gap-[28px] mb-[28px]">
+      {c.cols.slice(0, 2).map(([head, links]) => (
+        <div>
+          <div class="font-mono text-[11px] tracking-[1.4px] uppercase text-ink-muted mb-3">{head}</div>
+          {links.map(([label, path]) => (
+            <a href={linkHref(path)} class="block mb-[10px] text-ink text-[14px] no-underline hover:text-accent transition-colors">{label}</a>
+          ))}
+        </div>
+      ))}
+    </div>
+
+    {/* Vertical bottom bar: LocaleSwitcher → copy */}
+    <div class="pt-[22px] border-t border-hair-soft flex flex-col gap-4">
+      <LocaleSwitcher current={locale} locales={locales} />
+      <div class="font-mono text-[10.5px] text-ink-muted tracking-[0.5px]">{c.copy}</div>
+    </div>
+  </footer>
+)}

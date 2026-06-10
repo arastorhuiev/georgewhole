@@ -1,0 +1,17 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import HomePage from '@/page-impl/HomePage.astro';
+import { useTranslations } from '@i18n';
+
+const lang = 'ru';
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  locale={lang}
+  path=""
+  title={`${t.brand} · ${t.brandTagline}`}
+  description={t.hero.sub}
+>
+  <HomePage lang={lang} />
+</BaseLayout>

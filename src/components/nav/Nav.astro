@@ -1,0 +1,66 @@
+---
+import LocaleSwitcher from '@components/common/LocaleSwitcher.astro';
+
+interface NavItem {
+  key: string;
+  label: string;
+  href: string;
+}
+
+interface LocaleOption {
+  code: string;
+  name: string;
+  href?: string;
+}
+
+interface Props {
+  brand: string;
+  brandHref?: string;
+  brandTagline?: string;
+  items: NavItem[];
+  active?: string;
+  locale: string;
+  locales?: LocaleOption[];
+  wide?: boolean;
+}
+
+const {
+  brand,
+  brandHref = '/',
+  brandTagline,
+  items,
+  active,
+  locale,
+  locales,
+  wide = true,
+} = Astro.props;
+---
+
+<header class:list={[
+  'border-b border-hair bg-bg flex items-center justify-between font-sans',
+  wide ? 'px-[64px] py-[20px]' : 'px-[32px] py-[18px]',
+]}>
+  <div class="flex items-baseline gap-[10px]">
+    <a href={brandHref} class="font-serif text-[22px] font-normal tracking-[-0.3px] text-ink no-underline leading-none hover:opacity-[0.68] transition-opacity">{brand}</a>
+    {brandTagline && (
+      <span class="font-mono text-[10px] text-ink-muted tracking-[0.6px] uppercase">{brandTagline}</span>
+    )}
+  </div>
+  <nav class="flex items-center gap-[28px]" aria-label="Main navigation">
+    {items.map((item) => (
+      <a
+        href={item.href}
+        class:list={[
+          'text-[14px] no-underline font-medium border-b pb-[2px] hover:text-accent hover:border-[rgba(63,107,94,0.5)] transition-colors',
+          item.key === active
+            ? 'text-accent border-accent'
+            : 'text-ink border-transparent',
+        ]}
+        aria-current={item.key === active ? 'page' : undefined}
+      >
+        {item.label}
+      </a>
+    ))}
+    <LocaleSwitcher current={locale} locales={locales} />
+  </nav>
+</header>

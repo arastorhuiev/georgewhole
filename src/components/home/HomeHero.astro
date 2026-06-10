@@ -1,0 +1,35 @@
+---
+// Home hero — kicker · headline · sub · two CTAs · atmospheric image.
+// All copy comes from the UI dictionary; no inline styles (Tailwind + scoped
+// CSS only). CTAs are <Button> (hover/active fixed in Button.astro).
+import Kicker from '@components/common/Kicker.astro';
+import Button from '@components/common/Button.astro';
+import AtmosImage from '@components/common/AtmosImage.astro';
+
+interface Props {
+  lang: string;
+  hero: { kicker: string; title: string; sub: string; primary: string; ghost: string };
+  atmosLabel: string;
+}
+
+const { lang, hero, atmosLabel } = Astro.props;
+---
+
+<section class="border-b border-hair pt-[40px] px-[20px] pb-[36px] flex flex-col gap-[28px] md:pt-[88px] md:px-[64px] md:pb-[72px] md:grid md:grid-cols-[1.5fr_1fr] md:gap-[80px] md:items-center">
+  <div class="order-1">
+    <Kicker>{hero.kicker}</Kicker>
+    <h1 class="font-serif text-ink font-normal text-[clamp(38px,6vw,70px)] leading-[1.04] tracking-[-1.2px] text-balance my-6">
+      {hero.title}
+    </h1>
+    <p class="font-serif text-ink-soft text-[clamp(17px,2vw,22px)] leading-[1.5] max-w-[560px] mt-0 mb-9">
+      {hero.sub}
+    </p>
+    <div class="flex flex-col gap-[10px] md:flex-row md:gap-[14px] md:items-center">
+      <Button variant="primary" size="lg" href={`/${lang}/books/`}>{hero.primary}</Button>
+      <Button variant="ghost" size="lg" href={`/${lang}/about/`}>{hero.ghost}</Button>
+    </div>
+  </div>
+  <div class="order-2 mt-[28px] md:mt-0">
+    <AtmosImage height={520} label={atmosLabel} tone="morning" />
+  </div>
+</section>

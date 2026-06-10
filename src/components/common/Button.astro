@@ -1,0 +1,103 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Icon from '@components/common/Icon.astro';
+
+// Polymorphic editorial button. Renders <a> when `href` is set, else <button>.
+// All native attributes (aria-*, target, rel, data-*, type, disabled, id…)
+// flow through ...rest. Pixel paddings/sizes are ported 1:1 from the mockup as
+// arbitrary Tailwind values; hover/active/disabled live in `enabled:`/`active:`
+// variants (previously the .btn-* hacks in global.css @layer components).
+
+type Variant = 'primary' | 'ghost' | 'text';
+type Size = 'sm' | 'md' | 'lg';
+
+interface OwnProps {
+  variant: Variant;
+  size?: Size;
+  /** Trailing arrow icon. Defaults: primary/text → true, ghost → false. */
+  icon?: boolean;
+  class?: string;
+}
+
+type Props = OwnProps &
+  (
+    | ({ href: string } & Omit<HTMLAttributes<'a'>, 'href'>)
+    | ({ href?: undefined } & HTMLAttributes<'button'>)
+  );
+
+const {
+  variant,
+  size = 'md',
+  href,
+  class: className,
+  icon = variant === 'ghost' ? false : true,
+  ...rest
+} = Astro.props;
+
+// Native <button> defaults to type="submit"; preserve the old explicit
+// type="button" default so a Button dropped into a form never auto-submits.
+const { type: nativeType, ...buttonRest } = rest as Record<string, unknown>;
+
+// ── Tailwind class maps (1:1 with the JSX pixel spec) ──────────────────────
+// Hover/active use BARE `hover:`/`active:` (not `enabled:`): `:enabled` only
+// matches form controls, never an <a>, so the old `enabled:` prefix silently
+// killed hover on every link-button. Disabled <button>s are neutralised via
+// `disabled:pointer-events-none` (no pointer events → no :hover). Transitions
+// for transform/box-shadow/colour are global (see global.css a,button rule).
+const base =
+  'inline-flex items-center font-sans font-medium no-underline cursor-pointer ' +
+  'disabled:cursor-default disabled:pointer-events-none disabled:opacity-60 ' +
+  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
+
+const variantClasses: Record<Variant, string> = {
+  primary:
+    'gap-[10px] rounded-pill border-none bg-accent text-accent-fg tracking-[0.1px] ' +
+    'hover:bg-accent-deep hover:-translate-y-px hover:shadow-[0_5px_14px_rgba(47,82,70,0.22)] ' +
+    'active:translate-y-0 active:shadow-[0_2px_6px_rgba(47,82,70,0.2)]',
+  ghost:
+    'gap-[10px] rounded-pill border border-hair bg-transparent text-ink ' +
+    'hover:border-accent hover:bg-[rgba(63,107,94,0.07)] hover:text-accent-deep ' +
+    'active:bg-[rgba(63,107,94,0.12)]',
+  text:
+    'group gap-[6px] text-accent border-b border-accent-hair pb-px ' +
+    'hover:text-accent-deep hover:border-accent',
+};
+
+const sizeClasses: Record<Variant, Record<Size, string>> = {
+  primary: {
+    sm: 'px-[14px] py-[8px] text-[13px]',
+    md: 'px-[18px] py-[11px] text-[14px]',
+    lg: 'px-[22px] py-[14px] text-[15px]',
+  },
+  ghost: {
+    sm: 'px-[14px] py-[8px] text-[13px]',
+    md: 'px-[18px] py-[10px] text-[14px]',
+    lg: 'px-[22px] py-[13px] text-[15px]',
+  },
+  // text: no block padding, fixed 14px (bottom border + 1px applied above)
+  text: { sm: 'text-[14px]', md: 'text-[14px]', lg: 'text-[14px]' },
+};
+
+const iconSize = variant === 'text' ? 12 : 13;
+// Only the text-link arrow nudges right on hover (parent is `group`).
+const iconClass =
+  variant === 'text'
+    ? 'transition-transform duration-200 ease-[cubic-bezier(0.2,0.7,0.3,1)] group-hover:translate-x-[3px]'
+    : undefined;
+
+const classes = [base, variantClasses[variant], sizeClasses[variant][size], className];
+---
+
+{
+  href ? (
+    <a href={href} class:list={classes} {...rest}>
+      <slot />
+      {icon && <Icon name="arrow" size={iconSize} class={iconClass} />}
+    </a>
+  ) : (
+    <button type={(nativeType as 'button' | 'submit' | 'reset') ?? 'button'} class:list={classes} {...buttonRest}>
+      <slot />
+      {icon && <Icon name="arrow" size={iconSize} class={iconClass} />}
+    </button>
+  )
+}

@@ -1,0 +1,32 @@
+---
+// Newsletter block — email capture + an atmospheric image (desktop only).
+import EmailCapture from '@components/forms/EmailCapture.astro';
+import AtmosImage from '@components/common/AtmosImage.astro';
+
+interface Props {
+  newsletter: { title: string; sub: string; placeholder: string; submit: string; note: string; sentTitle: string; sentBody: string };
+  atmosLabel: string;
+}
+
+const { newsletter, atmosLabel } = Astro.props;
+---
+
+<section class="py-[40px] px-[20px] md:py-[88px] md:px-[64px]">
+  <div class="flex flex-col gap-[32px] md:grid md:grid-cols-2 md:gap-[80px] md:items-center">
+    <EmailCapture
+      variant="newsletter"
+      strings={{
+        title: newsletter.title,
+        sub: newsletter.sub,
+        placeholder: newsletter.placeholder,
+        submit: newsletter.submit,
+        note: newsletter.note,
+        sentTitle: newsletter.sentTitle,
+        sentBody: newsletter.sentBody,
+      }}
+    />
+    <div class="hidden md:block">
+      <AtmosImage height={300} label={atmosLabel} tone="paper" accentTint />
+    </div>
+  </div>
+</section>

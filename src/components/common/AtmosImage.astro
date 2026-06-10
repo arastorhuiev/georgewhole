@@ -1,0 +1,71 @@
+---
+interface Props {
+  height?: number;
+  label?: string;
+  tone?: 'paper' | 'dusk' | 'morning' | 'deep';
+  radius?: number;
+  accentTint?: boolean;
+  class?: string;
+}
+
+const {
+  height = 360,
+  label = 'image',
+  tone = 'paper',
+  radius = 0,
+  accentTint = false,
+  class: className,
+} = Astro.props;
+
+const toneMap: Record<string, [string, string]> = {
+  paper:   ['#E8E0CE', '#D9CFB6'],
+  dusk:    ['#C9BDA4', '#A89A7E'],
+  morning: ['#EFE7D4', '#DFD2B4'],
+  deep:    ['#7A6A4E', '#574A36'],
+};
+
+const [c1, c2] = toneMap[tone] ?? toneMap.paper;
+
+const id = crypto.randomUUID().replace(/-/g, '');
+const gId = `g${id}`;
+const pId = `p${id}`;
+---
+
+<div
+  class:list={[className, 'relative w-full overflow-hidden bg-[var(--_bg)] h-[var(--_h)] rounded-[var(--_r)]']}
+  style={`--_h:${height}px;--_r:${radius}px;--_bg:${c1};`}
+>
+  <svg
+    width="100%"
+    height="100%"
+    viewBox="0 0 800 600"
+    preserveAspectRatio="xMidYMid slice"
+    class="block"
+  >
+    <defs>
+      <linearGradient id={gId} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color={c1} />
+        <stop offset="100%" stop-color={c2} />
+      </linearGradient>
+      <pattern
+        id={pId}
+        width="3"
+        height="3"
+        patternUnits="userSpaceOnUse"
+        patternTransform="rotate(28)"
+      >
+        <line x1="0" y1="0" x2="0" y2="3" stroke={c2} stroke-width="0.6" opacity="0.55" />
+      </pattern>
+    </defs>
+    <rect width="800" height="600" fill={`url(#${gId})`} />
+    <rect width="800" height="600" fill={`url(#${pId})`} />
+    {accentTint && (
+      <rect width="800" height="600" fill="var(--color-accent)" opacity="0.07" />
+    )}
+    <rect x="0" y="380" width="800" height="120" fill={c2} opacity="0.35" />
+    <rect x="0" y="500" width="800" height="100" fill={c2} opacity="0.55" />
+  </svg>
+  <div class="absolute left-[12px] bottom-[10px] font-mono text-[10px] tracking-[0.5px] uppercase text-[rgba(42,39,35,0.45)]">
+    {label}
+  </div>
+</div>

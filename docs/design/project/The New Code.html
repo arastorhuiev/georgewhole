@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>georgewhole · дизайн-исследование</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,600;1,400;1,600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    html, body { margin: 0; padding: 0; background: #f0eee9; }
+
+    /* ── Per-locale font logic ──────────────────────────────
+       Tokens (T.serif/sans/mono) resolve to these CSS variables, so a
+       single attribute — data-locale="xx" on any wrapper — swaps the
+       typeface for that subtree. Default (=:root) is the Cyrillic set
+       (the site ships in RU). All four families carry Latin + Cyrillic,
+       so every locale stays fully readable; the per-locale override is
+       purely an aesthetic per-script optimisation.
+       • ru / uk → Literata     (Cyrillic purpose-built, warm & bookish)
+       • en / es → Source Serif 4 (a touch tighter for Latin running text) */
+    :root {
+      --font-serif: "Literata", Georgia, "Times New Roman", "PT Serif", serif;
+      --font-sans:  "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, "Noto Sans", sans-serif;
+      --font-mono:  "Source Code Pro", ui-monospace, "SF Mono", "Menlo", Consolas, monospace;
+    }
+    [data-locale="ru"], [data-locale="uk"] {
+      --font-serif: "Literata", Georgia, "Times New Roman", serif;
+    }
+    [data-locale="en"], [data-locale="es"] {
+      --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    }
+
+    body { font-family: var(--font-sans); }
+
+    /* ── Delicate hover affordances (kept quiet) ───────────── */
+    a, button { transition: color .18s ease, background-color .18s ease, border-color .18s ease, transform .18s ease, box-shadow .18s ease; }
+    .artrow .artrow-t, .feat-t { transition: color .18s ease; }
+    .artrow .artrow-a, .feat-a { transition: transform .22s cubic-bezier(.2,.7,.3,1); }
+    .artrow:hover .artrow-t { color: #3F6B5E !important; }
+    .artrow:hover .artrow-a { transform: translateX(4px); }
+    .artrow:hover { background: rgba(63,107,94,0.025); }
+    .feat:hover .feat-t { color: #3F6B5E !important; }
+    .feat:hover .feat-a { transform: translateX(4px); }
+    .retailer:hover { border-color: #3F6B5E !important; transform: translateY(-1px); box-shadow: 0 2px 7px rgba(42,39,35,0.08); }
+    .topicchip:hover { border-color: #3F6B5E !important; }
+    .quizopt:hover { border-color: #3F6B5E !important; }
+    .tagchip:hover { border-color: #3F6B5E !important; color: #2A2723 !important; }
+    .reslink:hover { color: #3F6B5E !important; }
+    .elsewhere:hover { opacity: .65; }
+
+    /* ── Buttons ──────────────────────────────────────────── */
+    .btn-primary { cursor: pointer; }
+    .btn-primary:disabled { cursor: default; }
+    .btn-primary:not(:disabled):hover { background: #2F5246 !important; transform: translateY(-1px); box-shadow: 0 5px 14px rgba(47,82,70,0.22); }
+    .btn-primary:not(:disabled):active { transform: translateY(0); box-shadow: 0 2px 6px rgba(47,82,70,0.20); }
+    .btn-ghost { cursor: pointer; }
+    .btn-ghost:disabled { cursor: default; }
+    .btn-ghost:not(:disabled):hover { border-color: #3F6B5E !important; background: rgba(63,107,94,0.07) !important; color: #2F5246 !important; }
+    .btn-ghost:not(:disabled):active { background: rgba(63,107,94,0.12) !important; }
+
+    /* ── Text & nav links ─────────────────────────────────── */
+    .textlink { cursor: pointer; }
+    .textlink:hover { color: #2F5246 !important; border-bottom-color: #3F6B5E !important; }
+    .textlink:hover .artrow-a, .textlink:hover svg { transform: translateX(3px); }
+    .textlink svg { transition: transform .2s cubic-bezier(.2,.7,.3,1); }
+    .navlink { cursor: pointer; }
+    .navlink:hover { color: #3F6B5E !important; border-bottom-color: rgba(63,107,94,0.5) !important; }
+    .brandlink { cursor: pointer; }
+    .brandlink:hover { opacity: .68; }
+    .footerlink { cursor: pointer; }
+    .footerlink:hover { color: #3F6B5E !important; }
+
+    /* ── Locale options (desktop switcher) ────────────────── */
+    .localeopt { cursor: pointer; transition: color .16s ease; }
+    .localeopt:hover { color: #3F6B5E !important; }
+
+    /* ── Book shelf cards ─────────────────────────────────── */
+    .bookcover { transition: transform .24s cubic-bezier(.2,.7,.3,1), box-shadow .24s ease; }
+    .bookcard { cursor: pointer; }
+    .bookcard:hover .bookcover { transform: translateY(-5px) rotate(-0.6deg); box-shadow: 6px 12px 0 rgba(42,39,35,0.10), 0 6px 18px rgba(0,0,0,0.20) !important; }
+    .bookcard:hover .bookcard-t { color: #3F6B5E !important; }
+
+    /* ── Icon / pill buttons (mobile nav) ─────────────────── */
+    .iconbtn { cursor: pointer; }
+    .iconbtn:hover { border-color: #3F6B5E !important; color: #3F6B5E !important; }
+    .iconbtn.is-open { border-color: #3F6B5E !important; color: #3F6B5E !important; background: rgba(63,107,94,0.07) !important; }
+    .iconbtn .chev-i { transition: transform .2s ease; }
+    .iconbtn.is-open .chev-i { transform: rotate(180deg); }
+
+    /* ── Mobile menu rows ─────────────────────────────────── */
+    .menurow { cursor: pointer; transition: background .14s ease, color .14s ease; }
+    .menurow:hover { background: rgba(63,107,94,0.06) !important; color: #3F6B5E !important; }
+
+    /* ── Forms ────────────────────────────────────────────── */
+    input:focus, textarea:focus { border-color: #3F6B5E !important; box-shadow: 0 0 0 3px rgba(63,107,94,0.10); }
+    input, textarea { transition: border-color .16s ease, box-shadow .16s ease; }
+  </style>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" src="design-canvas.jsx"></script>
+  <script type="text/babel" src="tokens.jsx"></script>
+  <script type="text/babel" src="components.jsx"></script>
+  <script type="text/babel" src="ru-strings.jsx"></script>
+  <script type="text/babel" src="ru-strings-pages.jsx"></script>
+  <script type="text/babel" src="blocks-ru.jsx"></script>
+  <script type="text/babel" src="books-ru.jsx"></script>
+  <script type="text/babel" src="quiz-ru.jsx"></script>
+  <script type="text/babel" src="screen-home-ru.jsx"></script>
+  <script type="text/babel" src="screen-article-ru.jsx"></script>
+  <script type="text/babel" src="screen-about-ru.jsx"></script>
+  <script type="text/babel" src="screen-lists-ru.jsx"></script>
+  <script type="text/babel" src="screen-misc-ru.jsx"></script>
+  <script type="text/babel" src="screen-design-system.jsx"></script>
+  <script type="text/babel" src="app.jsx"></script>
+</body>
+</html>

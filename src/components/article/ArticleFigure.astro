@@ -1,0 +1,28 @@
+---
+import AtmosImage from '@components/common/AtmosImage.astro';
+
+interface Props {
+  tone?: 'paper' | 'dusk' | 'morning' | 'deep';
+  height?: number;
+  bleed?: boolean;
+  caption?: string;
+  credit?: string;
+}
+
+const {
+  tone = 'dusk',
+  height = 360,
+  bleed = false,
+  caption,
+  credit,
+} = Astro.props;
+---
+
+<figure class:list={['my-[40px] font-sans', bleed && '-mx-[64px]']}>
+  <AtmosImage height={height} label={credit} tone={tone} accentTint />
+  {caption && (
+    <figcaption class:list={['mt-[12px] text-[13px] text-ink-muted leading-[1.5]', bleed && 'px-[64px]']}>
+      <span class="italic font-serif text-[14.5px] text-ink-soft">{caption}</span>
+    </figcaption>
+  )}
+</figure>

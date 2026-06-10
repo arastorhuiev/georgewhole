@@ -1,0 +1,56 @@
+---
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Footer from '@components/footer/Footer.astro';
+import Quiz from '@components/quiz/Quiz.svelte';
+import { useTranslations } from '@i18n';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+import { articlesFor, slugOf } from '@lib/content';
+import { quizData } from '@quiz/data';
+
+interface Props {
+  lang: string;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang as any);
+const { questions, ui, archetypes: rawArchetypes } = await quizData(lang);
+const locales = buildLocaleSwitcherItems(lang as any, 'quiz');
+const navItems = [
+  { key: 'articles', label: t.nav.articles, href: `/${lang}/articles` },
+  { key: 'books', label: t.nav.books, href: `/${lang}/books` },
+  { key: 'about', label: t.nav.about, href: `/${lang}/about` },
+  { key: 'newsletter', label: t.nav.newsletter, href: `/${lang}/newsletter` },
+];
+
+// Resolve each archetype's recommended article transKeys → { title, href }.
+const articles = await articlesFor(lang as any);
+const byKey = new Map(articles.map((a) => [a.data.transKey, a]));
+const archetypes = rawArchetypes.map((a) => ({
+  title: a.title,
+  body: a.body,
+  recommended: a.recommended.flatMap((k) => {
+    const art = byKey.get(k);
+    return art
+      ? [{ title: art.data.title, href: `/${lang}/articles/${slugOf(art.id)}/` }]
+      : [];
+  }),
+}));
+---
+
+<div class="hidden md:block">
+  <Nav brand="georgewhole" brandHref={`/${lang}/`} brandTagline={t.brandTagline} items={navItems} locale={lang} locales={locales} wide />
+</div>
+<div class="md:hidden">
+  <MobileNav brand="georgewhole" brandHref={`/${lang}/`} navItems={navItems} locales={locales} currentLocale={lang} labels={t.mobileNav} />
+</div>
+
+<main id="main" class="mx-auto max-w-[760px] px-5 py-14 md:py-20">
+  <Quiz client:visible questions={questions} archetypes={archetypes} ui={ui} />
+</main>
+
+<div class="hidden md:block">
+  <Footer strings={t.footer} locale={lang} locales={locales} layout="desktop" />
+</div>
+<div class="md:hidden">
+  <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
+</div>

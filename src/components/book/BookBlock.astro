@@ -1,0 +1,107 @@
+---
+// BookBlock.astro — book row: cover | text with CTA and retailer links.
+// Ported from docs/design/project/blocks-ru.jsx → BookBlockRU.
+
+import BookCover from '@components/book/BookCover.astro';
+import RetailerLinks from '@components/book/RetailerLinks.astro';
+import Kicker from '@components/common/Kicker.astro';
+import Button from '@components/common/Button.astro';
+
+interface CoverProps {
+  title: string;
+  num?: string;
+  bg?: string;
+  fg?: string;
+  rule?: string;
+  tagline?: string;
+}
+
+interface Props {
+  kicker: string;
+  title: string;
+  subtitle?: string;
+  body?: string;
+  cta: string;
+  ctaHref?: string;
+  retailers?: Array<[string, string, string?]>;
+  retailerStatus?: string;
+  retailerLabel?: string;
+  compact?: boolean;
+  cover?: CoverProps;
+}
+
+const {
+  kicker,
+  title,
+  subtitle,
+  body,
+  cta,
+  ctaHref,
+  retailers,
+  retailerStatus,
+  retailerLabel,
+  compact = false,
+  cover,
+} = Astro.props;
+
+const coverW = compact ? 120 : 180;
+const coverH = compact ? 172 : 260;
+---
+
+<article
+  class:list={[
+    'font-sans grid items-start',
+    compact
+      ? 'grid-cols-[120px_1fr] gap-5'
+      : 'grid-cols-[180px_1fr] gap-8',
+  ]}
+>
+  <BookCover
+    title={cover?.title ?? title}
+    num={cover?.num}
+    w={coverW}
+    h={coverH}
+    bg={cover?.bg}
+    fg={cover?.fg}
+    rule={cover?.rule}
+    tagline={cover?.tagline}
+  />
+  <div>
+    <Kicker color="var(--color-ink-muted)">{kicker}</Kicker>
+    <h3
+      class:list={[
+        'font-serif text-ink font-normal leading-[1.2] tracking-[-0.3px] mt-2 mb-[6px]',
+        compact ? 'text-[24px]' : 'text-[28px]',
+      ]}
+    >
+      {title}
+    </h3>
+    {subtitle && (
+      <p
+        class:list={[
+          'font-serif text-ink-soft italic leading-[1.5] mt-0 mb-[14px]',
+          compact ? 'text-[15px]' : 'text-[16px]',
+        ]}
+      >
+        {subtitle}
+      </p>
+    )}
+    {!compact && body && (
+      <p class="text-ink-soft text-[14.5px] leading-[1.65] mt-0 mb-[22px] max-w-[480px]">
+        {body}
+      </p>
+    )}
+    {ctaHref
+      ? <Button variant="primary" size="sm" href={ctaHref}>{cta}</Button>
+      : <Button variant="primary" size="sm">{cta}</Button>}
+    {retailers && retailers.length > 0 && (
+      <div class="mt-[22px]">
+        <RetailerLinks
+          items={retailers}
+          status={retailerStatus}
+          label={retailerLabel}
+        />
+      </div>
+    )}
+  </div>
+</article>

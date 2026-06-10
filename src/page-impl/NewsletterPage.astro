@@ -1,0 +1,99 @@
+---
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Kicker from '@components/common/Kicker.astro';
+import EmailCapture from '@components/forms/EmailCapture.astro';
+import Footer from '@components/footer/Footer.astro';
+import { useTranslations } from '@i18n';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang as any);
+const locales = buildLocaleSwitcherItems(lang as any, 'newsletter');
+
+const navItems = [
+  { key: 'articles',   label: t.nav.articles,   href: `/${lang}/articles`   },
+  { key: 'books',      label: t.nav.books,       href: `/${lang}/books`      },
+  { key: 'about',      label: t.nav.about,       href: `/${lang}/about`      },
+  { key: 'newsletter', label: t.nav.newsletter,  href: `/${lang}/newsletter` },
+];
+
+const n = t.newsletterPage;
+---
+
+  {/* Desktop nav */}
+  <div class="hidden md:block">
+    <Nav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      brandTagline={t.brandTagline}
+      items={navItems}
+      active="newsletter"
+      locale={lang}
+      locales={locales}
+      wide
+    />
+  </div>
+  {/* Mobile nav */}
+  <div class="block md:hidden">
+    <MobileNav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      navItems={navItems}
+      locales={locales}
+      currentLocale={lang}
+      labels={t.mobileNav}
+    />
+  </div>
+
+  <main id="main">
+    {/* ── Breadcrumb ── */}
+    <nav
+      class="flex items-center gap-[8px] px-[20px] py-[12px] md:px-[64px] md:py-[14px] font-mono text-[11px] tracking-[1px] uppercase text-[var(--color-ink-muted)] border-b border-[var(--color-hair)]"
+      aria-label="Breadcrumb"
+    >
+      <a href={`/${lang}/`} class="text-[var(--color-ink-muted)] no-underline transition-colors hover:text-ink">{n.crumb[0]}</a>
+      <span class="text-[var(--color-hair)]" aria-hidden="true">/</span>
+      <span class="text-ink-soft" aria-current="page">{n.crumb[1]}</span>
+    </nav>
+
+    {/* ── Page header ── */}
+    <header class="pt-[36px] px-[20px] pb-[32px] md:pt-[64px] md:px-[64px] md:pb-[56px] border-b border-[var(--color-hair)]">
+      <Kicker>{n.kicker}</Kicker>
+      <h1 class="font-serif text-ink text-[32px] leading-[1.1] font-normal tracking-[-0.5px] mt-[14px] mb-[16px] text-balance md:text-[48px] md:leading-[1.08] md:mt-[16px] md:mb-[20px] md:tracking-[-0.8px]">{n.title}</h1>
+      <p class="font-serif text-ink-soft text-[17px] leading-[1.55] m-0 italic md:text-[20px] md:max-w-[560px]">{n.sub}</p>
+    </header>
+
+    {/* ── Two-col: EmailCapture | points — desktop; stacked on mobile ── */}
+    <section class="pt-[32px] px-[20px] pb-[48px] grid grid-cols-1 gap-[32px] md:pt-[64px] md:px-[64px] md:pb-[80px] md:grid-cols-[1.1fr_1fr] md:gap-[72px] md:items-start">
+      {/* Email capture — left on desktop, top on mobile */}
+      <div class="bg-[var(--color-surface-soft)] border border-[var(--color-hair)] p-[28px_22px] md:p-[40px_44px]">
+        <EmailCapture
+          variant="newsletter"
+          bare
+          strings={t.newsletter}
+        />
+      </div>
+
+      {/* 3 points — right on desktop, below on mobile */}
+      <div class="flex flex-col gap-[18px] md:gap-[24px]">
+        {n.points.map(([head, body]) => (
+          <div class="pt-[16px] border-t-2 border-accent">
+            <div class="font-serif text-ink text-[17px] tracking-[-0.2px] mb-[5px] md:text-[19px]">{head}</div>
+            <p class="font-sans text-ink-soft text-[14px] leading-[1.55] m-0">{body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <div class="hidden md:block">
+    <Footer strings={t.footer} locale={lang} locales={locales} layout="desktop" />
+  </div>
+  <div class="block md:hidden">
+    <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
+  </div>

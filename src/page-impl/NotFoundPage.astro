@@ -1,0 +1,105 @@
+---
+import { useTranslations } from '@i18n/index';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Footer from '@components/footer/Footer.astro';
+import Button from '@components/common/Button.astro';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang as any);
+
+const locales = buildLocaleSwitcherItems(lang as any, '');
+
+const navItems = [
+  { key: 'articles',   label: t.nav.articles,   href: `/${lang}/articles`   },
+  { key: 'books',      label: t.nav.books,      href: `/${lang}/books`      },
+  { key: 'about',      label: t.nav.about,      href: `/${lang}/about`      },
+  { key: 'newsletter', label: t.nav.newsletter, href: `/${lang}/newsletter` },
+];
+---
+
+<div class="bg-bg min-h-full box-border">
+
+  <!-- ── NAV ─────────────────────────────────────────────────── -->
+  <div class="hidden md:block">
+    <Nav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      brandTagline={t.brandTagline}
+      items={navItems}
+      active=""
+      locale={lang}
+      locales={locales}
+      wide
+    />
+  </div>
+  <div class="md:hidden">
+    <MobileNav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      navItems={navItems}
+      locales={locales}
+      currentLocale={lang}
+      labels={t.mobileNav}
+    />
+  </div>
+
+  <!-- ── 404 CONTENT ───────────────────────────────────────────── -->
+  <section
+    class="py-[72px] px-[24px] text-center flex flex-col items-center border-b border-[var(--color-hair)] md:py-[120px] md:px-[64px]"
+  >
+    <!-- Typographic 404 mark -->
+    <div class="relative mb-[28px]">
+      <div
+        class="font-serif text-ink text-[92px] leading-[1] tracking-[-4px] font-normal md:text-[140px]"
+      >
+        {t.notFound.code}
+      </div>
+      <!-- accent underline rule -->
+      <div
+        class="absolute left-1/2 -translate-x-1/2 h-[2px] bg-accent w-[48px] bottom-[-2px] md:w-[64px] md:bottom-[-6px]"
+        aria-hidden="true"
+      />
+    </div>
+
+    <h1
+      class="font-serif text-ink text-[clamp(28px,4vw,38px)] font-normal tracking-[-0.4px] m-0 mb-[14px]"
+    >
+      {t.notFound.title}
+    </h1>
+
+    <p
+      class="font-serif text-ink-soft italic text-[clamp(16px,1.8vw,19px)] leading-[1.55] m-0 mb-[32px] max-w-[420px]"
+    >
+      {t.notFound.sub}
+    </p>
+
+    <!-- CTAs: primary home + 2 ghost -->
+    <div class="flex flex-col items-center gap-[12px] flex-wrap justify-center md:flex-row">
+      <Button variant="primary" href={`/${lang}/`}>
+        {t.notFound.ctas[0]}
+      </Button>
+      <Button variant="ghost" href={`/${lang}/articles/`}>
+        {t.notFound.ctas[1]}
+      </Button>
+      <Button variant="ghost" href={`/${lang}/quiz/`}>
+        {t.notFound.ctas[2]}
+      </Button>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────── -->
+  <div class="hidden md:block">
+    <Footer strings={t.footer} locale={lang} locales={locales} />
+  </div>
+  <div class="md:hidden">
+    <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
+  </div>
+
+</div>

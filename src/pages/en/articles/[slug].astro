@@ -1,0 +1,47 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ArticlePage from '@/page-impl/ArticlePage.astro';
+import { articlesFor, slugOf } from '@lib/content';
+import { absUrl } from '@lib/seo';
+import { articleNode, breadcrumb } from '@lib/schema';
+import { useTranslations } from '@i18n';
+
+export async function getStaticPaths() {
+  const entries = await articlesFor('en');
+  return entries.map((entry) => ({
+    params: { slug: slugOf(entry.id) },
+    props: { entry },
+  }));
+}
+
+const lang = 'en';
+const t = useTranslations(lang);
+const { entry } = Astro.props;
+const slug = slugOf(entry.id);
+const url = absUrl(lang, `articles/${slug}`);
+const siteUrl = (Astro.site?.href ?? 'https://georgewhole.com/').replace(/\/$/, '');
+
+const jsonLd = [
+  articleNode(siteUrl, url, lang, {
+    title: entry.data.title,
+    summary: entry.data.summary,
+    date: entry.data.date,
+    updated: entry.data.updated,
+  }),
+  breadcrumb([
+    { name: t.brand, url: absUrl(lang, '') },
+    { name: t.nav.articles, url: absUrl(lang, 'articles') },
+    { name: entry.data.title, url },
+  ]),
+];
+---
+
+<BaseLayout
+  locale={lang}
+  path={`articles/${slug}`}
+  title={`${entry.data.title} · georgewhole`}
+  description={entry.data.summary}
+  jsonLd={jsonLd}
+>
+  <ArticlePage lang={lang} entry={entry} />
+</BaseLayout>

@@ -1,0 +1,214 @@
+{
+  "old-code/en": {
+    "questions": [
+      { "text": "When you ate something you had not planned to, the loudest voice in your head is…", "options": ["«I'll work it off later.»", "«What is wrong with me.»", "«I was tired and I needed that.»", "«I don't actually have a rule about this.»"] },
+      { "text": "A \"good day\" with food is a day when you…", "options": ["Ate very little.", "Kept everything under control.", "Just didn't think about it.", "Ate and got on with life."] },
+      { "text": "You most often meet hunger as…", "options": ["A weakness to push through.", "A signal that something is wrong.", "Ordinary information from the body.", "A reason to eat."] },
+      { "text": "The phrase \"I have no discipline\" feels to you like…", "options": ["Pure truth.", "Something I've been telling myself for years.", "An old rule — not necessarily a fact.", "Not about me."] },
+      { "text": "Fullness feels like…", "options": ["Failure.", "Something to feel ashamed of later.", "A neutral state.", "Normal and calm."] },
+      { "text": "You think about your body most often…", "options": ["As a problem I am solving.", "As something that lets me down.", "Less than I used to.", "As the home I live in."] },
+      { "text": "These rules came to you…", "options": ["From family, at the table.", "From the air — I don't know where.", "I only started noticing them recently.", "I've mostly set them aside."] },
+      { "text": "When discomfort after eating shows up, you…", "options": ["Immediately plan to \"fix\" it.", "Criticise myself.", "Notice it and wait for it to pass.", "Just keep going."] },
+      { "text": "\"Earning\" the next meal is for you…", "options": ["A familiar logic.", "Something I argue with.", "An old rule that has gotten quieter.", "Someone else's phrase."] },
+      { "text": "Someone eats freely next to you. You feel…", "options": ["Envy and the urge to control.", "Anxiety.", "Curiosity.", "Calm."] },
+      { "text": "Most often what you want is…", "options": ["A smaller body.", "For the noise in your head to go quiet.", "To stop arguing with the plate.", "Nothing in particular."] },
+      { "text": "What do you need most right now?", "options": ["A plan.", "For people to stop shaming me.", "Company and quiet.", "I'm just reading out of curiosity."] }
+    ],
+    "ui": {
+      "kicker": "Quiz · no sign-up",
+      "title": "What is your Old Code?",
+      "sub": "Twelve calm questions to hear the rules we absorbed and stopped noticing. No email needed — you'll see your result right away.",
+      "startCta": "Take the quiz",
+      "optionLetters": "ABCD",
+      "meta": ["12 questions", "≈ 4 minutes", "No sign-up"],
+      "howLabel": "How it works",
+      "how": [
+        ["01", "Answer", "Twelve questions, one at a time. You can go back and change an answer."],
+        ["02", "See your result", "Right away, no email. A short description of your \"code\" and where to start reading."],
+        ["03", "Optional — a letter", "If you want, leave your email and a letter will arrive once a week. It is not required."]
+      ],
+      "progressLabel": "Question",
+      "of": "of",
+      "back": "Back",
+      "next": "Next",
+      "finish": "See my result",
+      "timerNote": "No time limit. The timer is just a reference.",
+      "resultKicker": "Your result",
+      "resultStart": "Start with these:",
+      "resultRetake": "Retake the quiz",
+      "resultMailKicker": "Optional",
+      "resultMailTitle": "Get a letter once a week?",
+      "resultMailSub": "Email is only for the letter. Your result is already yours without it. Unsubscribe in one click.",
+      "resultMailCta": "Subscribe",
+      "resultMailPh": "your@email",
+      "resultMailSkip": "The result is enough, thank you",
+      "resultMailSentTitle": "Thank you for subscribing.",
+      "resultMailSentSub": "The first letter arrives this Sunday morning."
+    },
+    "archetypes": [
+      { "key": "earner", "title": "It looks like your Old Code is the \"Earner.\"", "body": "The loudest rule is: food and rest must be earned. This is not about discipline — it is inherited accounting. The good news is that it can be slowly closed.", "recommended": ["sila-voli", "horoshiy-den", "desyat-let"] },
+      { "key": "critic", "title": "It looks like your Old Code is the \"Self-Critic.\"", "body": "[DRAFT — copy pending author & clinical review.] The loudest voice is shame: \"what is wrong with me.\" That is not the truth about you — it is an old rule you can start to hear from the outside.", "recommended": ["otkuda-kod", "horoshiy-den"], "placeholder": true },
+      { "key": "tired", "title": "It looks like your Old Code is the \"Tired One.\"", "body": "[DRAFT — copy pending author & clinical review.] You are already tired of arguing with the plate and have started to notice the rules from the outside. That is the beginning of a quieter code.", "recommended": ["desyat-let", "god-kogda-stalo-tishe"], "placeholder": true },
+      { "key": "quieter", "title": "It looks like your Old Code is already quieter.", "body": "[DRAFT — copy pending author & clinical review.] Many of the old rules are ones you have already set aside. You may be reading out of curiosity rather than pain — and that too is a place from which a new code can be written.", "recommended": ["god-kogda-stalo-tishe", "tarelka-ottsa"], "placeholder": true }
+    ]
+  },
+  "old-code/uk": {
+    "questions": [
+      { "text": "Коли ви з'їли те, чого не планували, найгучніший голос у голові — це…", "options": ["«Потім відпрацюю».", "«Що зі мною не так».", "«Я втомився, і мені це було потрібно».", "«У мене взагалі немає такого правила»."] },
+      { "text": "«Хороший день» з їжею — це день, коли ви…", "options": ["З'їли мало.", "Тримали все під контролем.", "Просто не думали про це.", "Поїли і зайнялися життям."] },
+      { "text": "Голод ви найчастіше сприймаєте як…", "options": ["Слабкість, яку треба перетерпіти.", "Сигнал, що щось не так.", "Звичайну інформацію від тіла.", "Привід поїсти."] },
+      { "text": "Фраза «у мене немає дисципліни» для вас…", "options": ["Чиста правда.", "Те, що я кажу собі роками.", "Старе правило, не факт.", "Не про мене."] },
+      { "text": "Ситість відчувається як…", "options": ["Провал.", "Те, за що потім соромно.", "Нейтральний стан.", "Нормально і спокійно."] },
+      { "text": "Про своє тіло ви думаєте найчастіше…", "options": ["Як про проблему, яку вирішую.", "Як про те, що підводить.", "Рідше, ніж раніше.", "Як про дім, у якому живу."] },
+      { "text": "Ці правила дісталися вам…", "options": ["Від сім'ї, за столом.", "З повітря, не пам'ятаю звідки.", "Я почав їх помічати нещодавно.", "Я їх майже відклав."] },
+      { "text": "Коли дискомфорт після їжі з'являється, ви…", "options": ["Одразу планую «виправити».", "Лаю себе.", "Помічаю і чекаю, поки мине.", "Просто живу далі."] },
+      { "text": "«Заслужити» наступний прийом їжі — це для вас…", "options": ["Звична логіка.", "Те, з чим сперечаюся.", "Старе правило, яке тихіше.", "Чужа фраза."] },
+      { "text": "Хтось їсть вільно поруч з вами. Ви відчуваєте…", "options": ["Заздрість і контроль.", "Тривогу.", "Цікавість.", "Спокій."] },
+      { "text": "Найчастіше ви хочете…", "options": ["Менше тіло.", "Щоб стало тихо в голові.", "Перестати сперечатися з тарілкою.", "Нічого особливого."] },
+      { "text": "Що вам зараз потрібніше за все?", "options": ["План.", "Щоб перестали соромити.", "Компанія і тиша.", "Я просто читаю з інтересу."] }
+    ],
+    "ui": {
+      "kicker": "Тест · без реєстрації",
+      "title": "Який у вас Старий Код?",
+      "sub": "Дванадцять спокійних запитань, щоб почути правила, які ми засвоїли і вже не помічаємо. Email не потрібен — результат ви побачите одразу.",
+      "startCta": "Почати тест",
+      "optionLetters": "АБВГ",
+      "meta": ["12 запитань", "≈ 4 хвилини", "Без реєстрації"],
+      "howLabel": "Як це працює",
+      "how": [
+        ["01", "Відповідаєте", "Дванадцять запитань, по одному за раз. Можна повернутися і змінити відповідь."],
+        ["02", "Бачите результат", "Одразу, без email. Короткий опис вашого «коду» і з чого почати читати."],
+        ["03", "За бажанням — лист", "Якщо хочете, залиште пошту, і раз на тиждень прийде лист. Це не обов'язково."]
+      ],
+      "progressLabel": "Запитання",
+      "of": "з",
+      "back": "Назад",
+      "next": "Далі",
+      "finish": "Дізнатися результат",
+      "timerNote": "Часу немає. Таймер — просто орієнтир.",
+      "resultKicker": "Ваш результат",
+      "resultStart": "З цих текстів варто почати:",
+      "resultRetake": "Пройти знову",
+      "resultMailKicker": "За бажанням",
+      "resultMailTitle": "Надсилати лист раз на тиждень?",
+      "resultMailSub": "Email лише для листа. Без нього результат вже у вас. Відписатися — в один клік.",
+      "resultMailCta": "Підписатися",
+      "resultMailPh": "ваш@email",
+      "resultMailSkip": "Достатньо результату, дякую",
+      "resultMailSentTitle": "Дякуємо, що підписалися.",
+      "resultMailSentSub": "Перший лист прийде найближчої неділі вранці."
+    },
+    "archetypes": [
+      { "key": "earner", "title": "Схоже, ваш Старий Код — «Той, хто заслуговує».", "body": "Найгучніше звучить правило: їжу і спокій треба заробити. Це не про дисципліну — це успадкована бухгалтерія. Хороша новина в тому, що її можна повільно закрити.", "recommended": ["sila-voli", "horoshiy-den", "desyat-let"] },
+      { "key": "critic", "title": "Схоже, ваш Старий Код — «Самокритик».", "body": "[ЧЕРНЕТКА — текст потребує авторського і клінічного доопрацювання.] Найгучніше звучить голос сорому: «що зі мною не так». Це не правда про вас — це старе правило, яке можна починати чути збоку.", "recommended": ["otkuda-kod", "horoshiy-den"], "placeholder": true },
+      { "key": "tired", "title": "Схоже, ваш Старий Код — «Втомлений».", "body": "[ЧЕРНЕТКА — текст потребує авторського і клінічного доопрацювання.] Ви вже втомилися сперечатися з тарілкою і почали помічати правила збоку. Це початок тихішого коду.", "recommended": ["desyat-let", "god-kogda-stalo-tishe"], "placeholder": true },
+      { "key": "quieter", "title": "Схоже, ваш Старий Код вже тихіше.", "body": "[ЧЕРНЕТКА — текст потребує авторського і клінічного доопрацювання.] Багато старих правил ви вже відклали. Можливо, ви читаєте з інтересу, а не з болю — і це теж місце, з якого можна писати новий код.", "recommended": ["god-kogda-stalo-tishe", "tarelka-ottsa"], "placeholder": true }
+    ]
+  },
+  "old-code/es": {
+    "questions": [
+      { "text": "Cuando comiste algo que no habías planeado, la voz más ruidosa en tu cabeza es…", "options": ["«Lo compensaré después.»", "«Qué me pasa.»", "«Estaba cansado y lo necesitaba.»", "«En realidad no tengo una regla para esto.»"] },
+      { "text": "Un «buen día» con la comida es un día en que…", "options": ["Comiste muy poco.", "Mantuviste todo bajo control.", "Simplemente no pensaste en ello.", "Comiste y seguiste con tu vida."] },
+      { "text": "Con mayor frecuencia, te encuentras con el hambre como…", "options": ["Una debilidad que superar.", "Una señal de que algo está mal.", "Información ordinaria del cuerpo.", "Una razón para comer."] },
+      { "text": "La frase «no tengo disciplina» te parece…", "options": ["La pura verdad.", "Algo que me llevo diciendo durante años.", "Una regla antigua, no necesariamente un hecho.", "No va conmigo."] },
+      { "text": "La saciedad se siente como…", "options": ["Un fracaso.", "Algo de lo que avergonzarse después.", "Un estado neutro.", "Normal y tranquilo."] },
+      { "text": "Piensas en tu cuerpo con mayor frecuencia…", "options": ["Como un problema que estoy resolviendo.", "Como algo que me falla.", "Menos que antes.", "Como el hogar en el que vivo."] },
+      { "text": "Estas reglas te llegaron…", "options": ["De la familia, en la mesa.", "Del aire — no sé de dónde.", "Solo empecé a notarlas hace poco.", "Las he dejado casi de lado."] },
+      { "text": "Cuando aparece el malestar después de comer, tú…", "options": ["Inmediatamente planeo «arreglarlo».», «Me critico a mí mismo.", "Lo noto y espero a que pase.", "Sigo adelante."] },
+      { "text": "«Ganarse» la siguiente comida es para ti…", "options": ["Una lógica familiar.", "Algo con lo que discuto.", "Una regla antigua que se ha silenciado.", "La frase de otro."] },
+      { "text": "Alguien come libremente a tu lado. Sientes…", "options": ["Envidia y el impulso de controlar.", "Ansiedad.", "Curiosidad.", "Calma."] },
+      { "text": "Lo que más sueles querer es…", "options": ["Un cuerpo más pequeño.", "Que el ruido en tu cabeza se calle.", "Dejar de discutir con el plato.", "Nada en particular."] },
+      { "text": "¿Qué necesitas más ahora mismo?", "options": ["Un plan.", "Que la gente deje de avergonzarme.", "Compañía y silencio.", "Solo estoy leyendo por curiosidad."] }
+    ],
+    "ui": {
+      "kicker": "Cuestionario · sin registro",
+      "title": "¿Cuál es tu Código Antiguo?",
+      "sub": "Doce preguntas tranquilas para escuchar las reglas que absorbimos y dejamos de notar. No necesitas correo electrónico — verás tu resultado de inmediato.",
+      "startCta": "Hacer el cuestionario",
+      "optionLetters": "ABCD",
+      "meta": ["12 preguntas", "≈ 4 minutos", "Sin registro"],
+      "howLabel": "Cómo funciona",
+      "how": [
+        ["01", "Responde", "Doce preguntas, una a la vez. Puedes volver y cambiar una respuesta."],
+        ["02", "Ve tu resultado", "De inmediato, sin correo. Una breve descripción de tu «código» y por dónde empezar a leer."],
+        ["03", "Opcional — una carta", "Si quieres, deja tu correo y llegará una carta una vez a la semana. No es obligatorio."]
+      ],
+      "progressLabel": "Pregunta",
+      "of": "de",
+      "back": "Atrás",
+      "next": "Siguiente",
+      "finish": "Ver mi resultado",
+      "timerNote": "Sin límite de tiempo. El temporizador es solo una referencia.",
+      "resultKicker": "Tu resultado",
+      "resultStart": "Empieza por aquí:",
+      "resultRetake": "Volver a hacer el cuestionario",
+      "resultMailKicker": "Opcional",
+      "resultMailTitle": "¿Recibir una carta una vez a la semana?",
+      "resultMailSub": "El correo es solo para la carta. Tu resultado ya es tuyo sin él. Cancela la suscripción con un clic.",
+      "resultMailCta": "Suscribirse",
+      "resultMailPh": "tu@correo",
+      "resultMailSkip": "El resultado es suficiente, gracias",
+      "resultMailSentTitle": "Gracias por suscribirte.",
+      "resultMailSentSub": "La primera carta llega este domingo por la mañana."
+    },
+    "archetypes": [
+      { "key": "earner", "title": "Parece que tu Código Antiguo es el «Que se lo gana».", "body": "La regla más ruidosa es: la comida y el descanso deben ganarse. No se trata de disciplina — es una contabilidad heredada. La buena noticia es que se puede cerrar poco a poco.", "recommended": ["sila-voli", "horoshiy-den", "desyat-let"] },
+      { "key": "critic", "title": "Parece que tu Código Antiguo es el «Autocrítico».", "body": "[BORRADOR — texto pendiente de revisión de autor y clínica.] La voz más ruidosa es la vergüenza: «qué me pasa». Eso no es la verdad sobre ti — es una regla antigua que puedes empezar a escuchar desde fuera.", "recommended": ["otkuda-kod", "horoshiy-den"], "placeholder": true },
+      { "key": "tired", "title": "Parece que tu Código Antiguo es el «Cansado».", "body": "[BORRADOR — texto pendiente de revisión de autor y clínica.] Ya estás cansado de discutir con el plato y has empezado a notar las reglas desde fuera. Ese es el principio de un código más silencioso.", "recommended": ["desyat-let", "god-kogda-stalo-tishe"], "placeholder": true },
+      { "key": "quieter", "title": "Parece que tu Código Antiguo ya está más silencioso.", "body": "[BORRADOR — texto pendiente de revisión de autor y clínica.] Muchas de las reglas antiguas ya las has dejado de lado. Puede que estés leyendo por curiosidad más que por dolor — y ese también es un lugar desde el que se puede escribir un nuevo código.", "recommended": ["god-kogda-stalo-tishe", "tarelka-ottsa"], "placeholder": true }
+    ]
+  },
+  "old-code/ru": {
+    "questions": [
+      { "text": "Когда вы съели то, что не планировали, самый громкий голос в голове — это…", "options": ["«Потом отработаю».", "«Что со мной не так».", "«Я устал, и мне это было нужно».", "«У меня вообще-то нет такого правила»."] },
+      { "text": "«Хороший день» с едой — это день, когда вы…", "options": ["Съели мало.", "Всё держали под контролем.", "Просто не думали об этом.", "Поели и занялись жизнью."] },
+      { "text": "Голод вы чаще встречаете как…", "options": ["Слабость, которую надо перетерпеть.", "Сигнал, что что-то не так.", "Обычную информацию от тела.", "Повод поесть."] },
+      { "text": "Фраза «у меня нет дисциплины» для вас…", "options": ["Чистая правда.", "То, что я говорю себе годами.", "Старое правило, не факт.", "Не про меня."] },
+      { "text": "Сытость ощущается как…", "options": ["Провал.", "То, за что потом стыдно.", "Нейтральное состояние.", "Нормально и спокойно."] },
+      { "text": "О своём теле вы думаете чаще всего…", "options": ["Как о проблеме, которую решаю.", "Как о том, что подводит.", "Реже, чем раньше.", "Как о доме, в котором живу."] },
+      { "text": "Эти правила достались вам…", "options": ["От семьи, за столом.", "Из воздуха, не помню откуда.", "Я начал их замечать недавно.", "Я их почти отложил."] },
+      { "text": "Когда дискомфорт после еды приходит, вы…", "options": ["Сразу планирую «исправить».", "Ругаю себя.", "Замечаю и жду, пока пройдёт.", "Просто живу дальше."] },
+      { "text": "«Заслужить» следующий приём пищи — это для вас…", "options": ["Привычная логика.", "То, с чем спорю.", "Старое правило, которое тише.", "Чужая фраза."] },
+      { "text": "Кто-то ест свободно рядом с вами. Вы чувствуете…", "options": ["Зависть и контроль.", "Тревогу.", "Любопытство.", "Спокойствие."] },
+      { "text": "Чаще всего вы хотите…", "options": ["Меньшее тело.", "Чтобы стало тихо в голове.", "Перестать спорить с тарелкой.", "Ничего особенного."] },
+      { "text": "Что вам сейчас нужнее всего?", "options": ["План.", "Чтобы перестали стыдить.", "Компания и тишина.", "Я просто читаю из интереса."] }
+    ],
+    "ui": {
+      "kicker": "Тест · без регистрации",
+      "title": "Какой у вас Старый Код?",
+      "sub": "Двенадцать спокойных вопросов, чтобы расслышать правила, которые мы усвоили и больше не замечаем. Email не нужен — результат вы увидите сразу.",
+      "startCta": "Начать тест",
+      "optionLetters": "АБВГ",
+      "meta": ["12 вопросов", "≈ 4 минуты", "Без регистрации"],
+      "howLabel": "Как это работает",
+      "how": [
+        ["01", "Отвечаете", "Двенадцать вопросов, по одному за раз. Можно вернуться и поменять ответ."],
+        ["02", "Видите результат", "Сразу, без email. Короткое описание вашего «кода» и с чего начать читать."],
+        ["03", "По желанию — письмо", "Если хотите, оставьте почту, и раз в неделю придёт письмо. Это не обязательно."]
+      ],
+      "progressLabel": "Вопрос",
+      "of": "из",
+      "back": "Назад",
+      "next": "Дальше",
+      "finish": "Узнать результат",
+      "timerNote": "Времени нет. Таймер — просто ориентир.",
+      "resultKicker": "Ваш результат",
+      "resultStart": "С этих текстов стоит начать:",
+      "resultRetake": "Пройти заново",
+      "resultMailKicker": "По желанию",
+      "resultMailTitle": "Присылать письмо раз в неделю?",
+      "resultMailSub": "Email только для письма. Без него результат уже у вас. Отписаться — в один клик.",
+      "resultMailCta": "Подписаться",
+      "resultMailPh": "ваш@email",
+      "resultMailSkip": "Достаточно результата, спасибо",
+      "resultMailSentTitle": "Спасибо, что подписались.",
+      "resultMailSentSub": "Первое письмо придёт в ближайшее воскресенье утром."
+    },
+    "archetypes": [
+      { "key": "earner", "title": "Похоже, ваш Старый Код — «Заслуживающий».", "body": "Громче всего звучит правило: еду и покой надо заработать. Это не про дисциплину — это унаследованная бухгалтерия. Хорошая новость в том, что её можно медленно закрыть.", "recommended": ["sila-voli", "horoshiy-den", "desyat-let"] },
+      { "key": "critic", "title": "Похоже, ваш Старый Код — «Самокритик».", "body": "[ЧЕРНОВИК — текст требует авторской и клинической доработки.] Громче всего звучит голос стыда: «что со мной не так». Это не правда о вас — это старое правило, которое можно начать слышать со стороны.", "recommended": ["otkuda-kod", "horoshiy-den"], "placeholder": true },
+      { "key": "tired", "title": "Похоже, ваш Старый Код — «Уставший».", "body": "[ЧЕРНОВИК — текст требует авторской и клинической доработки.] Вы уже устали спорить с тарелкой и начали замечать правила со стороны. Это начало более тихого кода.", "recommended": ["desyat-let", "god-kogda-stalo-tishe"], "placeholder": true },
+      { "key": "quieter", "title": "Похоже, ваш Старый Код уже тише.", "body": "[ЧЕРНОВИК — текст требует авторской и клинической доработки.] Многие старые правила вы уже отложили. Возможно, вы читаете из интереса, а не из боли — и это тоже место, с которого можно писать новый код.", "recommended": ["god-kogda-stalo-tishe", "tarelka-ottsa"], "placeholder": true }
+    ]
+  }
+}

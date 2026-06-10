@@ -1,0 +1,329 @@
+---
+// BookDetailPage.astro — Book detail page implementation (M2).
+// One DOM, responsive: desktop ≥768px primary fidelity, functional mobile.
+
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Footer from '@components/footer/Footer.astro';
+import Kicker from '@components/common/Kicker.astro';
+import BookCover from '@components/book/BookCover.astro';
+import BookShelf from '@components/book/BookShelf.astro';
+import RetailerLinks from '@components/book/RetailerLinks.astro';
+import Button from '@components/common/Button.astro';
+import OldNewCompare from '@components/common/OldNewCompare.astro';
+import PullQuote from '@components/article/PullQuote.astro';
+
+import { useTranslations } from '@i18n';
+import { booksFor, slugOf } from '@lib/content';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+import type { Locale } from '@lib/locales';
+
+interface Props {
+  lang: Locale;
+  entry: CollectionEntry<'books'>;
+}
+
+const { lang, entry } = Astro.props;
+const t = useTranslations(lang as any);
+
+const { Content } = await render(entry);
+
+const slug = slugOf(entry.id);
+const coverRule = entry.data.cover.rule === 'T.accent'
+  ? 'var(--color-accent)'
+  : entry.data.cover.rule;
+
+// All books for cross-promo (other books in cycle)
+const allBooks = await booksFor(lang);
+const otherBooks = allBooks
+  .filter((e) => e.id !== entry.id)
+  .map((e) => ({
+    id: slugOf(e.id),
+    num: e.data.num,
+    title: e.data.title,
+    themes: e.data.themes,
+    status: e.data.status,
+    cover: {
+      bg: e.data.cover.bg,
+      fg: e.data.cover.fg,
+      rule: e.data.cover.rule === 'T.accent' ? 'var(--color-accent)' : e.data.cover.rule,
+      tagline: e.data.cover.tagline,
+    },
+  }));
+
+// Nav
+const navItems = [
+  { key: 'articles',   label: t.nav.articles,   href: `/${lang}/articles`   },
+  { key: 'books',      label: t.nav.books,       href: `/${lang}/books`      },
+  { key: 'about',      label: t.nav.about,       href: `/${lang}/about`      },
+  { key: 'newsletter', label: t.nav.newsletter,  href: `/${lang}/newsletter` },
+];
+
+const locales = buildLocaleSwitcherItems(lang, `books/${slug}`);
+
+const crumb = [t.nav.books, entry.data.title];
+---
+
+  <!-- Desktop nav -->
+  <div class="hidden md:block">
+    <Nav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      brandTagline={t.brandTagline}
+      items={navItems}
+      locale={lang}
+      locales={locales}
+      active="books"
+      wide
+    />
+  </div>
+
+  <!-- Mobile nav -->
+  <div class="md:hidden">
+    <MobileNav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      navItems={navItems}
+      locales={locales}
+      currentLocale={lang}
+      labels={t.mobileNav}
+    />
+  </div>
+
+  <main id="main">
+    <!-- Hero section: breadcrumb + cover + facts column -->
+    <section class="px-[20px] pt-[28px] pb-[36px] md:px-[64px] md:pt-[40px] md:pb-[64px] border-b border-hair">
+
+      <!-- Breadcrumb -->
+      <div class="font-mono text-ink-muted text-[10px] md:text-[11px] tracking-[1.2px] uppercase mb-[20px] md:mb-[32px] flex gap-[10px]">
+        {crumb.map((s, i) => (
+          <>
+            {i < crumb.length - 1 ? (
+              <a href={`/${lang}/books/`} class="text-ink-muted no-underline transition-colors duration-[0.18s] ease hover:text-ink">{s}</a>
+            ) : (
+              <span class="text-ink" aria-current="page">{s}</span>
+            )}
+            {i < crumb.length - 1 && <span class="opacity-40">/</span>}
+          </>
+        ))}
+      </div>
+
+      <!-- Two-column hero layout: cover sticky | facts -->
+      <div class="flex flex-col gap-[24px] md:grid md:grid-cols-[300px_1fr] md:gap-[64px] md:items-start">
+        <!-- Cover (sticky on desktop) -->
+        <div class="cover-col-wrap flex justify-center md:sticky md:top-[32px] md:justify-start">
+          <BookCover
+            title={entry.data.title}
+            num={entry.data.num}
+            bg={entry.data.cover.bg}
+            fg={entry.data.cover.fg}
+            rule={coverRule}
+            tagline={entry.data.cover.tagline}
+            w={300}
+            h={432}
+          />
+        </div>
+
+        <!-- Facts column -->
+        <div>
+          <Kicker color="var(--color-ink-muted)">{entry.data.num}</Kicker>
+          <h1 class="font-serif text-ink text-[36px] md:text-[54px] leading-[1.05] font-normal tracking-[-0.6px] md:tracking-[-0.9px] mt-[12px] mb-[8px] md:mt-[14px] md:mb-[10px]">{entry.data.title}</h1>
+          {entry.data.subtitle && (
+            <p class="font-serif text-ink-soft text-[19px] md:text-[24px] italic leading-[1.4] mt-0 mb-[16px] md:mb-[22px]">{entry.data.subtitle}</p>
+          )}
+          {entry.data.lead && (
+            <p class="font-sans text-ink-soft text-[15px] md:text-[16px] leading-[1.6] mt-0 mb-[22px] md:mb-[28px] md:max-w-[560px]">{entry.data.lead}</p>
+          )}
+
+          <!-- Primary CTA — published books scroll to the retailer block -->
+          {entry.data.status === 'out' && (
+            <div class="mb-[20px]">
+              <Button variant="primary" href="#buy">{t.common.getBook}</Button>
+            </div>
+          )}
+
+          <!-- Retailer links -->
+          {entry.data.retailers && entry.data.retailers.length > 0 && (
+            <div id="buy" class="[scroll-margin-top:24px]">
+              <RetailerLinks
+                items={entry.data.retailers}
+                status={entry.data.retailerStatus}
+                label={t.bookDetail.retailLabel}
+              />
+            </div>
+          )}
+
+          <!-- Facts grid + languages -->
+          <div class="flex flex-col gap-[20px] mt-[28px] md:flex-row md:flex-wrap md:items-start md:gap-[40px] md:mt-[36px]">
+            {entry.data.facts && entry.data.facts.length > 0 && (
+              <div class="flex gap-[1px] bg-hair border border-hair">
+                {entry.data.facts.map(([k, val]: [string, string]) => (
+                  <div class="bg-bg px-[24px] py-[16px] min-w-[88px]">
+                    <div class="font-mono text-ink-muted text-[10px] tracking-[1px] uppercase mb-[6px]">{k}</div>
+                    <div class="font-serif text-ink text-[17px]">{val}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {entry.data.languages && entry.data.languages.length > 0 && (
+              <div class="mt-[4px]">
+                <div class="font-mono text-ink-muted text-[10px] tracking-[1px] uppercase mb-[12px]">{t.bookDetail.langLabel}</div>
+                <div class="flex gap-[8px] flex-wrap">
+                  {entry.data.languages.map((l: string) => (
+                    <span class="font-sans text-ink bg-bg text-[13px] px-[14px] py-[7px] border border-[var(--color-accent-hair)] rounded-pill">{l}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About + TOC (desktop: two-col; mobile: stacked) -->
+    <section class="px-[20px] py-[40px] md:px-[64px] md:py-[72px] border-b border-hair">
+      <div class="flex flex-col gap-[40px] md:grid md:grid-cols-[1fr_360px] md:gap-[64px] md:items-start">
+        <!-- Left: prose body -->
+        <div>
+          <Kicker>{t.bookDetail.aboutLabel}</Kicker>
+          <div class="body-prose font-serif text-ink mt-[18px] text-[18px] md:text-[20px] leading-[1.7]">
+            <Content />
+          </div>
+
+          <!-- Excerpt as PullQuote -->
+          {entry.data.excerpt && (
+            <PullQuote attribution={t.bookDetail.excerptLabel} marks={['', '']}>
+              {entry.data.excerpt}
+            </PullQuote>
+          )}
+        </div>
+
+        <!-- Right: TOC + praise (sticky on desktop) -->
+        <aside class="flex flex-col gap-0 md:sticky md:top-[32px]">
+          {entry.data.toc && entry.data.toc.length > 0 && (
+            <div class="mb-[28px]">
+              <div class="font-mono text-ink-muted text-[10.5px] tracking-[1.4px] uppercase mb-[14px]">{t.bookDetail.tocLabel}</div>
+              {entry.data.toc.map(([n, toc_title]: [string, string]) => (
+                <div class="grid grid-cols-[34px_1fr] gap-[8px] py-[12px] border-t border-[var(--color-hair-soft)]">
+                  <span class="font-mono text-accent text-[11px]">{n}</span>
+                  <span class="font-serif text-ink text-[16px] leading-[1.35]">{toc_title}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <!-- Praise -->
+          {entry.data.praise && entry.data.praise.length > 0 && (
+            <div class="mt-[8px]">
+              <div class="font-mono text-ink-muted text-[10.5px] tracking-[1.4px] uppercase mb-[14px]">{t.bookDetail.praiseLabel}</div>
+              {entry.data.praise.map(([quote, by]: [string, string]) => (
+                <div class="py-[14px] border-t border-[var(--color-hair-soft)]">
+                  <p class="font-serif text-ink text-[15.5px] italic leading-[1.5] mt-0 mb-[6px]">{quote}</p>
+                  <div class="font-mono text-ink-muted text-[10.5px] tracking-[0.6px] uppercase">{by}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </aside>
+      </div>
+    </section>
+
+    <!-- Main idea / manifesto section -->
+    <section class="px-[20px] py-[40px] md:px-[64px] md:py-[72px] border-b border-hair">
+      <div class="max-w-full">
+        <Kicker>{t.bookDetail.ideaKicker}</Kicker>
+        <h2 class="font-serif text-ink text-[24px] md:text-[36px] font-normal leading-[1.2] tracking-[-0.3px] md:tracking-[-0.5px] mt-[14px] mb-0 md:mt-[16px]">{t.bookDetail.ideaTitle}</h2>
+
+        {entry.data.manifesto && entry.data.manifesto.length > 0 && (
+          <>
+            <!-- Desktop compare -->
+            <div class="hidden md:block mt-[40px]">
+              <OldNewCompare
+                pairs={entry.data.manifesto}
+                layout="desktop"
+                labels={{
+                  oldHead: t.idea.oldHead,
+                  newHead: t.idea.newHead,
+                  oldLabel: t.idea.oldK,
+                  newLabel: t.idea.newK,
+                }}
+              />
+            </div>
+            <!-- Mobile compare -->
+            <div class="md:hidden mt-[28px]">
+              <OldNewCompare
+                pairs={entry.data.manifesto}
+                layout="mobile"
+                labels={{
+                  oldHead: t.idea.oldHead,
+                  newHead: t.idea.newHead,
+                  oldLabel: t.idea.oldK,
+                  newLabel: t.idea.newK,
+                }}
+              />
+            </div>
+          </>
+        )}
+      </div>
+    </section>
+
+    <!-- Cross-promo: other books in cycle -->
+    {otherBooks.length > 0 && (
+      <section class="border-t border-hair">
+        <div class="px-[20px] pt-[40px] pb-0 md:px-[64px]">
+          <Kicker>{t.bookDetail.crossLabel}</Kicker>
+        </div>
+        <div class="hidden md:block">
+          <BookShelf
+            books={otherBooks}
+            labels={{ statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon }}
+            layout="desktop"
+          />
+        </div>
+        <div class="md:hidden">
+          <BookShelf
+            books={otherBooks}
+            labels={{ statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon }}
+            layout="mobile"
+          />
+        </div>
+      </section>
+    )}
+  </main>
+
+  <!-- Footer -->
+  <div class="hidden md:block">
+    <Footer layout="desktop" strings={t.footer} locale={lang} locales={locales} />
+  </div>
+  <div class="md:hidden">
+    <Footer layout="mobile" strings={t.footer} locale={lang} locales={locales} />
+  </div>
+
+<style>
+  /* Shrink cover on mobile, restore on desktop — global child selector needed
+     because .bookcover lives inside a child component (cannot use Tailwind
+     arbitrary variant across component boundaries reliably). */
+  .cover-col-wrap :global(.bookcover) {
+    width: 180px !important;
+    height: 260px !important;
+  }
+  @media (min-width: 768px) {
+    .cover-col-wrap :global(.bookcover) {
+      width: 300px !important;
+      height: 432px !important;
+    }
+  }
+
+  /* body-prose global p margin — :global() inside scoped style is the only
+     reliable way to pierce the Content component's rendered <p> tags. */
+  .body-prose :global(p) {
+    margin: 0 0 18px;
+  }
+  .body-prose :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

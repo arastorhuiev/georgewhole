@@ -1,0 +1,27 @@
+---
+// ShelfThemes.astro — mono middot-separated keyword strip.
+// Ported from docs/design/project/books-ru.jsx → ShelfThemes.
+
+interface Props {
+  themes: string[];
+  size?: number;
+}
+
+const { themes, size = 10.5 } = Astro.props;
+---
+
+{themes && themes.length > 0 && (
+  <div
+    class="font-mono leading-[1.6] tracking-[0.4px] flex flex-wrap gap-x-2 gap-y-[2px]"
+    style={`font-size:${size}px;`}
+  >
+    {themes.map((t, i) => (
+      <span class="whitespace-nowrap text-ink-muted">
+        {i > 0 && (
+          <span class="opacity-40 mr-2">·</span>
+        )}
+        {t}
+      </span>
+    ))}
+  </div>
+)}

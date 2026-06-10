@@ -1,0 +1,56 @@
+---
+// "A few articles to start with" — heading + 3-up article grid. Each card is a
+// real link (group → ArticleCard title turns accent on hover). "All articles"
+// uses the text-button (animated arrow on hover).
+import ArticleCard from '@components/article/ArticleCard.astro';
+import Button from '@components/common/Button.astro';
+
+interface ReadingArticle {
+  href: string;
+  title: string;
+  kicker?: string;
+  summary?: string;
+  meta?: string;
+  image?: string;
+  imageTone?: 'paper' | 'dusk' | 'morning' | 'deep';
+}
+
+interface Props {
+  lang: string;
+  reading: { title: string; all: string };
+  articles: ReadingArticle[];
+}
+
+const { lang, reading, articles } = Astro.props;
+const allHref = `/${lang}/articles/`;
+---
+
+<section class="border-b border-hair px-[20px] py-[48px] md:px-[64px] md:py-[88px]">
+  <div class="flex items-end justify-between mb-[24px] md:mb-[48px]">
+    <h2 class="font-serif text-ink font-normal text-[clamp(28px,3vw,36px)] leading-[1.15] tracking-[-0.4px] m-0">
+      {reading.title}
+    </h2>
+    <div class="hidden md:block">
+      <Button variant="text" href={allHref}>{reading.all}</Button>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-[36px] md:grid md:grid-cols-3 md:gap-[40px]">
+    {articles.map((a) => (
+      <a href={a.href} class="group no-underline flex flex-col">
+        <ArticleCard
+          title={a.title}
+          kicker={a.kicker}
+          summary={a.summary}
+          meta={a.meta}
+          image={a.image}
+          imageTone={a.imageTone}
+        />
+      </a>
+    ))}
+  </div>
+
+  <div class="mt-7 md:hidden">
+    <Button variant="text" href={allHref}>{reading.all}</Button>
+  </div>
+</section>

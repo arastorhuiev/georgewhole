@@ -1,0 +1,175 @@
+---
+import Icon from '@components/common/Icon.astro';
+
+interface NavItem {
+  key: string;
+  label: string;
+  href: string;
+}
+
+interface LocaleOption {
+  code: string;
+  name: string;
+  href?: string;
+}
+
+interface Labels {
+  lang: string;
+  menu: string;
+}
+
+interface Props {
+  brand: string;
+  brandHref?: string;
+  navItems: Array<NavItem>;
+  locales: Array<LocaleOption>;
+  currentLocale: string;
+  labels: Labels;
+}
+
+const { brand, brandHref = '/', navItems, locales, labels } = Astro.props;
+const currentLocale = Astro.props.currentLocale.toUpperCase();
+---
+
+<header class="border-b border-hair bg-bg px-5 py-[14px] flex items-center justify-between relative font-sans">
+  <a
+    href={brandHref}
+    class="font-serif text-[18px] font-normal text-ink no-underline hover:opacity-[0.68] transition-opacity"
+  >
+    {brand}
+  </a>
+
+  <div class="flex items-center gap-[6px]">
+    <!-- Language dropdown -->
+    <details class="nav-details">
+      <summary
+        class="iconbtn font-mono text-[12px] tracking-[0.4px] border border-hair bg-transparent text-ink px-[10px] py-[6px] rounded-md flex items-center gap-[5px] list-none cursor-pointer transition-colors hover:border-accent hover:text-accent"
+        aria-label={labels.lang}
+      >
+        {currentLocale}
+        <Icon name="chev" size={8} class="chev-i transition-transform duration-200 ease" />
+      </summary>
+
+      <div class="panel absolute top-[calc(100%+8px)] right-5 z-30 bg-bg border border-hair rounded-md shadow-[0_8px_28px_rgba(42,39,35,0.14),0_2px_6px_rgba(42,39,35,0.08)] overflow-hidden min-w-[208px]">
+        <!-- Mono header row -->
+        <div class="px-4 pt-[10px] pb-2 font-mono text-[9.5px] tracking-[1.4px] uppercase text-ink-muted border-b border-hair-soft flex items-center gap-[7px]">
+          <Icon name="globe" size={11} />
+          {labels.lang}
+        </div>
+
+        <!-- Locale rows -->
+        {locales.map((locale) => {
+          const active = locale.code === currentLocale;
+          const inner = (
+            <>
+              <span class="flex items-baseline gap-[10px]">
+                <span
+                  class:list={[
+                    'font-mono text-[11px] tracking-[0.6px] w-[22px] inline-block',
+                    active ? 'text-accent font-bold' : 'text-ink-muted font-normal',
+                  ]}
+                >
+                  {locale.code}
+                </span>
+                <span
+                  class:list={[
+                    'font-sans text-[14.5px]',
+                    active ? 'text-ink font-semibold' : 'text-ink-soft font-normal',
+                  ]}
+                >
+                  {locale.name}
+                </span>
+              </span>
+              {active && (
+                <span class="inline-flex text-accent">
+                  <Icon name="check" size={13} />
+                </span>
+              )}
+            </>
+          );
+          return locale.href ? (
+            <a
+              href={locale.href}
+              class:list={[
+                'menurow w-full flex items-center justify-between gap-3 px-4 py-3 text-left no-underline text-ink cursor-pointer transition-[background,color] duration-[0.14s] ease hover:bg-[rgba(63,107,94,0.06)] hover:text-accent',
+                active ? 'bg-[rgba(63,107,94,0.07)]' : 'bg-transparent',
+              ]}
+            >
+              {inner}
+            </a>
+          ) : (
+            <span
+              class:list={[
+                'menurow w-full flex items-center justify-between gap-3 px-4 py-3 text-left no-underline text-ink cursor-pointer transition-[background,color] duration-[0.14s] ease hover:bg-[rgba(63,107,94,0.06)] hover:text-accent',
+                active ? 'bg-[rgba(63,107,94,0.07)]' : 'bg-transparent',
+              ]}
+              role="presentation"
+            >
+              {inner}
+            </span>
+          );
+        })}
+      </div>
+    </details>
+
+    <!-- Nav dropdown -->
+    <details class="nav-details">
+      <summary
+        class="iconbtn border border-hair bg-transparent text-ink w-[34px] h-[30px] rounded-md flex items-center justify-center list-none cursor-pointer transition-colors hover:border-accent hover:text-accent"
+        aria-label={labels.menu}
+      >
+        <Icon name="hamburger" size={16} />
+      </summary>
+
+      <div class="panel absolute top-[calc(100%+8px)] right-5 z-30 bg-bg border border-hair rounded-md shadow-[0_8px_28px_rgba(42,39,35,0.14),0_2px_6px_rgba(42,39,35,0.08)] overflow-hidden min-w-[208px]">
+        <nav>
+          {navItems.map((item, i) => (
+            <a
+              href={item.href}
+              class:list={[
+                'menurow flex items-center justify-between px-4 py-[13px] no-underline text-ink font-sans text-[15px] font-medium cursor-pointer transition-[background,color] duration-[0.14s] ease hover:bg-[rgba(63,107,94,0.06)] hover:text-accent',
+                i > 0 ? 'border-t border-hair-soft' : '',
+              ]}
+            >
+              {item.label}
+              <span class="text-accent inline-flex">
+                <Icon name="arrow" size={13} />
+              </span>
+            </a>
+          ))}
+        </nav>
+      </div>
+    </details>
+  </div>
+</header>
+
+<style>
+  /* Strip default <details> marker — ::-webkit-details-marker cannot be expressed as a Tailwind utility */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Open-state: accent border + tint on the summary button — compound attribute+class selector, not expressible in Tailwind */
+  details[open] > summary.iconbtn {
+    border-color: var(--color-accent) !important;
+    color: var(--color-accent) !important;
+    background: rgba(63, 107, 94, 0.07) !important;
+  }
+
+  /* Chevron rotation when open — compound descendant selector, not expressible in Tailwind */
+  details[open] .chev-i {
+    transform: rotate(180deg);
+  }
+
+  /* Smooth panel reveal on open — references @keyframes, must stay here */
+  @media (prefers-reduced-motion: no-preference) {
+    details[open] > .panel {
+      animation: navPanelIn 0.18s cubic-bezier(0.2, 0.7, 0.3, 1);
+      transform-origin: top right;
+    }
+  }
+  @keyframes navPanelIn {
+    from { opacity: 0; transform: translateY(-6px) scale(0.985); }
+    to { opacity: 1; transform: none; }
+  }
+</style>

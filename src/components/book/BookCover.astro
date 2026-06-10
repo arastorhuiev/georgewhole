@@ -1,0 +1,113 @@
+---
+// BookCover.astro — typographic book-cover placeholder, ported 1:1 from
+// docs/design/project/components.jsx → BookCover.
+// Pixel-perfect: every style number is taken verbatim from the source.
+// Prop-driven / computed px use inline styles; static tokens use CSS classes.
+
+interface Props {
+  title: string;
+  num?: string;
+  byline?: string;
+  tagline?: string;
+  w?: number;
+  h?: number;
+  bg?: string;
+  fg?: string;
+  rule?: string;
+  cover?: string;
+  class?: string;
+}
+
+const {
+  title,
+  num,
+  byline = 'georgewhole',
+  tagline = 'georgewhole.com',
+  w = 180,
+  h = 260,
+  bg,
+  fg,
+  rule,
+  cover = 'newcode',
+  class: className,
+} = Astro.props;
+
+const coverBg = bg ?? (cover === 'newcode' ? '#2A2723' : 'var(--color-accent-deep)');
+const coverFg = fg ?? (cover === 'newcode' ? '#FAF6EF' : 'var(--color-accent-fg)');
+const ruleColor = rule ?? 'var(--color-accent)';
+
+// font sizes computed from w, matching the JSX exactly
+const numFontSize = Math.round(w * 0.36);
+const titleFontSizeWithNum = Math.max(13, Math.round(w * 0.115));
+
+// title words for the no-num layout
+const titleWords = title.split(' ');
+---
+
+<div
+  class:list={[
+    'bookcover',
+    'font-serif',
+    'relative overflow-hidden box-border flex flex-col justify-between',
+    'p-[18px]',
+    'shadow-[4px_6px_0_rgba(42,39,35,0.08),0_1px_3px_rgba(0,0,0,0.18)]',
+    'transition-[transform,box-shadow] duration-150 ease-[cubic-bezier(0.2,0.7,0.3,1)] [will-change:transform]',
+    className,
+  ]}
+  style={{
+    width: `${w}px`,
+    height: `${h}px`,
+    background: coverBg,
+    color: coverFg,
+  }}
+>
+  {/* Top byline */}
+  <div
+    class="font-mono text-[9.5px] tracking-[1.6px] uppercase opacity-65"
+  >
+    {byline}
+  </div>
+
+  {/* Middle: num + title + rule */}
+  <div>
+    {num != null && (
+      <div
+        class="font-serif font-normal leading-[0.86] tracking-[-1.5px] mb-[12px] opacity-90"
+        style={{ fontSize: `${numFontSize}px` }}
+      >
+        {num}
+      </div>
+    )}
+
+    {/* Title: single string when num present, one word per div when no num */}
+    {num != null ? (
+      <div
+        class="font-normal leading-[1.14] tracking-[-0.3px]"
+        style={{ fontSize: `${titleFontSizeWithNum}px` }}
+      >
+        {title}
+      </div>
+    ) : (
+      <div
+        class="text-[24px] font-normal leading-[1.1] tracking-[-0.3px]"
+      >
+        {titleWords.map((word) => (
+          <div>{word}</div>
+        ))}
+      </div>
+    )}
+
+    {/* Rule */}
+    <div
+      class="w-[36px] h-[2px] mt-[10px]"
+      style={{ background: ruleColor }}
+    />
+  </div>
+
+  {/* Bottom tagline */}
+  <div
+    class="font-mono text-[9px] tracking-[1.2px] opacity-55 uppercase"
+  >
+    {tagline}
+  </div>
+</div>

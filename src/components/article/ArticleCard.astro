@@ -1,0 +1,45 @@
+---
+import AtmosImage from '@components/common/AtmosImage.astro';
+import Kicker from '@components/common/Kicker.astro';
+
+interface Props {
+  title: string;
+  kicker?: string;
+  summary?: string;
+  meta?: string;
+  image?: string;
+  imageTone?: 'paper' | 'dusk' | 'morning' | 'deep';
+  compact?: boolean;
+}
+
+const {
+  title,
+  kicker,
+  summary,
+  meta,
+  image,
+  imageTone = 'paper',
+  compact = false,
+} = Astro.props;
+---
+
+<article class="w-full font-sans flex flex-col gap-[12px]">
+  {image && (
+    <AtmosImage
+      height={compact ? 140 : 200}
+      label={image}
+      tone={imageTone}
+    />
+  )}
+  {kicker && <Kicker>{kicker}</Kicker>}
+  <h3
+    class:list={[
+      'font-serif font-normal leading-[1.25] text-ink m-0 tracking-[-0.2px] transition-colors group-hover:text-accent',
+      compact ? 'text-[20px]' : 'text-[24px]',
+    ]}
+  >
+    {title}
+  </h3>
+  {summary && <p class="text-[14.5px] leading-[1.6] text-ink-soft m-0 font-sans">{summary}</p>}
+  {meta && <div class="font-mono text-[11px] text-ink-muted tracking-[0.6px]">{meta}</div>}
+</article>

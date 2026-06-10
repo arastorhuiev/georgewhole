@@ -1,0 +1,32 @@
+---
+// ShelfStatus.astro — status pill: out → accent filled dot; soon → muted hollow dot.
+// Ported from docs/design/project/books-ru.jsx → ShelfStatus.
+
+interface Props {
+  status: 'out' | 'soon';
+  label: string;
+  withDot?: boolean;
+}
+
+const { status, label, withDot = true } = Astro.props;
+const out = status === 'out';
+---
+
+<span
+  class:list={[
+    'font-mono inline-flex items-center gap-[6px] text-[10.5px] tracking-[1px] uppercase',
+    out ? 'text-accent' : 'text-ink-muted',
+  ]}
+>
+  {withDot && (
+    <span
+      class:list={[
+        'w-[6px] h-[6px] rounded-[3px] flex-shrink-0',
+        out
+          ? 'bg-accent'
+          : 'bg-transparent border border-ink-muted',
+      ]}
+    />
+  )}
+  {label}
+</span>

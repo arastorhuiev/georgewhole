@@ -1,0 +1,101 @@
+---
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Kicker from '@components/common/Kicker.astro';
+import ContactForm from '@components/forms/ContactForm.astro';
+import Footer from '@components/footer/Footer.astro';
+import { useTranslations } from '@i18n';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang as any);
+const locales = buildLocaleSwitcherItems(lang as any, 'contact');
+
+const navItems = [
+  { key: 'articles',   label: t.nav.articles,   href: `/${lang}/articles`   },
+  { key: 'books',      label: t.nav.books,       href: `/${lang}/books`      },
+  { key: 'about',      label: t.nav.about,       href: `/${lang}/about`      },
+  { key: 'newsletter', label: t.nav.newsletter,  href: `/${lang}/newsletter` },
+];
+
+const c = t.contactPage;
+
+// Resolve "elsewhere" links: external URLs pass through; bare paths get the locale prefix.
+const elsewhere = t.contact.elsewhere.map(
+  ([name, note, href]) =>
+    [name, note, href.startsWith('http') ? href : `/${lang}/${href}/`] as [string, string, string],
+);
+---
+
+  {/* Desktop nav */}
+  <div class="hidden md:block">
+    <Nav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      brandTagline={t.brandTagline}
+      items={navItems}
+      active=""
+      locale={lang}
+      locales={locales}
+      wide
+    />
+  </div>
+  {/* Mobile nav */}
+  <div class="block md:hidden">
+    <MobileNav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      navItems={navItems}
+      locales={locales}
+      currentLocale={lang}
+      labels={t.mobileNav}
+    />
+  </div>
+
+  <main id="main">
+    {/* ── Breadcrumb ── */}
+    <nav
+      class="flex items-center gap-[8px] px-[20px] py-[12px] md:px-[64px] md:py-[14px] font-mono text-[11px] tracking-[1px] uppercase text-[var(--color-ink-muted)] border-b border-hair"
+      aria-label="Breadcrumb"
+    >
+      <a href={`/${lang}/`} class="text-[var(--color-ink-muted)] no-underline transition-colors hover:text-ink">{c.crumb[0]}</a>
+      <span class="text-hair" aria-hidden="true">/</span>
+      <span class="text-ink-soft" aria-current="page">{c.crumb[1]}</span>
+    </nav>
+
+    {/* ── Page header ── */}
+    <header class="px-[20px] pt-[36px] pb-[32px] md:px-[64px] md:pt-[64px] md:pb-[56px] border-b border-hair">
+      <Kicker>{c.kicker}</Kicker>
+      <h1 class="font-serif text-ink text-[32px] leading-[1.1] font-normal tracking-[-0.5px] mt-[14px] mb-[16px] text-balance md:text-[48px] md:leading-[1.08] md:mt-[16px] md:mb-[20px] md:tracking-[-0.8px]">{c.title}</h1>
+      <p class="font-serif text-ink-soft text-[17px] leading-[1.55] m-0 italic md:text-[20px] md:max-w-[560px]">{c.sub}</p>
+    </header>
+
+    {/* ── Contact form — desktop layout ── */}
+    <section class="hidden md:block px-[20px] py-[36px] pb-[48px] md:px-[64px] md:pt-[64px] md:pb-[80px]">
+      <ContactForm
+        layout="desktop"
+        strings={t.contact}
+        elsewhere={elsewhere}
+      />
+    </section>
+
+    {/* ── Contact form — mobile layout ── */}
+    <section class="block md:hidden px-[20px] pt-[36px] pb-[48px] md:px-[64px] md:pt-[64px] md:pb-[80px]">
+      <ContactForm
+        layout="mobile"
+        strings={t.contact}
+        elsewhere={elsewhere}
+      />
+    </section>
+  </main>
+
+  <div class="hidden md:block">
+    <Footer strings={t.footer} locale={lang} locales={locales} layout="desktop" />
+  </div>
+  <div class="block md:hidden">
+    <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
+  </div>

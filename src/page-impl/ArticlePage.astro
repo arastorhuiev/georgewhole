@@ -1,0 +1,327 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import AtmosImage from '@components/common/AtmosImage.astro';
+import Kicker from '@components/common/Kicker.astro';
+import AuthorByline from '@components/article/AuthorByline.astro';
+import Sources from '@components/article/Sources.astro';
+import ArticleCard from '@components/article/ArticleCard.astro';
+import EmailCapture from '@components/forms/EmailCapture.astro';
+import Footer from '@components/footer/Footer.astro';
+import BookCover from '@components/book/BookCover.astro';
+import { useTranslations } from '@i18n/index';
+import { articlesFor, booksFor, slugOf } from '@lib/content';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+
+interface Props {
+  lang: string;
+  entry: CollectionEntry<'articles'>;
+}
+
+const { lang, entry } = Astro.props;
+const t = useTranslations(lang as any);
+const locales = buildLocaleSwitcherItems(lang as any, `articles/${slugOf(entry.id)}`);
+
+const navItems = [
+  { key: 'articles',   label: t.nav.articles,   href: `/${lang}/articles`   },
+  { key: 'books',      label: t.nav.books,      href: `/${lang}/books`      },
+  { key: 'about',      label: t.nav.about,      href: `/${lang}/about`      },
+  { key: 'newsletter', label: t.nav.newsletter, href: `/${lang}/newsletter` },
+];
+
+// Render markdown body
+const { Content } = await render(entry);
+
+// Format date in the page's own locale (not always RU)
+const dateLocale: Record<string, string> = { ru: 'ru-RU', en: 'en-US' };
+const dateStr = entry.data.date
+  ? entry.data.date.toLocaleDateString(dateLocale[lang] ?? 'en-US', { day: 'numeric', month: 'long', year: 'numeric' })
+  : '';
+
+// Resolve related articles
+const allArticles = await articlesFor(lang as any);
+const relatedEntries = entry.data.related
+  ? allArticles.filter((a) => entry.data.related!.includes(a.data.transKey)).slice(0, 3)
+  : allArticles.filter((a) => a.id !== entry.id).slice(0, 3);
+
+// The promoted (published) book for the sidebar card — localized from content.
+const books = await booksFor(lang as any);
+const promoBook = books.find((b) => b.data.status === 'out') ?? books[0];
+const promoTitle = promoBook?.data.title ?? 'georgewhole';
+const promoSub = promoBook?.data.subtitle ?? promoBook?.data.line ?? '';
+const promoHref = promoBook ? `/${lang}/books/${slugOf(promoBook.id)}/` : `/${lang}/books/`;
+
+// Sources — static design-faithful placeholders; real items come from frontmatter later.
+const sourceItems = lang === 'ru'
+  ? [
+      'Tribole, E. &amp; Resch, E. <em>Intuitive Eating</em>, 4-е изд. (2020).',
+      'Bacon, L. <em>Health at Every Size</em> (2010).',
+      'Linehan, M. M. <em>DBT Skills Training Manual</em> (2014).',
+    ]
+  : [
+      'Tribole, E. &amp; Resch, E. <em>Intuitive Eating</em>, 4th ed. (2020).',
+      'Bacon, L. <em>Health at Every Size</em> (2010).',
+      'Linehan, M. M. <em>DBT Skills Training Manual</em> (2014).',
+    ];
+---
+
+  <!-- Desktop nav -->
+  <div class="max-md:hidden">
+    <Nav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      brandTagline={t.brandTagline}
+      items={navItems}
+      active="articles"
+      locale={lang}
+      locales={locales}
+      wide
+    />
+  </div>
+  <!-- Mobile nav -->
+  <div class="md:hidden">
+    <MobileNav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      navItems={navItems}
+      locales={locales}
+      currentLocale={lang}
+      labels={t.mobileNav}
+    />
+  </div>
+
+  <!-- Reading progress bar (mobile) -->
+  <div class="md:hidden h-[3px] bg-[var(--color-hair-soft)] relative" aria-hidden="true">
+    <div class="absolute left-0 top-0 bottom-0 w-[34%] bg-accent"></div>
+  </div>
+
+  <main id="main">
+  <!-- Article header -->
+  <header class="pt-[32px] px-[64px] pb-[56px] border-b border-hair max-md:pt-[28px] max-md:px-[20px] max-md:pb-[28px]">
+    <!-- Breadcrumb -->
+    <nav class="font-mono text-[11px] tracking-[1.2px] uppercase text-ink-muted mb-[32px] flex items-center gap-[10px] flex-wrap max-md:text-[10px] max-md:mb-[14px] max-md:gap-[6px]" aria-label="Breadcrumb">
+      <a href={`/${lang}/`} class="text-ink-muted no-underline transition-colors hover:text-ink">{t.common.breadcrumbHome}</a>
+      <span class="opacity-40" aria-hidden="true">/</span>
+      <a href={`/${lang}/articles/`} class="text-ink-muted no-underline transition-colors hover:text-ink">{t.nav.articles}</a>
+      <span class="opacity-40" aria-hidden="true">/</span>
+      <span class="text-ink">{entry.data.title}</span>
+    </nav>
+
+    <div class="max-w-[880px]">
+      {entry.data.kicker && <Kicker>{entry.data.kicker}</Kicker>}
+      <h1 class="font-serif text-[58px] leading-[1.06] mt-[20px] mb-[28px] font-normal text-ink tracking-[-0.9px] text-balance max-md:text-[32px] max-md:leading-[1.1] max-md:mt-[14px] max-md:mb-[18px] max-md:tracking-[-0.5px]">{entry.data.title}</h1>
+      <p class="font-serif text-[22px] leading-[1.5] text-ink-soft mt-0 mb-[36px] italic max-w-[720px] max-md:text-[17px] max-md:leading-[1.55] max-md:mb-[22px]">{entry.data.summary}</p>
+
+      <div class="pt-[24px] border-t border-[var(--color-hair-soft)] max-md:pt-[16px]">
+        <AuthorByline
+          name="georgewhole"
+          blurb={t.authorStripe.mobileSummary}
+          date={dateStr}
+          readtime={entry.data.readingTime}
+          layout="stack"
+        />
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero image -->
+  <section class="pt-[48px] px-[64px] pb-0 max-md:pt-0 max-md:px-[20px] max-md:pb-[8px]">
+    <AtmosImage
+      height={440}
+      label={entry.data.image ?? t.atmos.articleFallback}
+      tone={entry.data.imageTone ?? 'morning'}
+      accentTint
+    />
+  </section>
+
+  <!-- Three-column body grid (desktop) / single column (mobile) -->
+  <div class="grid grid-cols-[220px_1fr_220px] gap-[56px] px-[64px] pt-[64px] pb-[80px] max-w-[1280px] mx-auto items-start max-md:block max-md:px-[20px] max-md:pt-[8px] max-md:pb-[32px]">
+    <!-- Left sidebar: TOC placeholder — desktop only -->
+    <aside class="max-md:hidden sticky top-[32px] font-sans" aria-label={t.articleDetail.tocLabel}>
+      <div class="font-mono text-[10.5px] tracking-[1.4px] uppercase text-ink-muted mb-[14px]">{t.articleDetail.tocLabel}</div>
+      <nav>
+        <div class="font-mono text-[10.5px] text-ink-muted tracking-[0.8px] opacity-60">{t.articleDetail.tocNote}</div>
+      </nav>
+    </aside>
+
+    <!-- Main prose -->
+    <article class="max-w-[70ch] justify-self-center w-full">
+      <div class="article-body font-serif text-ink text-[20px] leading-[1.7] max-md:text-[19px]">
+        <Content />
+      </div>
+
+      <!-- Inline email capture -->
+      <div class="mt-[48px] mb-[48px] pt-[36px] pb-[36px] px-[32px] bg-[var(--color-surface-soft)] border border-hair">
+        <EmailCapture
+          variant="newsletter"
+          compact
+          strings={t.newsletter}
+        />
+      </div>
+
+      <!-- End-of-article author blurb -->
+      <div class="mt-[48px] pt-[32px] border-t border-[var(--color-hair-soft)]">
+        <AuthorByline
+          name="georgewhole"
+          blurb="пишет медленно — несколько книг об одном."
+          layout="stack"
+        />
+      </div>
+
+      <!-- Sources -->
+      <Sources label={t.sourcesLabel} items={sourceItems} />
+    </article>
+
+    <!-- Right sidebar: book promo — desktop only -->
+    <aside class="max-md:hidden sticky top-[32px] font-sans" aria-label={t.booksPromo.kicker}>
+      <div class="p-[20px] border border-hair bg-[var(--color-surface-soft)]">
+        <Kicker>{t.booksPromo.kicker}</Kicker>
+        <p class="font-serif text-[15px] text-ink mt-[10px] mb-[16px] leading-[1.45] italic">{t.booksPromo.sub}</p>
+        <div class="flex gap-[12px] items-start mt-[16px]">
+          <BookCover title={promoTitle} w={64} h={92} />
+          <div class="flex-1">
+            <div class="text-[13px] text-ink font-semibold">{promoTitle}</div>
+            {promoSub && <div class="text-[12px] text-ink-soft leading-[1.4] mb-[8px]">{promoSub}</div>}
+            <a href={promoHref} class="text-accent text-[12px] font-medium no-underline border-b border-[var(--color-accent-hair,rgba(63,107,94,0.3))]">
+              {t.common.getBook} →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related links label -->
+      <div class="mt-[24px] pt-[18px] border-t border-[var(--color-hair-soft)] font-mono text-[10.5px] tracking-[1.4px] uppercase text-ink-muted mb-[12px]">{t.articleDetail.relatedLabel}</div>
+      {relatedEntries.slice(0, 3).map((rel) => (
+        <a
+          href={`/${lang}/articles/${slugOf(rel.id)}/`}
+          class="block font-serif text-[15px] text-ink leading-[1.4] py-[12px] border-t border-[var(--color-hair-soft)] no-underline transition-colors hover:text-accent"
+        >
+          {rel.data.title}
+        </a>
+      ))}
+    </aside>
+  </div>
+
+  <!-- Related articles grid -->
+  {relatedEntries.length > 0 && (
+    <section class="pt-[56px] px-[64px] pb-[72px] border-t border-hair max-md:pt-[36px] max-md:px-[20px] max-md:pb-[48px]">
+      <Kicker>{t.articleDetail.readNext}</Kicker>
+      <div class="grid grid-cols-3 gap-[32px] mt-[28px] max-md:grid-cols-1 max-md:gap-[24px]">
+        {relatedEntries.map((rel) => (
+          <a href={`/${lang}/articles/${slugOf(rel.id)}/`} class="related-card-link no-underline text-inherit block">
+            <ArticleCard
+              title={rel.data.title}
+              kicker={rel.data.kicker}
+              summary={rel.data.summary}
+              image={rel.data.image}
+              imageTone={rel.data.imageTone}
+              meta={rel.data.readingTime}
+            />
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+  </main>
+
+  <div class="hidden md:block">
+    <Footer layout="desktop" strings={t.footer} locale={lang} locales={locales} />
+  </div>
+  <div class="md:hidden">
+    <Footer layout="mobile" strings={t.footer} locale={lang} locales={locales} />
+  </div>
+
+<style>
+  /* ── Styled markdown body ── */
+  .article-body :global(p) {
+    margin: 0 0 24px;
+  }
+
+  .article-body :global(h2) {
+    font-family: var(--font-serif);
+    font-size: 30px;
+    line-height: 1.25;
+    font-weight: 400;
+    color: var(--color-ink);
+    letter-spacing: -0.4px;
+    margin: 48px 0 18px;
+  }
+
+  @media (max-width: 767px) {
+    .article-body :global(h2) {
+      font-size: 24px;
+      line-height: 1.25;
+      letter-spacing: -0.3px;
+      margin: 36px 0 14px;
+    }
+  }
+
+  .article-body :global(h3) {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    line-height: 1.3;
+    font-weight: 400;
+    color: var(--color-ink);
+    letter-spacing: -0.2px;
+    margin: 36px 0 14px;
+  }
+
+  .article-body :global(blockquote) {
+    margin: 36px 0;
+    padding: 24px 0 4px 28px;
+    border-left: 2px solid var(--color-accent);
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--color-ink);
+    letter-spacing: -0.2px;
+  }
+
+  .article-body :global(blockquote p) {
+    margin: 0;
+  }
+
+  .article-body :global(em) {
+    font-style: italic;
+  }
+
+  .article-body :global(strong) {
+    font-weight: 600;
+  }
+
+  .article-body :global(ul),
+  .article-body :global(ol) {
+    padding-left: 20px;
+    margin: 0 0 24px;
+  }
+
+  .article-body :global(li) {
+    margin-bottom: 8px;
+    line-height: 1.65;
+  }
+
+  .article-body :global(a) {
+    color: var(--color-accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-accent-hair, rgba(63,107,94,0.3));
+  }
+
+  .article-body :global(a:hover) {
+    border-bottom-color: var(--color-accent);
+  }
+
+  /* Drop cap on first paragraph */
+  .article-body :global(> p:first-child) {
+    font-size: 22px;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+    font-style: italic;
+    margin: 0 0 32px;
+  }
+
+  /* Hover on related card title */
+  .related-card-link:hover :global(.title) {
+    color: var(--color-accent);
+  }
+</style>

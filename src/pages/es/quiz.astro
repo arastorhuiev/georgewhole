@@ -1,0 +1,17 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import QuizPage from '@/page-impl/QuizPage.astro';
+import { useTranslations } from '@i18n';
+
+const lang = 'es';
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  locale={lang}
+  path="quiz"
+  title={`${t.quizHome.title} · ${t.brand}`}
+  description={t.quizHome.sub}
+>
+  <QuizPage lang={lang} />
+</BaseLayout>

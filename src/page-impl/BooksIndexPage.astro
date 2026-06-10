@@ -1,0 +1,163 @@
+---
+// BooksIndexPage.astro — Books index page implementation (M2).
+// One DOM, responsive: desktop ≥768px primary fidelity, functional mobile.
+
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Footer from '@components/footer/Footer.astro';
+import Kicker from '@components/common/Kicker.astro';
+import BookShelf from '@components/book/BookShelf.astro';
+import BookBlock from '@components/book/BookBlock.astro';
+
+import { useTranslations } from '@i18n';
+import { booksFor, slugOf } from '@lib/content';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+import type { Locale } from '@lib/locales';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang as any);
+
+const allBooks = await booksFor(lang);
+
+// Map entries to the BookShelf item shape
+const shelfBooks = allBooks.map((e) => ({
+  id: slugOf(e.id),
+  href: `/${lang}/books/${slugOf(e.id)}/`,
+  num: e.data.num,
+  title: e.data.title,
+  themes: e.data.themes,
+  status: e.data.status,
+  cover: {
+    bg: e.data.cover.bg,
+    fg: e.data.cover.fg,
+    rule: e.data.cover.rule === 'T.accent' ? 'var(--color-accent)' : e.data.cover.rule,
+    tagline: e.data.cover.tagline,
+  },
+}));
+
+// The published book (status='out') — slozhnye
+const publishedEntry = allBooks.find((e) => e.data.status === 'out');
+
+// Nav items from t.nav
+const navItems = [
+  { key: 'articles',   label: t.nav.articles,   href: `/${lang}/articles`   },
+  { key: 'books',      label: t.nav.books,       href: `/${lang}/books`      },
+  { key: 'about',      label: t.nav.about,       href: `/${lang}/about`      },
+  { key: 'newsletter', label: t.nav.newsletter,  href: `/${lang}/newsletter` },
+];
+
+const locales = buildLocaleSwitcherItems(lang, 'books');
+---
+
+  <!-- Desktop nav -->
+  <div class="hidden md:block">
+    <Nav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      brandTagline={t.brandTagline}
+      items={navItems}
+      locale={lang}
+      locales={locales}
+      active="books"
+      wide
+    />
+  </div>
+
+  <!-- Mobile nav -->
+  <div class="md:hidden">
+    <MobileNav
+      brand="georgewhole"
+      brandHref={`/${lang}/`}
+      navItems={navItems}
+      locales={locales}
+      currentLocale={lang}
+      labels={t.mobileNav}
+    />
+  </div>
+
+  <main id="main">
+    <!-- Page header -->
+    <header class="border-b border-[var(--color-hair)]">
+      <div class="pt-[28px] px-[20px] pb-[32px] md:pt-[40px] md:px-[64px] md:pb-[48px]">
+        <!-- Breadcrumb -->
+        <div class="font-mono text-ink-muted text-[11px] tracking-[1.2px] uppercase mb-[18px] flex gap-[10px] md:mb-[28px]">
+          {t.booksIndex.crumb.map((s: string, i: number) => (
+            <>
+              {i < t.booksIndex.crumb.length - 1 ? (
+                <a href={`/${lang}/`} class="text-ink-muted no-underline transition-colors duration-[180ms] ease-[ease] hover:text-ink">{s}</a>
+              ) : (
+                <span class="text-ink" aria-current="page">{s}</span>
+              )}
+              {i < t.booksIndex.crumb.length - 1 && <span class="opacity-40">/</span>}
+            </>
+          ))}
+        </div>
+        <div class="max-w-[820px]">
+          <Kicker>{t.booksIndex.kicker}</Kicker>
+          <h1 class="font-serif text-ink text-[32px] leading-[1.06] mt-[16px] mb-[18px] font-normal tracking-[-0.5px] text-balance md:text-[52px] md:tracking-[-0.9px]">{t.booksIndex.title}</h1>
+          <p class="font-serif text-ink-soft text-[17px] leading-[1.5] m-0 italic max-w-[680px] md:text-[20px]">{t.booksIndex.sub}</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- BookShelf: desktop (md+) and mobile variants -->
+    <div class="hidden md:block">
+      <BookShelf
+        books={shelfBooks}
+        labels={{ statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon }}
+        layout="desktop"
+      />
+    </div>
+    <div class="md:hidden">
+      <BookShelf
+        books={shelfBooks}
+        labels={{ statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon }}
+        layout="mobile"
+      />
+    </div>
+
+    <!-- Expanded block for published book -->
+    {publishedEntry && (
+      <section class="pt-[36px] px-[20px] pb-[36px] border-b border-[var(--color-hair)] md:py-[64px] md:px-[64px]">
+        <Kicker>{t.booksIndex.publishedLabel}</Kicker>
+        <div class="mt-[28px]">
+          <BookBlock
+            kicker={publishedEntry.data.line}
+            title={publishedEntry.data.title}
+            subtitle={publishedEntry.data.subtitle}
+            body={publishedEntry.data.lead}
+            cta={t.common.getBook}
+            ctaHref={`/${lang}/books/${slugOf(publishedEntry.id)}/`}
+            retailers={publishedEntry.data.retailers}
+            retailerStatus={publishedEntry.data.retailerStatus}
+            retailerLabel={t.bookDetail.retailLabel}
+            cover={{
+              title: publishedEntry.data.title,
+              num: publishedEntry.data.num,
+              bg: publishedEntry.data.cover.bg,
+              fg: publishedEntry.data.cover.fg,
+              rule: publishedEntry.data.cover.rule === 'T.accent' ? 'var(--color-accent)' : publishedEntry.data.cover.rule,
+              tagline: publishedEntry.data.cover.tagline,
+            }}
+          />
+        </div>
+      </section>
+    )}
+
+    <!-- Forthcoming note -->
+    <section class="py-[28px] px-[20px] border-b border-[var(--color-hair)] md:py-[32px] md:px-[64px]">
+      <p class="font-serif text-ink-muted text-[15px] leading-[1.55] m-0 italic md:text-[16px]">{t.booksIndex.forthcomingNote}</p>
+    </section>
+  </main>
+
+  <!-- Footer: desktop layout on md+, mobile below -->
+  <div class="hidden md:block">
+    <Footer layout="desktop" strings={t.footer} locale={lang} locales={locales} />
+  </div>
+  <div class="md:hidden">
+    <Footer layout="mobile" strings={t.footer} locale={lang} locales={locales} />
+  </div>

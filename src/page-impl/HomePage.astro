@@ -1,0 +1,128 @@
+---
+import { useTranslations } from '@i18n/index';
+import { booksFor, articlesFor, slugOf } from '@lib/content';
+import { buildLocaleSwitcherItems } from '@lib/locales';
+
+import Nav from '@components/nav/Nav.astro';
+import MobileNav from '@components/nav/MobileNav.astro';
+import Footer from '@components/footer/Footer.astro';
+import BookShelf from '@components/book/BookShelf.astro';
+
+import HomeHero from '@components/home/HomeHero.astro';
+import HomeAuthorStripe from '@components/home/HomeAuthorStripe.astro';
+import HomeReadingGrid from '@components/home/HomeReadingGrid.astro';
+import HomeQuizTeaser from '@components/home/HomeQuizTeaser.astro';
+import HomeNewsletterBlock from '@components/home/HomeNewsletterBlock.astro';
+import HomeContactStrip from '@components/home/HomeContactStrip.astro';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang as any);
+
+const booksEntries = await booksFor(lang as any);
+const articlesEntries = await articlesFor(lang as any);
+
+const locales = buildLocaleSwitcherItems(lang as any, '');
+
+const navItems = [
+  { key: 'articles',   label: t.nav.articles,   href: `/${lang}/articles`   },
+  { key: 'books',      label: t.nav.books,      href: `/${lang}/books`      },
+  { key: 'about',      label: t.nav.about,      href: `/${lang}/about`      },
+  { key: 'newsletter', label: t.nav.newsletter, href: `/${lang}/newsletter` },
+];
+
+// Map book entries to the shelf shape
+const shelfBooks = booksEntries.map((entry) => ({
+  id:     slugOf(entry.id),
+  href:   `/${lang}/books/${slugOf(entry.id)}/`,
+  num:    entry.data.num,
+  title:  entry.data.title,
+  themes: entry.data.themes,
+  status: entry.data.status,
+  cover:  entry.data.cover,
+}));
+
+// First 3 articles for the reading grid
+const readingArticles = articlesEntries.slice(0, 3).map((entry) => ({
+  href:      `/${lang}/articles/${slugOf(entry.id)}/`,
+  title:     entry.data.title,
+  kicker:    entry.data.kicker,
+  summary:   entry.data.summary,
+  meta:      entry.data.readingTime,
+  image:     entry.data.image,
+  imageTone: entry.data.imageTone,
+}));
+
+const shelfHeading = {
+  kicker: t.shelf.kicker,
+  title:  t.shelf.title,
+  sub:    t.shelf.sub,
+  all:    t.shelf.all,
+  allHref: `/${lang}/books/`,
+};
+const shelfLabels = { statusOut: t.shelf.statusOut, statusSoon: t.shelf.statusSoon };
+---
+
+<!-- ── NAV ─────────────────────────────────────────────────── -->
+<div class="hidden md:block">
+  <Nav
+    brand="georgewhole"
+    brandHref={`/${lang}/`}
+    brandTagline={t.brandTagline}
+    items={navItems}
+    active="home"
+    locale={lang}
+    locales={locales}
+    wide
+  />
+</div>
+<div class="md:hidden">
+  <MobileNav
+    brand="georgewhole"
+    brandHref={`/${lang}/`}
+    navItems={navItems}
+    locales={locales}
+    currentLocale={lang}
+    labels={t.mobileNav}
+  />
+</div>
+
+<main id="main">
+  <HomeHero lang={lang} hero={t.hero} atmosLabel={t.atmos.heroMorning} />
+
+  <HomeAuthorStripe lang={lang} authorStripe={t.authorStripe} />
+
+  <div class="hidden md:block">
+    <BookShelf books={shelfBooks} labels={shelfLabels} layout="desktop" heading={shelfHeading} />
+  </div>
+  <div class="md:hidden">
+    <BookShelf books={shelfBooks} labels={shelfLabels} layout="mobile" heading={shelfHeading} />
+  </div>
+
+  <HomeReadingGrid lang={lang} reading={t.reading} articles={readingArticles} />
+
+  <HomeQuizTeaser
+    lang={lang}
+    quizHome={t.quizHome}
+    quizUi={t.quizUi}
+    newsletter={{ sentTitle: t.newsletter.sentTitle, sentBody: t.newsletter.sentBody }}
+  />
+
+  <HomeNewsletterBlock newsletter={t.newsletter} atmosLabel={t.atmos.newsletterPaper} />
+
+  <HomeContactStrip
+    lang={lang}
+    contact={{ kicker: t.contact.kicker, title: t.contact.title, sub: t.contact.sub, submit: t.contact.submit }}
+  />
+</main>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<div class="hidden md:block">
+  <Footer strings={t.footer} locale={lang} locales={locales} />
+</div>
+<div class="md:hidden">
+  <Footer strings={t.footer} locale={lang} locales={locales} layout="mobile" />
+</div>

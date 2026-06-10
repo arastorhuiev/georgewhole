@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+/* Self-hosted variable fonts (Fontsource). Each @font-face carries a
+   unicode-range, so the browser fetches only the subset a page needs —
+   Cyrillic on ru/uk, Latin (incl. Spanish ñ ¿ ¡ á, in the latin subset) on
+   en/es. Subset-level import trimming is an M0 perf follow-up. */
+@import "@fontsource-variable/literata";
+@import "@fontsource-variable/source-serif-4";
+@import "@fontsource-variable/source-sans-3";
+@import "@fontsource/source-code-pro";
+
+/* ── Design tokens → Tailwind theme (colours / radii / shadow / fonts) ──
+   Editorial type scale (hero/display/etc.) stays in component-scoped CSS for
+   pixel-fidelity; @theme carries the system primitives. */
+@theme {
+  --color-bg: #faf6ef;
+  --color-surface: #f2ecdf;
+  --color-surface-soft: #f7f2e6;
+  --color-ink: #2a2723;
+  --color-ink-soft: #5c5349;
+  --color-ink-muted: #8c8478;
+  --color-accent: #3f6b5e;
+  --color-accent-deep: #2f5246;
+  --color-accent-fg: #faf6ef;
+  --color-callout: #ede9de;
+  --color-hair: rgba(42, 39, 35, 0.12);
+  --color-hair-soft: rgba(42, 39, 35, 0.06);
+  --color-accent-soft: rgba(63, 107, 94, 0.1);
+  --color-accent-hair: rgba(63, 107, 94, 0.22);
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-pill: 999px;
+
+  --shadow-paper: 0 1px 0 rgba(42, 39, 35, 0.04), 0 1px 2px rgba(42, 39, 35, 0.06);
+
+  /* Font utilities resolve to per-locale-overridable stacks (see :root). */
+  --font-serif: var(--font-serif-stack);
+  --font-sans: var(--font-sans-stack);
+  --font-mono: var(--font-mono-stack);
+}
+
+/* Per-locale serif: Literata for Cyrillic (ru/uk), Source Serif 4 for Latin
+   (en/es). One attribute — data-locale on <html> — swaps the whole subtree. */
+:root {
+  --font-serif-stack: "Literata Variable", Georgia, "Times New Roman", serif;
+  --font-sans-stack: "Source Sans 3 Variable", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Helvetica, Arial, "Noto Sans", sans-serif;
+  --font-mono-stack: "Source Code Pro", ui-monospace, "SF Mono", Menlo, Consolas,
+    monospace;
+}
+[data-locale="en"],
+[data-locale="es"] {
+  --font-serif-stack: "Source Serif 4 Variable", Georgia, "Times New Roman", serif;
+}
+[data-locale="ru"],
+[data-locale="uk"] {
+  --font-serif-stack: "Literata Variable", Georgia, "Times New Roman", serif;
+}
+
+@layer base {
+  html {
+    background: var(--color-bg);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+  a,
+  button {
+    transition: color 0.18s ease, background-color 0.18s ease,
+      border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  /* Visible keyboard focus everywhere (was missing site-wide). Mouse clicks
+     don't trigger :focus-visible, so this only shows for keyboard/AT users. */
+  :where(a, button, summary, [role="button"], input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ── Accessibility helpers ───────────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip-to-content link — visually hidden until focused. */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--color-accent);
+  color: var(--color-accent-fg);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transform: translateY(-150%);
+  transition: transform 0.18s ease;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Smooth entrance for form success states (used by the PE form scripts). */
+@keyframes formSentIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ── Cross-document View Transitions ───────────────────────────────────────
+   Native MPA view transitions: zero JS (no SPA router, no Svelte-island
+   re-hydration risk). Chrome/Edge cross-fade between page loads; browsers
+   without support no-op gracefully. Gated on prefers-reduced-motion so users
+   who ask for less motion get an instant cut (the @layer base reduce-guard
+   also neutralises the generated keyframes). */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.28s;
+    animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+}

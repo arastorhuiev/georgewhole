@@ -1,0 +1,45 @@
+---
+// Author stripe — a single portrait (sized per breakpoint via visibility
+// wrappers, NOT by passing utilities to AuthorPortrait, whose inline size would
+// otherwise force both to render — the old "two avatars" bug), name/line, and a
+// link into the About page. No inline styles.
+import AuthorPortrait from '@components/common/AuthorPortrait.astro';
+
+interface Props {
+  lang: string;
+  authorStripe: {
+    kicker: string;
+    line: string;
+    name: string;
+    mobileSummary: string;
+    link: string;
+  };
+}
+
+const { lang, authorStripe: a } = Astro.props;
+---
+
+<section class="flex items-center gap-4 px-5 py-7 border-b border-hair bg-surface-soft md:gap-7 md:px-16 md:py-10">
+  <div class="hidden md:block"><AuthorPortrait size={68} /></div>
+  <div class="md:hidden"><AuthorPortrait size={52} /></div>
+
+  <div class="flex-1">
+    <div class="font-mono text-ink-muted text-[11px] uppercase tracking-[1.6px] font-medium">
+      {a.kicker}
+    </div>
+    <div class="hidden md:block font-serif text-ink text-2xl mt-1.5 leading-[1.35] tracking-[-0.2px]">
+      {a.line}
+    </div>
+    <div class="md:hidden">
+      <div class="font-serif text-ink text-[17px] mt-1 leading-[1.35]">{a.name}</div>
+      <div class="font-serif text-ink-soft text-[14.5px] italic leading-[1.45]">{a.mobileSummary}</div>
+    </div>
+  </div>
+
+  <a
+    href={`/${lang}/about/`}
+    class="font-sans text-accent text-[14px] font-medium no-underline border-b border-accent-hair pb-px whitespace-nowrap transition-colors hover:text-accent-deep hover:border-accent"
+  >
+    {a.link}
+  </a>
+</section>

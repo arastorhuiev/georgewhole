@@ -1,0 +1,15 @@
+---
+// Manual hreflang — Astro's built-in i18n does NOT emit these.
+// Self + reciprocal across LIVE locales + x-default → home locale.
+import { hreflangSet, xDefaultUrl } from '@lib/seo';
+
+interface Props {
+  /** locale-less logical path, e.g. '' | 'about' | 'articles/foo' */
+  path?: string;
+}
+const { path = '' } = Astro.props;
+const alternates = hreflangSet(path);
+---
+
+{alternates.map((a) => <link rel="alternate" hreflang={a.locale} href={a.href} />)}
+<link rel="alternate" hreflang="x-default" href={xDefaultUrl(path)} />

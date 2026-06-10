@@ -1,0 +1,47 @@
+---
+import Kicker from '@components/common/Kicker.astro';
+import Button from '@components/common/Button.astro';
+
+interface Props {
+  kicker: string;
+  title: string;
+  sub: string;
+  /** [label, href] pairs — first is primary, the rest are ghost links. */
+  ctas: Array<[string, string]>;
+  layout?: 'desktop' | 'mobile';
+}
+
+const {
+  kicker,
+  title,
+  sub,
+  ctas,
+  layout = 'desktop',
+} = Astro.props;
+
+const wide = layout === 'desktop';
+---
+
+<div class="font-sans">
+  <Kicker>{kicker}</Kicker>
+  <h2 class:list={[
+    'font-serif font-normal text-ink leading-[1.2] tracking-[-0.4px] mt-[14px] mb-[16px]',
+    wide ? 'text-[36px]' : 'text-[26px]',
+  ]}>
+    {title}
+  </h2>
+  <p class:list={[
+    'font-serif italic text-ink-soft leading-[1.65] mb-[28px] mt-0 max-w-[460px]',
+    wide ? 'text-[16px]' : 'text-[15px]',
+  ]}>
+    {sub}
+  </p>
+  <div class:list={[
+    'flex gap-[12px] flex-wrap',
+    wide ? 'flex-row' : 'flex-col',
+  ]}>
+    {ctas[0] && <Button variant="primary" href={ctas[0][1]}>{ctas[0][0]}</Button>}
+    {ctas[1] && <Button variant="ghost" href={ctas[1][1]}>{ctas[1][0]}</Button>}
+    {ctas[2] && <Button variant="ghost" href={ctas[2][1]}>{ctas[2][0]}</Button>}
+  </div>
+</div>

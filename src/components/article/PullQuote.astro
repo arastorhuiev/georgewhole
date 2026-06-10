@@ -1,0 +1,22 @@
+---
+interface Props {
+  attribution?: string;
+  marks?: [string, string];
+}
+
+const {
+  attribution,
+  marks = ['«', '»'],
+} = Astro.props;
+
+const [open, close] = marks;
+---
+
+<figure class="my-[36px] pt-[24px] pb-[24px] pl-[28px] border-l-[2px] border-accent font-serif">
+  <blockquote class="m-0 text-[26px] leading-[1.45] text-ink italic tracking-[-0.2px] font-[400]">
+    {open}<slot />{close}
+  </blockquote>
+  {attribution && (
+    <figcaption class="mt-[14px] font-mono text-[11px] tracking-[0.8px] uppercase text-ink-muted">{attribution}</figcaption>
+  )}
+</figure>
