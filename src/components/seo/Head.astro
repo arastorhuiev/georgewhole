@@ -1,7 +1,7 @@
 ---
-import { LIVE_LOCALES, type Locale } from '@lib/locales';
-import { absUrl } from '@lib/seo';
-import Hreflang from '@components/seo/Hreflang.astro';
+import { LIVE_LOCALES, type Locale } from "@lib/locales";
+import { absUrl } from "@lib/seo";
+import Hreflang from "@components/seo/Hreflang.astro";
 
 interface Props {
   locale: Locale;
@@ -16,15 +16,33 @@ interface Props {
   /** absolute share-image URL; defaults to the site OG image */
   ogImage?: string;
 }
-const { locale, path = '', title, description, noindex = false, ogType = 'website', ogImage } = Astro.props;
+const {
+  locale,
+  path = "",
+  title,
+  description,
+  noindex = false,
+  ogType = "website",
+  ogImage,
+} = Astro.props;
 const canonical = absUrl(locale, path);
 
-const origin = (Astro.site?.href ?? 'https://georgewhole.com/').replace(/\/$/, '');
+const origin = (Astro.site?.href ?? "https://georgewhole.com/").replace(
+  /\/$/,
+  "",
+);
 const ogImageUrl = ogImage ?? `${origin}/og-default.png`;
 
-const ogLocaleMap: Record<Locale, string> = { en: 'en_US', ru: 'ru_RU', uk: 'uk_UA', es: 'es_ES' };
-const ogLocale = ogLocaleMap[locale] ?? 'en_US';
-const altLocales = (LIVE_LOCALES as readonly Locale[]).filter((l) => l !== locale).map((l) => ogLocaleMap[l]);
+const ogLocaleMap: Record<Locale, string> = {
+  en: "en_US",
+  ru: "ru_RU",
+  uk: "uk_UA",
+  es: "es_ES",
+};
+const ogLocale = ogLocaleMap[locale] ?? "en_US";
+const altLocales = (LIVE_LOCALES as readonly Locale[])
+  .filter((l) => l !== locale)
+  .map((l) => ogLocaleMap[l]);
 ---
 
 <meta charset="utf-8" />
@@ -36,7 +54,8 @@ const altLocales = (LIVE_LOCALES as readonly Locale[]).filter((l) => l !== local
 <meta name="theme-color" content="#faf6ef" />
 <title>{title}</title>
 {description && <meta name="description" content={description} />}
-{noindex && <meta name="robots" content="noindex, nofollow" />}
+<!-- {noindex && <meta name="robots" content="noindex, nofollow" />} -->
+<meta name="robots" content="noindex, nofollow" />
 <link rel="canonical" href={canonical} />
 <Hreflang path={path} />
 
